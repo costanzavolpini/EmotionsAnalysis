@@ -33,8 +33,8 @@
       <nav class="navigation" role="navigation">
         <ul class="primary-nav">
           <li><a href="#project">Project</a></li>
-          <li><a href="#services">Database</a></li>
-          <li><a href="#works">Algorithm</a></li>
+          <li><a href="#database">Algorithm</a></li>
+          <li><a href="#works">Database</a></li>
           <li><a href="#teams">Museum</a></li>
           <li><a href="#testimonials">#Social</a></li>
           <li><a href="#contact">Team</a></li>
@@ -47,9 +47,9 @@
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
-        <h1>E M O T I O N S</h1>
+        <h1><img src="images/facetoface2.png" alt=""></h1>
         <p>Experience design 2018</p>
-        <nav role="navigation"> <a href="#services" class="banner-btn"><img src="images/down-arrow.png" alt=""></a></nav>
+        <nav role="navigation"> <a href="#project" class="banner-btn"><img src="images/down-arrow.png" alt=""></a></nav>
       </div>
       <!-- banner text -->
     </div>
@@ -96,46 +96,43 @@
 <!-- about section -->
 
 <!-- services section -->
-<section id="services" class="services service-section">
+<section class="services service-section">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-strategy"></span>
+      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-happy"></span>
         <div class="services-content">
           <h5>Analysing visitors’ reactions</h5>
           <p>Thanks to facial recognition it will be possible to trace how people feel in front of an artwork.</p>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-briefcase"></span>
+      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-heart"></span>
         <div class="services-content">
           <h5>Rating artworks</h5>
           <p>Rating is done collecting data through direct observation in a digital museum.</p>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-tools"></span>
+      <div class="col-md-4 col-sm-6 services"><span class="icon icon-bargraph"></span>
         <div class="services-content">
           <h5>Defining a set of emotions</h5>
           <p>By collecting data it will be possible to "rate" images and put them in different categories based on the emotions range we aim to analyse.</p>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-genius"></span>
+      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-linegraph"></span>
         <div class="services-content">
           <h5>Emotional oriented path</h5>
           <p>Thanks to categories, eventually, we can create an algorithm of how the paintings sequence should be according to the swing of emotions we want to reach.</p>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-megaphone"></span>
+      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-tools"></span>
         <div class="services-content">
           <h5>Designing of physical museum</h5>
           <p>The physical exhibition should go along with feelings and thus be coherent and reinforce paintings through the use of spacial conformational escamotages.</p>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-trophy"></span>
+      <div class="col-md-4 col-sm-6 services"> <span class="icon icon-target"></span>
         <div class="services-content">
-          <h5>BOH</h5>
-          <p>The ability of positioning and managing different pieces of
-            art according to an emotional impact the curator wants to
-            achieve. What we aim to do is emphasising this feeling cen-
-            tred attention and let the visitors embrace the essence of
+          <h5>OUR GOAL</h5>
+          <p>What we aim to do is emphasising this feeling centred attention and let the visitors embrace the essence of
             the exhibition.</p>
         </div>
       </div>
@@ -143,11 +140,48 @@
   </div>
 </section>
 <!-- services section -->
+
+<!-- about section -->
+<section id="database" class="section database no-padding">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+            <div class="col-md-6">
+              <!-- DRAG AND DROP to upload image-->
+              <!-- JS: https://bootsnipp.com/snippets/exvN8 !!! -->
+              <form id="file-upload-form" class="uploader">
+                  <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+                  <label for="file-upload" id="file-drag">
+                    <img id="file-image" src="#" alt="Preview" class="hidden">
+                    <div id="start">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                      <div style="font-family: Source Sans Pro; font-weight: 500";>Select a file or drag here</div>
+                      <div id="notimage" class="hidden">Please select an image</div>
+                      <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                    </div>
+                    <div id="response" class="hidden">
+                      <div id="messages"></div>
+                      <progress class="progress" id="file-progress" value="0">
+                        <span>0</span>%
+                      </progress>
+                    </div>
+                  </label>
+                </form>
+            </div>
+            <div class="col-md-6">
+              <div id="photo-reaction">
+                <img src="images/pingu.png" alt="" class="img-responsive" style="max-width: 60%; padding: 3% 0% 2% 0%; margin: auto;">
+              </blockquote>
+            </div>
+      </div>
+  </div>
+</section>
+<!-- about section -->
+
 <!-- work section -->
 <section id="works" class="works section no-padding">
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-1.jpg" class="work-box"> <img src="images/work-1.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin1.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -155,7 +189,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-2.jpg" class="work-box"> <img src="images/work-2.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin2.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -163,7 +197,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-3.jpg" class="work-box"> <img src="images/work-3.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin3.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -171,7 +205,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-4.jpg" class="work-box"> <img src="images/work-4.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin4.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -179,7 +213,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-5.jpg" class="work-box"> <img src="images/work-5.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin5.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -195,7 +229,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-7.jpg" class="work-box"> <img src="images/work-7.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-7.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -203,7 +237,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-8.jpg" class="work-box"> <img src="images/work-8.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-8.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -211,7 +245,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-9.jpg" class="work-box"> <img src="images/work-9.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-9.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -219,7 +253,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-10.jpg" class="work-box"> <img src="images/work-10.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-10.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -227,7 +261,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-11.jpg" class="work-box"> <img src="images/work-11.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-11.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -235,7 +269,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/work-12.jpg" class="work-box"> <img src="images/work-12.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/work-12.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -247,68 +281,17 @@
   </div>
 </section>
 <!-- work section -->
-<!-- our team section -->
-<section id="teams" class="section teams">
-  <div class="container">
-    <div class="row">
-      <!-- team member 1 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="images/team-1.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Johnathan Doe</h4>
-            <h5 class="role">The Mastermind</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. </p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
-          </ul>
-        </div>
-      </div>
-      <!-- team member 1 -->
-      <!-- team member 2 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="images/team-2.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Lisa Brown</h4>
-            <h5 class="role">Creative head</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-          </ul>
-        </div>
-      </div>
-      <!-- team member 2 -->
-      <!-- team member 3 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="images/team-3.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Mike Collins</h4>
-            <h5 class="role">Technical lead</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-          </ul>
-        </div>
-      </div>
-      <!-- team member 1 -->
+
+<!-- Get a quote section -->
+<section id="contact" class="section quote">
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 text-center">
+        <h3>Looking for a new brand? Let's work together!</h3>
+        <a href="#" class="btn btn-large">Get Quotation</a> </div>
     </div>
-  </div>
-</section>
-<!-- our team section -->
+  </section>
+  <!-- Get a quote section -->
+
 <!-- Testimonials section -->
 <section id="testimonials" class="section testimonials no-padding">
   <div class="container-fluid">
@@ -317,10 +300,15 @@
         <ul class="slides">
           <li>
             <div class="col-md-12">
-              <blockquote>
-                <h1>"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..." </h1>
-                <p>Rene Brown, Open Window production</p>
-              </blockquote>
+                <div class="col-md-6">
+                    <img src="images/giorda.jpg" alt="">
+                  </div>
+                <div class="col-md-6">
+                  <blockquote>
+                    <h1>"Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec sed odio dui. Phasellus non dolor nibh. Nullam elementum Aenean eu leo quam..." </h1>
+                    <p>Giordano C.</p>
+                  </blockquote>
+                </div>
             </div>
           </li>
           <li>
@@ -353,38 +341,80 @@
   </div>
 </section>
 <!-- Testimonials section -->
-<!-- Get a quote section -->
-<section id="contact" class="section quote">
-  <div class="container">
-    <div class="col-md-8 col-md-offset-2 text-center">
-      <h3>Looking for a new brand? Let's work together!</h3>
-      <a href="#" class="btn btn-large">Get Quotation</a> </div>
-  </div>
-</section>
-<!-- Get a quote section -->
+
+<!-- our team section -->
+<section id="teams" class="section teams">
+    <div class="container">
+      <div class="row">
+        <!-- team member 1 -->
+        <div class="col-md-4 col-sm-8">
+          <div class="person"> <img src="images/skander.jpg" alt="" class="img-responsive rounded-image">
+            <div class="person-content">
+              <h4>Skander Hajri</h4>
+              <h5 class="role">Computer Science</h5>
+              <p style="text-align: justify;">Computer Science student at EPFL, not Italian by birth but Italian by adoption. Likes olive oil, especially on bruschetta.</p>
+            </div>
+            <ul class="social-icons clearfix">
+              <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+              <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+              <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
+              <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+              <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- team member 1 -->
+        <!-- team member 2 -->
+        <div class="col-md-4 col-sm-8">
+          <div class="person"> <img src="images/licia.jpg" alt="" class="img-responsive rounded-image">
+            <div class="person-content">
+              <h4>Licia Tomaselli</h4>
+              <h5 class="role">Architect</h5>
+              <p style="text-align: justify;">Architecture exchange student at EPFL, always around informatics though. Has a Facebook account just to look at kittens.</p>
+            </div>
+            <ul class="social-icons clearfix">
+              <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- team member 2 -->
+        <!-- team member 3 -->
+        <div class="col-md-4 col-sm-8">
+          <div class="person"> <img src="images/costanza.jpg" alt="" class="img-responsive rounded-image">
+            <div class="person-content">
+              <h4>Costanza Volpini</h4>
+              <h5 class="role">Computer Science</h5>
+              <p style="text-align: justify;">Always mistaken for an architecture student is, in fact, in the Computer Science field. Has a problem with sweets in general.</p>
+            </div>
+            <ul class="social-icons clearfix">
+              <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
+              <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- team member 1 -->
+      </div>
+    </div>
+  </section>
+  <!-- our team section -->
+
 <!-- Footer section -->
 <footer class="footer">
   <div class="footer-top section">
     <div class="container">
       <div class="row">
-        <div class="footer-col col-md-6">
-          <h5>Our Office Location</h5>
-          <p>Collins Street West Victoria 8007 Australia.<br>
-            1800 1234 56789 / 98532100987<br>
-            support@flosix.com</p>
-          <p>Copyright © 2015 Flosix Inc. All Rights Reserved. Made with <i class="fa fa-heart pulse"></i> by <a href="http://www.designstub.com/">Designstub</a></p>
-        </div>
-        <div class="footer-col col-md-3">
-          <h5>Services We Offer</h5>
-          <p>
-          <ul>
-            <li><a href="#">Digital Strategy</a></li>
-            <li><a href="#">Websites</a></li>
-            <li><a href="#">Videography</a></li>
-            <li><a href="#">Social Media</a></li>
-            <li><a href="#">User Experience</a></li>
-          </ul>
-          </p>
+        <div class="footer-col col-md-9">
+          <h5>EXPERIENCE DESIGN</h5>
+          <p>Fall Semester 2018</p>
+          <p>Huang Jeffrey</p> <p>Immanuel Koh</p>
+          <p>Credits: Flosix Inc. (<a href="http://www.designstub.com/">Designstub</a>)</p>
         </div>
         <div class="footer-col col-md-3">
           <h5>Share with Love</h5>
@@ -403,6 +433,7 @@
 </footer>
 <!-- Footer section -->
 <!-- JS FILES -->
+<script src="./path/to/dropzone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.flexslider-min.js"></script>
@@ -410,5 +441,6 @@
 <script src="js/retina.min.js"></script>
 <script src="js/modernizr.js"></script>
 <script src="js/main.js"></script>
+
 </body>
 </html>
