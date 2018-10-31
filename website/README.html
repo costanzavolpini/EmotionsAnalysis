@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <title>Express.js README</title>
+<style>
+  
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; 
+  overflow: hidden;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; 
+  overflow: hidden;
+  word-wrap: break-word;
+}
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+  -webkit-print-color-adjust: exact;
+}
+
+#header {
+  background: url(assets/img/logo_info_color_en.svg);
+  width: 845px;
+  height: 106px;
+  background-repeat: no-repeat;
+}
+
+body{
+  padding: 0 30px;
+}
+.right-side{
+    padding-top: 5fpx;
+  float:right;
+  line-height: 1.1;
+}
+
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+  table, pre {
+    page-break-inside: avoid;
+  }
+  pre {
+    word-wrap: break-word;
+  }
+
+  body{
+    width: 845px;
+    margin: 0 auto;
+  }
+  #header {
+      position: fixed;
+      top: 0;
+    left: calc((100% - 845px)/2);
+  }
+  .header-margin{
+    margin-top:126px;
+  }
+    .print-hidden{
+        display: none;
+    }
+}
+
+/* highlight js styles*/
+
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+  <h2 id="getting-started">Getting Started</h2>
+<h3 id="install-dependencies">Install dependencies</h3>
+<p>To install the dependencies for the exercise (express.js, mongoose, testing framework, etc.) type:</p>
+<pre><code>npm <span class="hljs-keyword">install</span>
+</code></pre><h3 id="run-the-server">Run the server</h3>
+<p><code>app.js</code> is exported as a module so that we can  <code>require()</code> it from other modules, eg. our tests. For this reason the server does not <code>listen()</code> from within <code>app.js</code>. The initialization of the server is carried out with <code>./bin/www</code>, an executable file the <em>requires</em> <code>app.js</code> and calls <code>listen()</code>. To start:</p>
+<pre><code><span class="hljs-built_in">npm</span> start
+</code></pre><p>or</p>
+<pre><code><span class="hljs-attr">DEBUG=</span>'atelierbeats-server' <span class="hljs-keyword">node</span> <span class="hljs-title">./bin</span>/www
+</code></pre><p>The <code>DEBUG</code> environmental variable is read by the excellent <a href="https://github.com/visionmedia/debug">debug</a> module which allows to isolate debug messages output per module.</p>
+<h3 id="anatomy-of-a-skeleton">Anatomy of a skeleton</h3>
+<pre><code>|<span class="hljs-type">-- README</span>.html //What you're reading <span class="hljs-built_in">right</span> now
+|<span class="hljs-type">-- README</span>.md // Source <span class="hljs-keyword">for</span> what you're reading <span class="hljs-built_in">right</span> now
+|<span class="hljs-type">-- app</span>.js //main file
+|<span class="hljs-type">-- bin</span>
+|   <span class="hljs-type">`-- www</span> //starts app.js
+|   <span class="hljs-type">`-- installSeleniumAndChromeWebDriver</span> //installs selenium and chrome driver
+|<span class="hljs-type">-- config</span>.js  //configuration like mongodb url
+|<span class="hljs-type">-- models</span> //models go here
+|   <span class="hljs-type">|-- Album</span>.js
+|   <span class="hljs-type">|-- Artist</span>.js
+|   <span class="hljs-type">|-- Playlist</span>.js
+|   <span class="hljs-type">|-- Track</span>.js
+|   <span class="hljs-type">|-- User</span>.js
+|   <span class="hljs-type">`-- index</span>.js //lists all models so we can register the mongoose models <span class="hljs-built_in">with</span> one `require()`
+|<span class="hljs-type">-- node_modules</span> //npm packages
+|<span class="hljs-type">-- package</span>.json
+|<span class="hljs-type">-- public</span>
+|   <span class="hljs-type">`-- css</span>
+|<span class="hljs-type">-- routes</span>  //routers go here
+|<span class="hljs-type">-- seed</span>.js //executed it to seed the database
+|<span class="hljs-type">-- test</span>
+    |<span class="hljs-type">-- ex1</span> //tests <span class="hljs-keyword">for</span> Exercise <span class="hljs-number">1</span>
+    |<span class="hljs-type">-- ex2</span> //tests <span class="hljs-keyword">for</span> Exercise <span class="hljs-number">2</span>
+    |<span class="hljs-type">-- ex3</span> //tests <span class="hljs-keyword">for</span> Exercise <span class="hljs-number">3</span>
+    |<span class="hljs-type">-- ex4</span> //tests <span class="hljs-keyword">for</span> Exercise <span class="hljs-number">4</span>
+    |<span class="hljs-type">-- ex5</span> //tests <span class="hljs-keyword">for</span> Exercise <span class="hljs-number">5</span>
+    |<span class="hljs-type">-- seedData</span>.js //used <span class="hljs-built_in">by</span> seedDb.js
+    |<span class="hljs-type">-- seedDb</span>.js //seeds the database
+    `-- utils.js //various utils <span class="hljs-keyword">for</span> the tests
+</code></pre><h2 id="rest-api">REST API</h2>
+<h3 id="overview">Overview</h3>
+<p>Your API will expose your model. The root URL should have links for all the resources of your API.</p>
+<p>For each one of <code>Album</code>, <code>Artist</code>, <code>Track</code>, <code>User</code> you have to create routes that:</p>
+<ul>
+<li><strong>list</strong> all instances of the model (read all resources)</li>
+<li><strong>create</strong> a new instance of the model (create a new resource)</li>
+<li><strong>list</strong> an instance of the model  (read a resource)</li>
+<li><strong>update</strong> a an instance of the model (update a resource)</li>
+<li><strong>delete</strong> a an instance of the model (delete a resource)</li>
+</ul>
+<p>The <code>Playlist</code> model is a special case since it&#39;s a subresource of the <code>User model</code>.</p>
+<p><span style="text-decoration:underline; font-weight:bold">Important</span>: You should <strong>NOT</strong> send the <code>password</code> field of the <code>User</code> model to client requests.</p>
+<p>All the routes for Exercise 2:</p>
+<pre><code><span class="hljs-comment">#root </span>
+GET /
+
+<span class="hljs-comment">#Album model</span>
+GET /albums
+POST /albums
+
+GET /albums/<span class="hljs-symbol">:albumid</span>
+PUT /albums/<span class="hljs-symbol">:albumid</span>
+DELETE albums/<span class="hljs-symbol">:albumid</span>
+
+<span class="hljs-comment">#Artist model</span>
+GET /artists
+POST /artists
+
+GET /artists/<span class="hljs-symbol">:artistid</span>
+PUT /artists/<span class="hljs-symbol">:artistid</span>
+DELETE artists/<span class="hljs-symbol">:artistid</span>
+
+<span class="hljs-comment">#Track model</span>
+GET /tracks
+POST /tracks
+
+GET /tracks/<span class="hljs-symbol">:trackid</span>
+PUT /tracks/<span class="hljs-symbol">:trackid</span>
+DELETE tracks/<span class="hljs-symbol">:trackid</span>
+
+<span class="hljs-comment">#User model</span>
+GET /users
+POST /users
+
+GET /users/<span class="hljs-symbol">:userid</span>
+PUT /users/<span class="hljs-symbol">:userid</span>
+DELETE users/<span class="hljs-symbol">:userid</span>
+
+<span class="hljs-comment">#Playlist model</span>
+GET /users/<span class="hljs-symbol">:userid/playlists</span>
+PUT /users/<span class="hljs-symbol">:userid/playlists</span>
+</code></pre><h3 id="responses">Responses</h3>
+<ul>
+<li>The responses&#39; bodies should be in JSON format with <code>ContentType: application/json</code>. </li>
+<li>If everything is successful and the response contains data, the status code should be <code>200 OK</code>.</li>
+<li>If a <strong>new</strong> resource was created as a result from a <code>PUT</code> or a <code>POST</code> request, the status code should be <code>201 Created</code>.</li>
+<li>If everything is successful and the response contains no data (as is the case with a successful <code>DELETE</code>, or a successful <code>PUT</code> in a resource that exists), the status code should be <code>204 No Content</code>. In this case the response has no body.</li>
+<li>If resource (model instance) with the id of the request does not exist, the response&#39;s status code should be <code>404 Not Found</code>.</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<p>Note: In the examples we only present the headers of interest.</p>
+<h4 id="-get-"><code>GET /</code></h4>
+<pre><code><span class="hljs-comment">#Request headers</span>
+GET / HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-attr">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-attr">Accept:</span> application/json
+
+<span class="hljs-number">200</span> OK
+<span class="hljs-comment">#Response headers</span>
+<span class="hljs-attr">Content-Type:</span> application/json; charset=utf<span class="hljs-bullet">-8</span>
+</code></pre><p>Response body:</p>
+<pre><code>[
+    {
+        <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"albums"</span>,
+        <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/albums"</span>
+    },
+    {
+        <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"artists"</span>,
+        <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/artists"</span>
+    },
+    {
+        <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"playlists"</span>,
+        <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/playlists"</span>
+    },
+    {
+        <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"tracks"</span>,
+        <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/tracks"</span>
+    },
+    {
+        <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"users"</span>,
+        <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/users"</span>
+    }
+]
+</code></pre><h4 id="-get-users-"><code>GET /users</code></h4>
+<pre><code><span class="hljs-comment">#Request headers</span>
+GET /users HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-attr">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-attr">Accept:</span> application/json
+
+<span class="hljs-number">200</span> OK
+<span class="hljs-comment">#Response headers</span>
+<span class="hljs-attr">Content-Type:</span> application/json; charset=utf<span class="hljs-bullet">-8</span>
+</code></pre><p>Response body:</p>
+<pre><code>[
+    {
+        <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc5"</span>,
+        <span class="hljs-attr">"firstName"</span>: <span class="hljs-string">"Masiar"</span>,
+        <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"Babazadeh"</span>,
+        <span class="hljs-attr">"userName"</span>: <span class="hljs-string">"masiar"</span>,
+        <span class="hljs-attr">"email"</span>: <span class="hljs-string">"masiar.babazadeh@usi.ch"</span>,
+        <span class="hljs-attr">"playlists"</span>: [
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfbf"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.267Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb4"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb5"</span>
+                ]
+            },
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc0"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs 2"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb7"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb8"</span>
+                ]
+            }
+        ],
+        <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.808Z"</span>
+    },
+    {
+        <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc6"</span>,
+        <span class="hljs-attr">"firstName"</span>: <span class="hljs-string">"Robert"</span>,
+        <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"Sapolsky"</span>,
+        <span class="hljs-attr">"userName"</span>: <span class="hljs-string">"rob"</span>,
+        <span class="hljs-attr">"email"</span>: <span class="hljs-string">"sapolsky@stanford.edu"</span>,
+        <span class="hljs-attr">"playlists"</span>: [
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc1"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb4"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb5"</span>
+                ]
+            },
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc2"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs 2"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfba"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfbb"</span>
+                ]
+            }
+        ],
+        <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.810Z"</span>
+    },
+    {
+        <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc7"</span>,
+        <span class="hljs-attr">"firstName"</span>: <span class="hljs-string">"Vasileios"</span>,
+        <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"Triglianos"</span>,
+        <span class="hljs-attr">"userName"</span>: <span class="hljs-string">"vassilis"</span>,
+        <span class="hljs-attr">"email"</span>: <span class="hljs-string">"vasileios.triglianos@usi.ch"</span>,
+        <span class="hljs-attr">"playlists"</span>: [
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc3"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Iron maiden"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb4"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb5"</span>
+                ]
+            },
+            {
+                <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc4"</span>,
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs 3"</span>,
+                <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+                <span class="hljs-attr">"tracks"</span>: [
+                    <span class="hljs-string">"544571bdb96600d9c97bdfb9"</span>,
+                    <span class="hljs-string">"544571bdb96600d9c97bdfba"</span>
+                ]
+            }
+        ],
+        <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.812Z"</span>
+    }
+]
+</code></pre><h4 id="-get-users-userid-"><code>GET /users/:userid</code></h4>
+<pre><code><span class="hljs-meta">#Request headers</span>
+GET <span class="hljs-meta-keyword">/users/</span><span class="hljs-number">544571</span>bdb96600d9c97bdfc6 HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-symbol">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-symbol">Accept:</span> application/json
+
+<span class="hljs-number">200</span> OK
+<span class="hljs-meta">#Response headers</span>
+Content-Type: application/json; charset=utf<span class="hljs-number">-8</span>
+</code></pre><p>Response body:</p>
+<pre><code>{
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc6"</span>,
+    <span class="hljs-attr">"firstName"</span>: <span class="hljs-string">"Robert"</span>,
+    <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"Sapolsky"</span>,
+    <span class="hljs-attr">"userName"</span>: <span class="hljs-string">"rob"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"sapolsky@stanford.edu"</span>,
+    <span class="hljs-attr">"playlists"</span>: [
+        {
+            <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc1"</span>,
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs"</span>,
+            <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+            <span class="hljs-attr">"tracks"</span>: [
+                <span class="hljs-string">"544571bdb96600d9c97bdfb4"</span>,
+                <span class="hljs-string">"544571bdb96600d9c97bdfb5"</span>
+            ]
+        },
+        {
+            <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"544571bdb96600d9c97bdfc2"</span>,
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Thrash Metal favs 2"</span>,
+            <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.269Z"</span>,
+            <span class="hljs-attr">"tracks"</span>: [
+                <span class="hljs-string">"544571bdb96600d9c97bdfba"</span>,
+                <span class="hljs-string">"544571bdb96600d9c97bdfbb"</span>
+            ]
+        }
+    ],
+    <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-20T20:34:05.810Z"</span>
+}
+</code></pre><h4 id="-delete-users-userid-"><code>DELETE /users/:userid</code></h4>
+<pre><code><span class="hljs-meta">#Request headers</span>
+DELETE <span class="hljs-meta-keyword">/users/</span><span class="hljs-number">544571</span>bdb96600d9c97bdfc6 HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-symbol">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-symbol">Accept:</span> application/json
+
+<span class="hljs-number">204</span> No Content
+<span class="hljs-meta">#Response headers</span>
+</code></pre><p>Response body: No response body</p>
+<h4 id="-post-users-"><code>POST /users</code></h4>
+<pre><code><span class="hljs-comment">#Request headers</span>
+POST /users HTTP/<span class="hljs-number">1.1</span>
+Host: localhost:<span class="hljs-number">3000</span>
+Accept: <span class="hljs-built_in">application</span>/json
+Content-Type: <span class="hljs-built_in">application</span>/json
+{ <span class="hljs-string">"firstName"</span> : <span class="hljs-string">"Seth"</span>, <span class="hljs-string">"lastName"</span> : <span class="hljs-string">"MacFarlane"</span>, <span class="hljs-string">"userName"</span> : <span class="hljs-string">"seth"</span>, <span class="hljs-string">"email"</span> : <span class="hljs-string">"seth.macfarlane@gmail.com"</span>, <span class="hljs-string">"password"</span> : <span class="hljs-string">"peg"</span> }
+
+<span class="hljs-number">201</span> Created
+<span class="hljs-comment">#Response headers</span>
+Content-Type: <span class="hljs-built_in">application</span>/json; charset=utf<span class="hljs-number">-8</span>
+</code></pre><p>Response body:</p>
+<pre><code>{
+    <span class="hljs-attr">"firstName"</span>: <span class="hljs-string">"Seth"</span>,
+    <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"MacFarlane"</span>,
+    <span class="hljs-attr">"userName"</span>: <span class="hljs-string">"seth"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"seth.macfarlane@gmail.com"</span>,
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"5445ab5efd392f0000cc67a6"</span>,
+    <span class="hljs-attr">"playlists"</span>: [],
+    <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"2014-10-21T00:39:58.362Z"</span>
+}
+</code></pre><h4 id="-put-users-userid-"><code>PUT /users/:userid</code></h4>
+<pre><code><span class="hljs-meta">#Request headers</span>
+PUT <span class="hljs-meta-keyword">/users/</span><span class="hljs-number">5445</span>ab5efd392f0000cc67a6 HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-symbol">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-symbol">Accept:</span> application/json
+Content-Type: application/<span class="hljs-class">json
+</span>{ <span class="hljs-string">"firstName"</span> : <span class="hljs-string">"Seth"</span>, <span class="hljs-string">"lastName"</span> : <span class="hljs-string">"MacFarlane"</span>, <span class="hljs-string">"userName"</span> : <span class="hljs-string">"seth"</span>, <span class="hljs-string">"email"</span> : <span class="hljs-string">"seth@gmail.com"</span>, <span class="hljs-string">"password"</span> : <span class="hljs-string">"peg"</span> }
+
+<span class="hljs-number">204</span> No Content
+<span class="hljs-meta">#Response headers</span>
+</code></pre><p>Response body: No response body</p>
+<h3 id="hypermedia">Hypermedia</h3>
+<p>Optionally, in Exercise 3 you can make your app generate links to related resources. You can find some more info at <a href="http://spring.io/understanding/HATEOAS">http://spring.io/understanding/HATEOAS </a>.
+Minimally, each resource should have a link with a <code>&quot;rel&quot;: &quot;self&quot;</code>. The <code>href</code> of the links should be the full URI of the resource (including host and port).</p>
+<p>Here&#39;s an example of what a track would look like with hypermedia support:</p>
+<pre><code><span class="hljs-meta">#Request headers</span>
+GET <span class="hljs-meta-keyword">/tracks/</span><span class="hljs-number">54451002</span>befd9900009df5a5 HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-symbol">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-symbol">Accept:</span> application/json
+
+<span class="hljs-number">200</span> OK
+<span class="hljs-meta">#Response headers</span>
+Content-Type: application/json; charset=utf<span class="hljs-number">-8</span>
+</code></pre><p>Response body:</p>
+<pre><code>{
+    <span class="hljs-attr">"_id"</span>: <span class="hljs-string">"54451002befd9900009df5a5"</span>,
+    <span class="hljs-attr">"artist"</span>: <span class="hljs-string">"54451002befd9900009df592"</span>,
+    <span class="hljs-attr">"album"</span>: <span class="hljs-string">"54451002befd9900009df59b"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"All Is Violent, All Is Bright"</span>,
+    <span class="hljs-attr">"duration"</span>: <span class="hljs-string">"255"</span>,
+    <span class="hljs-attr">"file"</span>: <span class="hljs-string">"tracks_folder/10.mp3"</span>,
+    <span class="hljs-attr">"dateCreated"</span>: <span class="hljs-string">"1413812226943"</span>,
+    <span class="hljs-attr">"dateReleased"</span>: <span class="hljs-string">"1413812226943"</span>,
+    <span class="hljs-attr">"id3Tags"</span>: [],
+    <span class="hljs-attr">"links"</span>: [
+        {
+            <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"self"</span>,
+            <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/tracks/54451002befd9900009df5a5"</span>
+        },
+        {
+            <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"artist"</span>,
+            <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/artists/54451002befd9900009df592"</span>
+        },
+        {
+            <span class="hljs-attr">"rel"</span>: <span class="hljs-string">"album"</span>,
+            <span class="hljs-attr">"href"</span>: <span class="hljs-string">"http://localhost:3000/artists/54451002befd9900009df59b"</span>
+        }
+    ]
+}
+</code></pre><h3 id="not-allowed-methods">Not allowed methods</h3>
+<p>Optionally, in Exercise 4 you should return a <code>405 Method Not Allowed</code> HTTP status code, when a resource is called with a method that is not allowed. Be careful not to return a <code>405</code> on an <code>OPTIONS</code> request for your routes since it is supported by default from Express. 
+Express <a href="http://expressjs.com/en/guide/using-middleware.html">middleware</a> may come in handy for this task.</p>
+<p>Example:</p>
+<pre><code><span class="hljs-meta">#Request headers</span>
+PATCH <span class="hljs-meta-keyword">/artists/</span><span class="hljs-number">5445</span>cde849c7e43f5d1ce449 HTTP/<span class="hljs-number">1.1</span>
+<span class="hljs-symbol">Host:</span> localhost:<span class="hljs-number">3000</span>
+<span class="hljs-symbol">Accept:</span> application/json
+Content-Type: application/<span class="hljs-class">json
+</span>{ <span class="hljs-string">"op"</span>: <span class="hljs-string">"replace"</span>, <span class="hljs-string">"path"</span>: <span class="hljs-string">"/genre"</span>, <span class="hljs-string">"value"</span>: <span class="hljs-string">"Folk Rock"</span> },
+
+<span class="hljs-number">405</span> Method not Allowed
+<span class="hljs-meta">#Response headers</span>
+</code></pre><p>Response body: No response body</p>
+<h2 id="testing">Testing</h2>
+<h3 id="overview">Overview</h3>
+<p>Tests are under the <code>test/</code> dir are organized by exercise:</p>
+<ul>
+<li><code>ex1</code> are model tests </li>
+<li><code>ex2</code>, <code>ex3</code>, <code>ex4</code> and <code>ex5</code> are API tests</li>
+</ul>
+<p>We use <a href="https://mochajs.org/">Mocha</a> as the test runner and <a href="https://github.com/shouldjs/should.js">should.js</a> is the assertion library. For the API tests we use <a href="https://github.com/tj/supertest">supertest</a>, a library built on top of <a href="https://visionmedia.github.io/superagent/">superagent</a>. </p>
+<h3 id="running-all-the-tests">Running all the tests</h3>
+<p>TL;DR:</p>
+<pre><code>npm <span class="hljs-built_in">test</span>
+</code></pre><p><em>Full Version</em>: You don&#39;t have to start the server, the tests are going to start it automatically.
+If you have a look at the <code>package.json</code> you will see the following entry:</p>
+<pre><code><span class="hljs-string">"test"</span>: <span class="hljs-string">"npm run test-mocha"</span>
+</code></pre><p>which wil call in turn</p>
+<pre><code><span class="hljs-string">"test"</span>: <span class="hljs-string">"./node_modules/mocha/bin/mocha -R spec ./test/ex1 ./test/ex2 ./test/ex3 ./test/ex4 ./test/ex5"</span>
+</code></pre><p>under the <code>scripts</code> property. This command runs <code>mocha</code> on the target directories with a test reporter named <code>spec</code>. To run the command just enter:</p>
+<pre><code>npm <span class="hljs-built_in">test</span>
+</code></pre><h3 id="running-individual-mocha-tests">Running individual mocha tests</h3>
+<p>If you want to run an individual test or set of tests do</p>
+<pre><code>./node_modules/mocha/bin/mocha -R spec &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir<span class="hljs-number">-1</span>&gt; &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir<span class="hljs-number">-2</span>&gt; ... &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir-n&gt;
+</code></pre><p>To make things a bit easier, install <code>mocha</code> globally with:</p>
+<pre><code>npm <span class="hljs-keyword">install</span> -g mocha
+</code></pre><p>This will allow you to run tests like:</p>
+<pre><code>mocha -R spec &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir<span class="hljs-number">-1</span>&gt; &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir<span class="hljs-number">-2</span>&gt; ... &lt;<span class="hljs-built_in">file</span>-<span class="hljs-keyword">or</span>-dir-n&gt;
+</code></pre><h2 id="tips-and-tricks">Tips and Tricks</h2>
+<h3 id="installing-npm-packages">Installing npm packages</h3>
+<p>To install an <a href="https://www.npmjs.org/">npm</a> package and save it to package.json:</p>
+<pre><code>npm install --<span class="hljs-keyword">save</span> &lt;package-<span class="hljs-keyword">name</span>&gt;
+</code></pre><h3 id="productivity">Productivity</h3>
+<ul>
+<li><strong><a href="http://nodemon.io/">nodemon</a></strong> monitors changes in your source and restarts the server automatically. </li>
+</ul>
+<p>install with:</p>
+<pre><code>npm <span class="hljs-keyword">install</span> -g nodemon
+</code></pre><ul>
+<li><strong><a href="http://livereload.com/">livereload</a></strong> monitors changes in your source and refreshes your browser. It also supports preprocessing, for example compiling <a href="http://lesscss.org/">LESS</a> files .</li>
+</ul>
+<p>install with:</p>
+<pre><code>npm <span class="hljs-keyword">install</span> -g livereload
+</code></pre><h3 id="seed-db">Seed db</h3>
+<p>If you have implemented your model and the model tests pass, you should be able to seed the db with some data by typing:</p>
+<pre><code>node seed<span class="hljs-selector-class">.js</span> <span class="hljs-comment">//it will drop the db first</span>
+</code></pre><h3 id="upload">Upload</h3>
+<p><code>body-parser</code> is already set up for you. It&#39;s better if you set <code>Content-Type: &#39;application/json&#39;</code> when you upload. The uploaded body will be available under <code>req.body</code> in you route handlers. </p>
+<h3 id="how-to-organize-your-routes">How to organize your routes</h3>
+<p>This is a matter of personal preference but here&#39;s some rough guidelines: </p>
+<ul>
+<li><strong>Your logic is small (&lt; 20-30 Lines Of Code (LOC) per route) and you don&#39;t have a lot or sub routes (say less than 10 for a specific resource)</strong>.  In this case you may have one file per resource where you define the router, routes and logic and one file shared by all resources for common functionality. </li>
+</ul>
+<p>Example dir tree:</p>
+<pre><code>routes
+|-- <span class="hljs-built_in">index</span>.js      // router, routes <span class="hljs-built_in">and</span> logic <span class="hljs-keyword">for</span> /
+|-- artists.js    // router, routes <span class="hljs-built_in">and</span> logic <span class="hljs-keyword">for</span> /artists (model Artist)
+|-- tracks.js     // router, routes <span class="hljs-built_in">and</span> logic <span class="hljs-keyword">for</span> /tracks (model Track)
+|-- utils.js      // common functionality shared among <span class="hljs-keyword">all</span> routes
+</code></pre><ul>
+<li><strong>Your logic is average (between 20 and 100 LOC per route) and you have a lot of subroutes (say more than 15 for a specific)</strong>. In this case for each resource you may have a dir with a <code>router.js</code>, <code>handler.js</code> and <code>util.js</code>. <code>router.js</code> will host the router instantiation and the assignment of handlers and middleware to routes. <code>handler.js</code> will host the handler functions implemantation. <code>util.js</code> will have functionality that is common within the specific resource. It&#39;s important to note that a 100 LOC function is a good indication that you need to break this function to smaller ones that focus on one thing. Finally, like in the first scenario, for functionality that is common among all resources, can create one shared file that implements all this functionality.</li>
+</ul>
+<p>Example dir tree:</p>
+<pre><code>routes
+|-- utils.js      //common functionality shared among all routes
+`-- root
+    `-- router.js  // router <span class="hljs-literal">and</span> routes for /
+    `-- handler.js // logic for /
+    `-- utils`.js  // common functionality with /
+`-- artists
+    `-- router.js  // router <span class="hljs-literal">and</span> routes for /artists
+    `-- handler.js // logic for /artists (model Artist)
+    `-- utils`.js  // common functionality with /artists
+`-- tracks
+    `-- router.js  // router <span class="hljs-literal">and</span> routes for /tracks
+    `-- handler.js // logic for /tracks (model Track)
+    `-- utils`.js  // common functionality with /tracks
+</code></pre><p>If your logic is bigger than the <em>average</em> case then it&#39;s better if your logic is organized on a per feature basis (for example &#39;Upload&#39;, &#39;Control Panel&#39;).</p>
+<h3 id="do-not-repeat-yourself-dry">Do not Repeat Yourself - DRY</h3>
+<p>You may notice that some tasks are repeated often. Examples:</p>
+<ul>
+<li><code>Model.findbyId</code> when a route has an :id parameter.</li>
+<li>sending <code>404</code>&#39;s when an <code>id</code> doesn&#39;t exist</li>
+<li>mongoose error handling for <code>POST</code> or <code>PUT</code> requests. First we check if it&#39;s a <code>CastError</code> or <code>TypeError</code> to send <code>400 - Bad Request</code> otherwise send <code>500</code>);</li>
+</ul>
+<p>To conform to the DRY principle it helps to <strong>refactor</strong> common code so that is reusable by the rest of the app. Some express tips to help you with that:</p>
+<ul>
+<li><a href="http://expressjs.com/en/guide/using-middleware.html">middleware</a></li>
+<li><a href="http://expressjs.com/en/api.html#app.param">app param</a> and <a href="http://expressjs.com/en/api.html#router.param">router param</a></li>
+<li><a href="http://mongoosejs.com/docs/middleware.html">mongoose middleware</a></li>
+</ul>
+<p>Of course, for a lot of cases just moving boilerplate code to separate functions is enough.</p>
+<h3 id="mongoose">Mongoose</h3>
+<ul>
+<li><a href="https://github.com/jeromelebel/MongoHub-Mac">MongoHub</a> is a GUI client for MongoDB. It can help you inspect your data, delete stuff etc.</li>
+<li><strong>Password Encryption</strong>. It&#39;s not very secure to store user passwords unencrypted. <a href="https://github.com/ncb000gt/node.bcrypt.js/">bcrypt</a> can help you encrypt your passwords for mongoose. This <a href="http://devsmash.com/blog/password-authentication-with-mongoose-and-bcrypt">article</a> has more info on how to do that. 
+If you decide to implement this, uncomment the relevant test in <code>test/ex1/user.js</code></li>
+<li><code>mongoose.Schema.Types.ObjectId</code> <strong>!=</strong> <code>mongoose.Types.ObjectId</code>. The former is used when defining a schema type, the latter when you want to create an ObjectId and assign it to a model instance property.</li>
+</ul>
+<p>Example:</p>
+<pre><code><span class="hljs-comment">//Creating a Schema  </span>
+<span class="hljs-built_in">var</span> mongoose = <span class="hljs-keyword">require</span>(<span class="hljs-string">'mongoose'</span>)
+<span class="hljs-built_in">var</span> ObjectId = mongoose.Schema.Types.ObjectId;
+
+<span class="hljs-built_in">var</span> Track = <span class="hljs-literal">new</span> Schema({
+  artist : {<span class="hljs-keyword">type</span>: ObjectId, ref:<span class="hljs-string">'Artist'</span>}
+});
+
+<span class="hljs-comment">//Creating a model instance  </span>
+<span class="hljs-built_in">var</span> mongoose = <span class="hljs-keyword">require</span>(<span class="hljs-string">'mongoose'</span>)
+<span class="hljs-built_in">var</span> ObjectId = mongoose.Types.ObjectId;
+
+<span class="hljs-built_in">var</span> artist = <span class="hljs-literal">new</span> Artist({
+  _id : ObjectId()
+});
+
+<span class="hljs-built_in">var</span> Track = <span class="hljs-literal">new</span> Track({
+  artist: artist._id
+});
+</code></pre>
+</body>
+</html>
