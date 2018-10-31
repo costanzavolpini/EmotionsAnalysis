@@ -10,13 +10,13 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Experience Design Project 2018</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/flexslider.css">
-<link rel="stylesheet" href="css/jquery.fancybox.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/animate.min.css">
-<link rel="stylesheet" href="css/font-icon.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-icon.css') }}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href="http://it.allfont.net/allfont.css?fonts=garamond" rel="stylesheet" type="text/css" />
 <link href="http://it.allfont.net/allfont.css?fonts=garamond-bold" rel="stylesheet" type="text/css" />
@@ -29,7 +29,7 @@
 <section class="banner" role="banner">
   <!--header navigation -->
   <header id="header">
-    <div class="header-content clearfix"> <a class="logo" href="#"><img src="images/logo.png" alt=""></a>
+    <div class="header-content clearfix"> <a class="logo" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt=""></a>
       <nav class="navigation" role="navigation">
         <ul class="primary-nav">
           <li><a href="#project">Project</a></li>
@@ -47,9 +47,9 @@
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
-        <h1><img src="images/facetoface2.png" alt=""></h1>
+        <h1><img src="{{ url_for('static', filename='images/facetoface2.png') }}" alt=""></h1>
         <p>Experience design 2018</p>
-        <nav role="navigation"> <a href="#project" class="banner-btn"><img src="images/down-arrow.png" alt=""></a></nav>
+        <nav role="navigation"> <a href="#project" class="banner-btn"><img src="{{ url_for('static', filename='images/down-arrow.png') }}" alt=""></a></nav>
       </div>
       <!-- banner text -->
     </div>
@@ -64,7 +64,7 @@
         <ul class="slides">
           <li>
             <div class="col-md-6">
-              <div class="avatar"> <img src="images/manifesto3.jpg" alt="" class="img-responsive"> </div>
+              <div class="avatar"> <img src="{{ url_for('static', filename='images/manifesto3.jpg') }}" alt="" class="img-responsive"> </div>
             </div>
             <div class="col-md-6">
               <blockquote>
@@ -78,7 +78,7 @@
           </li>
           <li>
             <div class="col-md-6">
-              <div class="avatar"> <img src="images/intro-liu.jpg" alt="" class="img-responsive"> </div>
+              <div class="avatar"> <img src="{{ url_for('static', filename='images/intro-liu.jpg') }}" alt="" class="img-responsive"> </div>
             </div>
             <div class="col-md-6">
               <blockquote>
@@ -169,7 +169,7 @@
             </div>
             <div class="col-md-6">
               <div id="photo-reaction">
-                <img src="images/pingu.png" alt="" class="img-responsive" style="max-width: 60%; padding: 3% 0% 2% 0%; margin: auto;">
+                <img src="{{ url_for('static', filename='images/pingu.png') }}" alt="" class="img-responsive" style="max-width: 60%; padding: 3% 0% 2% 0%; margin: auto;">
               </blockquote>
             </div>
       </div>
@@ -181,7 +181,7 @@
 <section id="works" class="works section no-padding">
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin1.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin1.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -189,7 +189,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin2.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin2.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -197,7 +197,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin3.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin3.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -205,7 +205,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin4.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin4.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -213,7 +213,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin5.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin5.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -221,7 +221,7 @@
         </div>
         <!-- overlay -->
       </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin6.jpg" alt="">
+      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin6.jpg') }}" alt="">
         <div class="overlay">
           <div class="overlay-caption">
             <p><span class="icon icon-magnifying-glass"></span></p>
@@ -229,7 +229,7 @@
         </div>
         <!-- overlay -->
         </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin7.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin7.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -237,7 +237,7 @@
           </div>
           <!-- overlay -->
           </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin12.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin12.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -245,7 +245,7 @@
           </div>
           <!-- overlay -->
           </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin8.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin8.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -253,7 +253,7 @@
           </div>
           <!-- overlay -->
           </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin9.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin9.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -261,7 +261,7 @@
           </div>
           <!-- overlay -->
           </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin10.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin10.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -269,7 +269,7 @@
           </div>
           <!-- overlay -->
         </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="images/cluster.png" class="work-box"> <img src="images/bolin11.jpg" alt="">
+        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}" class="work-box"> <img src="{{ url_for('static', filename='images/bolin11.jpg') }}" alt="">
           <div class="overlay">
             <div class="overlay-caption">
               <p><span class="icon icon-magnifying-glass"></span></p>
@@ -290,7 +290,7 @@
         </div>
       <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
       <div class="col-md-7 text-center">
-        <img src="images/giorda.jpg" alt="" style="width: 60%;">
+        <img src="{{ url_for('static', filename='images/giorda.jpg') }}" alt="" style="width: 60%;">
       </div>
       <div class="col-md-3 text-center">
         <div>
@@ -311,7 +311,7 @@
           <li>
             <div class="col-md-12">
                 <div class="col-md-5">
-                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="images/giordanoc.jpg" alt="">
+                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="{{ url_for('static', filename='images/giordanoc.jpg') }}" alt="">
                   </div>
                 <div class="col-md-7">
                   <blockquote>
@@ -324,7 +324,7 @@
           <li>
             <div class="col-md-12">
                 <div class="col-md-5">
-                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="images/riccardo.jpg" alt="">
+                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="{{ url_for('static', filename='images/riccardo.jpg') }}" alt="">
                   </div>
                 <div class="col-md-7">
                   <blockquote>
@@ -337,7 +337,7 @@
           <li>
             <div class="col-md-12">
                 <div class="col-md-5">
-                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="images/viola.jpg" alt="">
+                    <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;" src="{{ url_for('static', filename='images/viola.jpg') }}" alt="">
                   </div>
                 <div class="col-md-7">
                   <blockquote>
@@ -360,7 +360,7 @@
       <div class="row">
         <!-- team member 1 -->
         <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="images/skander.jpg" alt="" class="img-responsive rounded-image">
+          <div class="person"> <img src="{{ url_for('static', filename='images/skander.jpg') }}" alt="" class="img-responsive rounded-image">
             <div class="person-content">
               <h4>Skander Hajri</h4>
               <h5 class="role">Computer Science</h5>
@@ -377,7 +377,7 @@
         <!-- team member 1 -->
         <!-- team member 2 -->
         <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="images/licia.jpg" alt="" class="img-responsive rounded-image">
+          <div class="person"> <img src="{{ url_for('static', filename='images/licia.jpg') }}" alt="" class="img-responsive rounded-image">
             <div class="person-content">
               <h4>Licia Tomaselli</h4>
               <h5 class="role">Architect</h5>
@@ -394,7 +394,7 @@
         <!-- team member 2 -->
         <!-- team member 3 -->
         <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="images/costanza.jpg" alt="" class="img-responsive rounded-image">
+          <div class="person"> <img src="{{ url_for('static', filename='images/costanza.jpg') }}" alt="" class="img-responsive rounded-image">
             <div class="person-content">
               <h4>Costanza Volpini</h4>
               <h5 class="role">Computer Science</h5>
@@ -446,12 +446,12 @@
 <!-- Footer section -->
 <!-- JS FILES -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.flexslider-min.js"></script>
-<script src="js/jquery.fancybox.pack.js"></script>
-<script src="js/retina.min.js"></script>
-<script src="js/modernizr.js"></script>
-<script src="js/main.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.flexslider-min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.fancybox.pack.js') }}"></script>
+<script src="{{ url_for('static', filename='js/retina.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>
