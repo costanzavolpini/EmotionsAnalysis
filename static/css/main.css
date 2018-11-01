@@ -13,13 +13,13 @@
 
 @font-face {
 	font-family: 'Adiescode';
-	src: url("/fonts/Adiescode.otf") format("opentype"), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	 url("/fonts/Adiescode.ttf") format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+	src: url("/static/fonts/Adiescode.otf") format("opentype"), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	 url("/static/fonts/Adiescode.ttf") format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 
 @font-face {
 	font-family: 'Blacksword';
-	src: url("/fonts/Blacksword.otf") format("opentype"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	src: url("/static/fonts/Blacksword.otf") format("opentype"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 
@@ -308,7 +308,7 @@ ul li {
 -------------------------------------------------------------------------------*/
 
 .banner {
-	background-image: url(../images/banner.jpg);
+	background-image: url("/static/images/banner.jpg");
 	background-position: center top;
 	background-repeat: no-repeat;
 	-moz-background-size: cover;
@@ -869,3 +869,5 @@ blockquote p {
 .testimonials blockquote {
     padding: 100px 5%;
 }
+
+
