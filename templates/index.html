@@ -11,20 +11,21 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Experience Design Project 2018</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <!-- Material Design Bootstrap -->
+  <link href="{{ url_for('static', filename='css/mdb.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/font-icon.css') }}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link href="http://it.allfont.net/allfont.css?fonts=garamond" rel="stylesheet" type="text/css" />
   <link href="http://it.allfont.net/allfont.css?fonts=garamond-bold" rel="stylesheet" type="text/css" />
-
   <link href="http://it.allfont.net/allfont.css?fonts=garamond-black" rel="stylesheet" type="text/css" />
 </head>
 
@@ -70,41 +71,48 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-              <div class="col-md-6">
-                <div class="avatar"> <img src="{{ url_for('static', filename='images/manifesto3.jpg') }}" alt="" class="img-responsive">
+              <div class="row justify-content-md-center">
+                <div class="col col-lg-6">
+                  <div class="avatar"> <img src="{{ url_for('static', filename='images/manifesto3.jpg') }}" alt=""
+                      class="img-responsive">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <blockquote>
-                  <h1 class="black-title-capitalize">ART IS WATCHING YOU.</h1>
-                  <p>Reverse your perspective: for once the artwork will look at you like you’re a work of art.
-                    <b>The paintings have eyes</b>. Create your own path following your emotions, making your
-                    experience in the museum unique. <b>Let your feelings guide you</b>.</p>
-                  <p>We intend to <b>analyse and record feelings</b> and emotions in visitors of different age, sex and
-                    cultural background in front of various paintings and investigate the way they look at artworks.
-                    The <b>aim is to set a specific path</b>, museum design and succession of depictions based on a
-                    precise sequence of feelings that the viewer or even the
-                    organiser of the exhibition wants to evoke.</p>
-                </blockquote>
+                <div class="col col-lg-6">
+                  <blockquote>
+                    <h1 class="black-title-capitalize">ART IS WATCHING YOU.</h1>
+                    <p>Reverse your perspective: for once the artwork will look at you like you’re a work of art.
+                      <b>The paintings have eyes</b>. Create your own path following your emotions, making your
+                      experience in the museum unique. <b>Let your feelings guide you</b>.</p>
+                    <p>We intend to <b>analyse and record feelings</b> and emotions in visitors of different age, sex
+                      and
+                      cultural background in front of various paintings and investigate the way they look at artworks.
+                      The <b>aim is to set a specific path</b>, museum design and succession of depictions based on a
+                      precise sequence of feelings that the viewer or even the
+                      organiser of the exhibition wants to evoke.</p>
+                  </blockquote>
+                </div>
               </div>
             </li>
             <li>
-              <div class="col-md-6">
-                <div class="avatar"> <img src="{{ url_for('static', filename='images/intro-liu.jpg') }}" alt="" class="img-responsive">
+              <div class="row justify-content-md-center">
+                <div class="col col-lg-6">
+                  <div class="avatar"> <img src="{{ url_for('static', filename='images/intro-liu.jpg') }}" alt="" class="img-responsive">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <blockquote>
-                  <h1 class="black-title-capitalize">Liu Bolin</h1>
-                  <p>For our research we have chosen one particular exhibition (Liu Bolin - <b>Le Théâtre des
-                      apparences</b>) because his work is not too well known to interfere with the recording of
-                    visitors’ impressions and it’s at the same time various (in terms of atmosphere of the work),
-                    curious for most of the visitors and <b>unconventional</b>.</p>
-                  <p>Emotions often burst out in a more or less evident way and we will try to catch what the visitor’s
-                    face says about what they’re feeling. <b>Facial recognition</b> allows to know which emotions can
-                    be linked to a specific artwork in order to define a <b>global range of feelings</b> for a
-                    particular piece of art.</p>
-                </blockquote>
+                <div class="col col-lg-6">
+                  <blockquote>
+                    <h1 class="black-title-capitalize">Liu Bolin</h1>
+                    <p>For our research we have chosen one particular exhibition (Liu Bolin - <b>Le Théâtre des
+                        apparences</b>) because his work is not too well known to interfere with the recording of
+                      visitors’ impressions and it’s at the same time various (in terms of atmosphere of the work),
+                      curious for most of the visitors and <b>unconventional</b>.</p>
+                    <p>Emotions often burst out in a more or less evident way and we will try to catch what the
+                      visitor’s
+                      face says about what they’re feeling. <b>Facial recognition</b> allows to know which emotions can
+                      be linked to a specific artwork in order to define a <b>global range of feelings</b> for a
+                      particular piece of art.</p>
+                  </blockquote>
+                </div>
               </div>
             </li>
           </ul>
@@ -191,8 +199,9 @@
           </form>
         </div>
         <div class="col-md-6">
-          <div id="photo-reaction">
-            <img src="{{ url_for('static', filename='images/pingu.png') }}" alt="" class="img-responsive" style="max-width: 60%; padding: 3% 0% 2% 0%; margin: auto;">
+          <div id="photo-reaction" class="media">
+            <img src="{{ url_for('static', filename='images/pingu.png') }}" alt="" class="d-flex align-self-center mr-3"
+              style="max-width: 60%; padding: 3% 0% 2% 0%; margin: auto;">
             </blockquote>
           </div>
         </div>
@@ -209,67 +218,67 @@
       <div class="carousel-item active">
         <div class="container-fluid">
           <div class="row no-gutter">
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin1.jpg') }}" alt="">
-            <div class="overlay">
-              <div class="overlay-caption">
-                <p><span class="icon icon-magnifying-glass"></span></p>
-              </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin1.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
+                <!-- overlay -->
+              </a> </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin2.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
+                <!-- overlay -->
+              </a> </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin3.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
+                <!-- overlay -->
+              </a> </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin4.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
+                <!-- overlay -->
+              </a> </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin5.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
+                <!-- overlay -->
+              </a> </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin7.jpg') }}" alt="">
+                <div class="overlay">
+                  <div class="overlay-caption">
+                    <p><span class="icon icon-magnifying-glass"></span></p>
+                  </div>
+                </div>
             </div>
-            <!-- overlay -->
-          </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin2.jpg') }}" alt="">
-            <div class="overlay">
-              <div class="overlay-caption">
-                <p><span class="icon icon-magnifying-glass"></span></p>
-              </div>
-            </div>
-            <!-- overlay -->
-          </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin3.jpg') }}" alt="">
-            <div class="overlay">
-              <div class="overlay-caption">
-                <p><span class="icon icon-magnifying-glass"></span></p>
-              </div>
-            </div>
-            <!-- overlay -->
-          </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin4.jpg') }}" alt="">
-            <div class="overlay">
-              <div class="overlay-caption">
-                <p><span class="icon icon-magnifying-glass"></span></p>
-              </div>
-            </div>
-            <!-- overlay -->
-          </a> </div>
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin5.jpg') }}" alt="">
-            <div class="overlay">
-              <div class="overlay-caption">
-                <p><span class="icon icon-magnifying-glass"></span></p>
-              </div>
-            </div>
-            <!-- overlay -->
-          </a> </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-          class="work-box"> <img src="{{ url_for('static', filename='images/bolin7.jpg') }}" alt="">
-          <div class="overlay">
-            <div class="overlay-caption">
-              <p><span class="icon icon-magnifying-glass"></span></p>
-            </div>
-          </div>
           </div>
         </div>
       </div>
-    </div>
       <div class="carousel-item">
         <div class="container-fluid">
-              <div class="row no-gutter">
-        <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
-            class="work-box"> <img src="{{ url_for('static', filename='images/bolin6.jpg') }}" alt="">
+          <div class="row no-gutter">
+            <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
+                class="work-box"> <img src="{{ url_for('static', filename='images/bolin6.jpg') }}" alt="">
                 <div class="overlay">
                   <div class="overlay-caption">
                     <p><span class="icon icon-magnifying-glass"></span></p>
@@ -295,13 +304,13 @@
                 </div>
                 <!-- overlay -->
               </a> </div>
-            </div>
-      </div>
+          </div>
         </div>
       </div>
-        <div class="carousel-item">
-          <div class="container-fluid">
-            <div class="row no-gutter">
+    </div>
+    <div class="carousel-item">
+      <div class="container-fluid">
+        <div class="row no-gutter">
           <div class="col-lg-2 col-md-4 col-sm-4 work"> <a href="{{ url_for('static', filename='images/cluster.png') }}"
               class="work-box"> <img src="{{ url_for('static', filename='images/bolin10.jpg') }}" alt="">
               <div class="overlay">
@@ -320,11 +329,11 @@
               </div>
               <!-- overlay -->
             </a> </div>
-          </div>
-          </div>
         </div>
       </div>
     </div>
+  </div>
+  </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -343,17 +352,22 @@
   <!-- Get a quote section -->
   <section id="contact" class="section quote">
     <div class="container">
-      <div class="col-md-2 text-center">
-        <h5>1st Floor</h5>
-      </div>
-      <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
-      <div class="col-md-7 text-center">
-        <img src="{{ url_for('static', filename='images/giorda.jpg') }}" alt="" style="width: 60%;">
-      </div>
-      <div class="col-md-3 text-center">
-        <div>
-          TODO: Emotions draggable to be sorted!
-          <a href="#" class="btn btn-large">Generate</a>
+      <div class="row justify-content-md-center">
+        <div class="col-md-2 text-center">
+          <h5>1st Floor</h5>
+        </div>
+        <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
+        <div class="col-md-7 text-center">
+          <img src="{{ url_for('static', filename='images/giorda.jpg') }}" alt="" style="width: 60%;">
+        </div>
+        <div class="col-md-3 text-center">
+          <div>
+            TODO: Emotions draggable to be sorted!
+            <form class="range-field">
+              <input type="range" min="0" max="100" />
+            </form>
+            <a href="#" class="btn btn-large">Generate</a>
+          </div>
         </div>
       </div>
     </div>
@@ -367,7 +381,7 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-              <div class="col-md-12">
+              <div class="row justify-content-md-center">
                 <div class="col-md-5">
                   <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;"
                     src="{{ url_for('static', filename='images/giordanoc.jpg') }}" alt="">
@@ -382,7 +396,7 @@
               </div>
             </li>
             <li>
-              <div class="col-md-12">
+              <div class="row justify-content-md-center">
                 <div class="col-md-5">
                   <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;"
                     src="{{ url_for('static', filename='images/riccardo.jpg') }}" alt="">
@@ -397,7 +411,7 @@
               </div>
             </li>
             <li>
-              <div class="col-md-12">
+              <div class="row justify-content-md-center">
                 <div class="col-md-5">
                   <img style="margin-right: auto; width: 30%; margin: auto; vertical-align: middle; border-radius: 50%; margin-top: 15%;"
                     src="{{ url_for('static', filename='images/viola.jpg') }}" alt="">
@@ -421,61 +435,56 @@
   <!-- our team section -->
   <section id="teams" class="section teams">
     <div class="container">
-      <div class="row">
-        <!-- team member 1 -->
-        <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="{{ url_for('static', filename='images/skander.jpg') }}" alt="" class="img-responsive rounded-image">
+      <div class="row justify-content-between">
+
+        <div class="col col-lg-3">
+          <div class="row justify-content-md-center">
+            <div class="media d-block d-md-flex">
+              <img src="{{ url_for('static', filename='images/skander.jpg') }}" alt="" class="d-flex rounded-circle avatar z-depth-1-half mb-3 mx-auto img-fluid">
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
             <div class="person-content">
               <h4>Skander Hajri</h4>
               <h5 class="role">Computer Science</h5>
               <p style="text-align: justify;">Computer Science student at EPFL, not Italian by birth but Italian by
                 adoption. Likes olive oil, especially on bruschetta.</p>
             </div>
-            <ul class="social-icons clearfix">
-              <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-              <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-              <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-            </ul>
           </div>
         </div>
-        <!-- team member 1 -->
-        <!-- team member 2 -->
-        <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="{{ url_for('static', filename='images/licia.jpg') }}" alt="" class="img-responsive rounded-image">
+
+        <div class="col col-lg-3">
+          <div class="row justify-content-md-center">
+            <div class="media d-block d-md-flex">
+              <img src="{{ url_for('static', filename='images/licia.jpg') }}" alt="" class="d-flex rounded-circle avatar z-depth-1-half mb-3 mx-auto img-fluid">
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
             <div class="person-content">
               <h4>Licia Tomaselli</h4>
               <h5 class="role">Architect</h5>
               <p style="text-align: justify;">Architecture exchange student at EPFL, always around informatics
                 though. Has a Facebook account just to look at kittens.</p>
             </div>
-            <ul class="social-icons clearfix">
-              <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            </ul>
           </div>
         </div>
-        <!-- team member 2 -->
-        <!-- team member 3 -->
-        <div class="col-md-4 col-sm-8">
-          <div class="person"> <img src="{{ url_for('static', filename='images/costanza.jpg') }}" alt="" class="img-responsive rounded-image">
+
+        <div class="col col-lg-3">
+          <div class="row justify-content-md-center">
+            <div class="media d-block d-md-flex">
+              <img src="{{ url_for('static', filename='images/costanza.jpg') }}" alt="" class="d-flex rounded-circle avatar z-depth-1-half mb-3 mx-auto img-fluid">
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
             <div class="person-content">
               <h4>Costanza Volpini</h4>
               <h5 class="role">Computer Science</h5>
               <p style="text-align: justify;">Always mistaken for an architecture student is, in fact, in the
                 Computer Science field. Has an addiction for all kinds of bento box.</p>
             </div>
-            <ul class="social-icons clearfix">
-              <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-              <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            </ul>
           </div>
         </div>
-        <!-- team member 1 -->
+
       </div>
     </div>
   </section>
@@ -518,8 +527,6 @@
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
-
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery.flexslider-min.js') }}"></script>
