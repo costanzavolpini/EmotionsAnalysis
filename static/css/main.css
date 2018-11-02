@@ -552,7 +552,8 @@ ul li {
 /* ------------------------------------------------------------------------------
 	 Footer
 -------------------------------------------------------------------------------*/
-.footer {
+
+/* .footer {
 	text-align: left;
 }
 .footer-top {
@@ -597,7 +598,7 @@ ul li {
 	color: #e84545;
 	font-size: 11px;
 	margin: 0 2px;
-}
+} */
 
 
 /* CUSTOMIZE */
@@ -879,3 +880,13 @@ blockquote p {
 .reduce-80{
 	width: 80%;
 }
+
+
+.teal {
+	background-color: rgba(0, 0, 0, 1)!important;
+}
+
+h5.text-uppercase.font-weight-bold{
+	color: white;
+}
+
