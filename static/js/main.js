@@ -65,7 +65,9 @@ $(document).ready(function () {
             type: 'POST',
             success: function(response) {
 				// Should receive the new path image
-                console.log(response);
+				$("#pathGenerated")[0].src.replace("path", "giorda");
+				var actualPath = $("#pathGenerated")[0].src.replace("path", "giorda")
+				$("#pathGenerated").attr("src", actualPath);
             },
             error: function(error) {
                 console.log(error);
