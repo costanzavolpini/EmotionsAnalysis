@@ -1,8 +1,8 @@
 $(document).ready(function () {
-	var value_flushed = null;
-	var value_frown = null;
-	var value_grin = null;
-	var value_surprise = null;
+	var value_flushed = 50;
+	var value_frown = 50;
+	var value_grin = 50;
+	var value_surprise = 50;
 
 	// Header Scroll
 	$(window).on('scroll', function () {
@@ -44,6 +44,30 @@ $(document).ready(function () {
 	function getValRangeSurprise(e){
 		value_surprise = e.target.value;
 	}
+
+	var data_emotions_path = {
+		"flushed" : value_flushed,
+		"frown" : value_frown,
+		"grin" : value_grin,
+		"surprise" : value_surprise
+	}
+
+	$('#generatePath').click(function(e) {
+		e.preventDefault();
+        $.ajax({
+            url: '/path',
+            data: JSON.stringify(data_emotions_path),
+            type: 'POST',
+            success: function(response) {
+				console.log("ehh");
+
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
 
 	// Fancybox
 	// $('.work-box').fancybox();
