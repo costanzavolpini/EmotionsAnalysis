@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, jsonify
+import time
+import cv2
+
 app = Flask(__name__)
 
 # url_for('static', filename='animate.min.css')
@@ -28,3 +31,11 @@ def get_emotions_path():
         return "no json received"
 
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
+
+
+camera_port = 0
+camera = cv2.VideoCapture(camera_port)
+time.sleep(0.1)  # If you don't wait, the image will be dark
+return_value, image = camera.read()
+cv2.imwrite("opencv.png", image)
+del(camera)  # so that others can use the camera as soon as possible

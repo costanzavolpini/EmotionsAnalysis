@@ -71,7 +71,7 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
-    });
+	});
 
 	// Fancybox
 	// $('.work-box').fancybox();
@@ -80,10 +80,34 @@ $(function () {
 	var myRadarChart = new Chart(ctxR, {
 		type: 'radar',
 		data: {
-			labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
 			datasets: [{
-					label: "My First dataset",
-					data: [65, 59, 90, 81, 56, 55, 40],
+					label: "PAINTING NAME",
+					data: [65, 59, 90, 81, 56, 55, 40, 20],
+					backgroundColor: [
+						'rgba(105, 0, 132, .2)',
+					],
+					borderColor: [
+						'rgba(200, 99, 132, .7)',
+					],
+					borderWidth: 2
+				}
+			]
+		},
+		options: {
+			responsive: true
+		}
+	});
+
+
+	var finalGraph =  document.getElementById("emotionFinal").getContext('2d');
+	var myFinalChart = new Chart(finalGraph, {
+		type: 'radar',
+		data: {
+			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+			datasets: [{
+					label: "PAINTING 1",
+					data: [65, 59, 90, 81, 56, 55, 40, 20],
 					backgroundColor: [
 						'rgba(105, 0, 132, .2)',
 					],
@@ -93,16 +117,17 @@ $(function () {
 					borderWidth: 2
 				},
 				{
-					label: "My Second dataset",
-					data: [28, 48, 40, 19, 96, 27, 100],
+					label: "PAINTING 2",
+					data: [5, 50, 80, 91, 96, 45, 20, 40],
 					backgroundColor: [
-						'rgba(0, 250, 220, .2)',
+						'rgba(105, 40, 132, .2)',
 					],
 					borderColor: [
-						'rgba(0, 213, 132, .7)',
+						'rgba(200, 49, 132, .7)',
 					],
 					borderWidth: 2
 				}
+
 			]
 		},
 		options: {

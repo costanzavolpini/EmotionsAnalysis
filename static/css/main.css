@@ -864,7 +864,7 @@ blockquote p {
 }
 
 .services .icon{
-	color: #947b77;
+	color: #e84545;
 }
 
 #header .logo {
@@ -903,5 +903,9 @@ h5.text-uppercase.font-weight-bold{
 	vertical-align: top;
 	justify-content: right;
 	min-width: 500px;
+}
+
+.role{
+	color: #e84545
 }
 
