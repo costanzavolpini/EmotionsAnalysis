@@ -22,6 +22,7 @@ $(document).ready(function () {
 
 	function getValRangeFlushed(e){
 		value_flushed = e.target.value;
+		$("#flushedValue").text(value_flushed + "%");
 	}
 
 	// Frown
@@ -29,6 +30,7 @@ $(document).ready(function () {
 
 	function getValRangeFrown(e){
 		value_frown = e.target.value;
+		$("#frownValue").text(value_frown + "%");
 	}
 
 	// Grin
@@ -36,6 +38,7 @@ $(document).ready(function () {
 
 	function getValRangeGrin(e){
 		value_grin = e.target.value;
+		$("#grinValue").text(value_grin + "%");
 	}
 
 	// Surprise
@@ -43,6 +46,7 @@ $(document).ready(function () {
 
 	function getValRangeSurprise(e){
 		value_surprise = e.target.value;
+		$("#surpriseValue").text(value_surprise + "%");
 	}
 
 	var data_emotions_path = {
@@ -52,6 +56,7 @@ $(document).ready(function () {
 		"surprise" : value_surprise
 	}
 
+	// Function that handle generate and return of the emotions
 	$('#generatePath').click(function(e) {
 		e.preventDefault();
         $.ajax({
@@ -59,8 +64,7 @@ $(document).ready(function () {
             data: JSON.stringify(data_emotions_path),
             type: 'POST',
             success: function(response) {
-				console.log("ehh");
-
+				// Should receive the new path image
                 console.log(response);
             },
             error: function(error) {

@@ -765,7 +765,7 @@ blockquote p {
 	margin: 0 0 .5rem 0;
 	color: #5f6982;
   }
-  .uploader .btn {
+  /* .uploader .btn {
 	display: inline-block;
 	margin: .5rem .5rem 1rem .5rem;
 	clear: both;
@@ -787,7 +787,7 @@ blockquote p {
 	background: #454cad;
 	border-color: #454cad;
 	cursor: pointer;
-  }
+  } */
 
 /* END DRAG AND DROP */
 
@@ -822,9 +822,13 @@ blockquote p {
 
 
 .uploader #start i.fa {
-	color: #947b77;
+	color: #3bc492;
 }
 
+#file-upload-btn {
+	color: #fff
+}
+/*
 .uploader .btn {
     display: inline-block;
     margin: .5rem .5rem 1rem .5rem;
@@ -847,9 +851,10 @@ blockquote p {
     border-color: #947b77;
     cursor: pointer;
 }
+*/
 
 .uploader label:hover {
-    border-color: #947b77;
+    border-color: #3bc492;
 }
 
 .photo-reaction {
@@ -888,5 +893,15 @@ blockquote p {
 
 h5.text-uppercase.font-weight-bold{
 	color: white;
+}
+
+.percent-emotions{
+	font-size: 14px;
+	color: #6c7279;
+	font-weight: 700;
+	font-family: "Source Sans Pro";
+	vertical-align: top;
+	justify-content: right;
+	min-width: 500px;
 }
 

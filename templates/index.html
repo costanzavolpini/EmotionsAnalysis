@@ -37,12 +37,12 @@
             alt=""></a>
         <nav class="navigation" role="navigation">
           <ul class="primary-nav">
-            <li><a href="#project">Project</a></li>
-            <li><a href="#database">Algorithm</a></li>
-            <li><a href="#works">Database</a></li>
-            <li><a href="#teams">Museum</a></li>
+            <li><a href="#projectDesc">Project</a></li>
+            <li><a href="#algorithm">Algorithm</a></li>
+            <li><a href="#database">Database</a></li>
+            <li><a href="#museum">Museum</a></li>
             <li><a href="#testimonials">#Social</a></li>
-            <li><a href="#contact">Team</a></li>
+            <li><a href="#teams">Team</a></li>
           </ul>
         </nav>
         <a href="#" class="nav-toggle">Menu<span></span></a>
@@ -194,7 +194,7 @@
   <!-- about section -->
 
   <!-- services section -->
-  <section class="services service-section">
+  <section class="services service-section" id="projectDesc">
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-sm-6 services"> <span class="icon icon-happy"></span>
@@ -244,7 +244,7 @@
   <!-- services section -->
 
   <!-- about section -->
-  <section id="database" class="section database no-padding">
+  <section id="algorithm" class="section database no-padding">
     <div class="container-fluid">
       <div class="row no-gutter">
         <div class="col-md-6">
@@ -258,7 +258,8 @@
                 <i class="fa fa-download" aria-hidden="true"></i>
                 <div style="font-family: Source Sans Pro; font-weight: 500" ;>Select a file or drag here</div>
                 <div id="notimage" class="hidden">Please select an image</div>
-                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                <!-- <span id="file-upload-btn" class="btn btn-primary">Select a file</span> -->
+                <a id="file-upload-btn" class="btn btn-large">Select a file</a>
               </div>
               <div id="response" class="hidden">
                 <div id="messages"></div>
@@ -281,12 +282,12 @@
   <!-- about section -->
 
   <!--Carousel Wrapper-->
-  <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+  <div id="database" class="carousel slide carousel-fade" data-ride="carousel">
     <!--Indicators-->
     <ol class="carousel-indicators">
-      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+      <li data-target="#database" data-slide-to="0" class="active"></li>
+      <li data-target="#database" data-slide-to="1"></li>
+      <li data-target="#database" data-slide-to="2"></li>
     </ol>
     <!--/.Indicators-->
     <!--Slides-->
@@ -473,7 +474,7 @@
 
 
   <!-- Get a quote section -->
-  <section id="contact" class="section quote">
+  <section id="museum" class="section quote">
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-2 text-center">
@@ -488,21 +489,25 @@
             <form class="range-field">
               <i class="far fa-flushed" aria-hidden="true">
                 <input id="flushed" type="range" min="0" max="100" />
+                <span id="flushedValue" class="percent-emotions">50%</span>
               </i>
             </form>
             <form class="range-field">
               <i class="far fa-frown" aria-hidden="true">
                 <input id="frown" type="range" min="0" max="100" />
+                <span id="frownValue" class="percent-emotions">50%</span>
               </i>
             </form>
             <form class="range-field">
               <i class="far fa-grin-alt" aria-hidden="true">
                 <input id="grin" type="range" min="0" max="100" />
+                <span id="grinValue" class="percent-emotions">50%</span>
               </i>
             </form>
             <form class="range-field">
               <i class="far fa-surprise" aria-hidden="true">
                 <input id="surprise" type="range" min="0" max="100" />
+                <span id="surpriseValue" class="percent-emotions">50%</span>
               </i>
             </form>
             <a href="#" class="btn btn-large" id="generatePath">Generate</a>
