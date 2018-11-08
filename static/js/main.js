@@ -1,4 +1,9 @@
 $(document).ready(function () {
+	var value_flushed = null;
+	var value_frown = null;
+	var value_grin = null;
+	var value_surprise = null;
+
 	// Header Scroll
 	$(window).on('scroll', function () {
 		var scroll = $(window).scrollTop();
@@ -10,10 +15,39 @@ $(document).ready(function () {
 		}
 	});
 
+
+	// EMOTIONS
+	// Flushed
+	$("input[id=flushed]").on('input change', getValRangeFlushed);
+
+	function getValRangeFlushed(e){
+		value_flushed = e.target.value;
+	}
+
+	// Frown
+	$("input[id=frown]").on('input change', getValRangeFrown);
+
+	function getValRangeFrown(e){
+		value_frown = e.target.value;
+	}
+
+	// Grin
+	$("input[id=grin]").on('input change', getValRangeGrin);
+
+	function getValRangeGrin(e){
+		value_grin = e.target.value;
+	}
+
+	// Surprise
+	$("input[id=surprise]").on('input change', getValRangeSurprise);
+
+	function getValRangeSurprise(e){
+		value_surprise = e.target.value;
+	}
+
 	// Fancybox
 	// $('.work-box').fancybox();
 $(function () {
-	console.log("here")
 	var ctxR = document.getElementById("radarChart").getContext('2d');
 	var myRadarChart = new Chart(ctxR, {
 		type: 'radar',
