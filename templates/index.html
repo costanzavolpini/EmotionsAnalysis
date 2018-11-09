@@ -52,7 +52,7 @@
     <!--header navigation -->
     <!-- banner text -->
     <div class="container">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         <div class="banner-text text-center">
           <h1><img src="{{ url_for('static', filename='images/facetoface2.png') }}" alt=""></h1>
           <p>Experience design 2018</p>
@@ -64,63 +64,6 @@
     </div>
   </section>
   <!-- header section -->
-  <!-- about section -->
-  <!-- <section id="project" class="section intro no-padding">
-    <div class="container-fluid">
-      <div class="row no-gutter">
-        <div class="flexslider">
-          <ul class="slides">
-            <li>
-              <div class="row justify-content-md-center">
-                <div class="col col-lg-6">
-                  <div class="avatar"> <img src="{{ url_for('static', filename='images/manifesto3.jpg') }}" alt=""
-                      class="img-responsive">
-                  </div>
-                </div>
-                <div class="col col-lg-6">
-                  <blockquote>
-                    <h1 class="black-title-capitalize">ART IS WATCHING YOU.</h1>
-                    <p>Reverse your perspective: for once the artwork will look at you like you’re a work of art.
-                      <b>The paintings have eyes</b>. Create your own path following your emotions, making your
-                      experience in the museum unique. <b>Let your feelings guide you</b>.</p>
-                    <p>We intend to <b>analyse and record feelings</b> and emotions in visitors of different age, sex
-                      and
-                      cultural background in front of various paintings and investigate the way they look at artworks.
-                      The <b>aim is to set a specific path</b>, museum design and succession of depictions based on a
-                      precise sequence of feelings that the viewer or even the
-                      organiser of the exhibition wants to evoke.</p>
-                  </blockquote>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="row justify-content-md-center">
-                <div class="col col-lg-6">
-                  <div class="avatar"> <img src="{{ url_for('static', filename='images/intro-liu.jpg') }}" alt="" class="img-responsive">
-                  </div>
-                </div>
-                <div class="col col-lg-6">
-                  <blockquote>
-                    <h1 class="black-title-capitalize">Liu Bolin</h1>
-                    <p>For our research we have chosen one particular exhibition (Liu Bolin - <b>Le Théâtre des
-                        apparences</b>) because his work is not too well known to interfere with the recording of
-                      visitors’ impressions and it’s at the same time various (in terms of atmosphere of the work),
-                      curious for most of the visitors and <b>unconventional</b>.</p>
-                    <p>Emotions often burst out in a more or less evident way and we will try to catch what the
-                      visitor’s
-                      face says about what they’re feeling. <b>Facial recognition</b> allows to know which emotions can
-                      be linked to a specific artwork in order to define a <b>global range of feelings</b> for a
-                      particular piece of art.</p>
-                  </blockquote>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
   <section id="project" class="section intro no-padding">
     <div class="container-fluid">
       <div class="row no-gutter">
@@ -261,7 +204,7 @@
               <p class="card-text white-text" style="text-align: justify;">
                 Run the experiment online to compare your emotions-score with the global one. For every painting we will detect a set of emotions such as anger, contempt, disgust, fear, happiness, neutral, sadness, and surprise.
                 </p>
-              <a href="#" data-toggle="modal" data-target="#modalVideo" class="btn btn-outline-white btn-md waves-effect" id="experiment">Detect your score</a>
+              <a href="#" class="btn btn-outline-white btn-md waves-effect" id="experiment">Detect your score</a>
             </div>
 
           </div>
@@ -672,7 +615,7 @@
           </div>
           <div class="modal-body">
               <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vlDzYIIOYmM"
+                  <iframe class="embed-responsive-item" src="{{ url_for('static', filename='videos/1.mp4') }}"
                     allowfullscreen></iframe>
                   </div>
           </div>

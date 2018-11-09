@@ -75,6 +75,19 @@ $(document).ready(function () {
         });
 	});
 
+
+	$('#experiment').click(function(e){
+		navigator.permissions.query({name: 'camera'})
+		.then((permissionObj) => {
+		 console.log(permissionObj.state);
+		 $('#modalVideo').modal('show')
+		})
+		.catch((error) => {
+		 console.log('Got error :', error);
+		})
+	});
+
+
 	// Function that takes a set of images and upload it on microsoft azure returning json
 	$('#saveUpload').click(function(e) {
 		e.preventDefault();
