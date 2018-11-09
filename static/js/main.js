@@ -145,6 +145,11 @@ $(document).ready(function () {
 });
 
 
+$('#carouselImages').carousel({
+	interval: 1500
+	})
+
+
 
 
 	// Fancybox
