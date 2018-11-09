@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var value_frown = 50;
 	var value_grin = 50;
 	var value_surprise = 50;
+	// var your_result = null;
 
 	// Header Scroll
 	$(window).on('scroll', function () {
@@ -77,6 +78,7 @@ $(document).ready(function () {
 
 
 	$('#experiment').click(function(e){
+		$('#modalVideo').modal('show')
 		navigator.permissions.query({name: 'camera'})
 		.then((permissionObj) => {
 			console.log(permissionObj.state);
@@ -85,8 +87,32 @@ $(document).ready(function () {
 				type: 'GET',
 				success: function(response) {
 					// Should receive the new path image
-					console.log("EHII")
-					console.log(response)
+					your_result = response.scores
+
+						var ctxRyour = document.getElementById("yourEmotion").getContext('2d');
+						var your = new Chart(ctxRyour, {
+							type: 'radar',
+							data: {
+								labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+								datasets: [{
+										label: "YOUR RESULT",
+										data: [your_result.anger * 100, your_result.contempt * 100, your_result.disgust * 100, your_result.fear * 100, your_result.happiness * 100, your_result.neutral * 100, your_result.sadness * 100, your_result.surprise * 100],
+										backgroundColor: [
+											'rgba(105, 0, 132, .2)',
+										],
+										borderColor: [
+											'rgba(200, 99, 132, .7)',
+										],
+										borderWidth: 2
+									}
+								]
+							},
+							options: {
+								responsive: true
+							}
+						});
+
+					$('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
 				},
 				error: function(error) {
 					console.log(error);
@@ -97,8 +123,6 @@ $(document).ready(function () {
 			{
 				this.currentTime = 0;
 			});
-
-			$('#modalVideo').modal('show')
 		})
 		.catch((error) => {
 		 console.log('Got error :', error);
@@ -109,45 +133,6 @@ $(document).ready(function () {
 	// Function that takes a set of images and upload it on microsoft azure returning json
 	$('#saveUpload').click(function(e) {
 		e.preventDefault();
-        // $.ajax({
-			// MICROSOFT AZURE
-            // url: '/path',
-            // // data: JSON.stringify(data_emotions_path), set of images
-            // type: 'POST',
-            // success: function(response) {
-			// 	// Should receive the JSON WITH VALUES
-			// 	Generate a new data/cluster to show instead of card of pingu in order to compare result!
-            // },
-            // error: function(error) {
-            //     console.log(error);
-            // }
-		// });
-
-		$('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
-
-		var ctxRyour = document.getElementById("yourEmotion").getContext('2d');
-		var your = new Chart(ctxRyour, {
-			type: 'radar',
-			data: {
-				labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-				datasets: [{
-						label: "YOUR RESULT",
-						data: [65, 59, 90, 81, 56, 55, 40, 20],
-						backgroundColor: [
-							'rgba(105, 0, 132, .2)',
-						],
-						borderColor: [
-							'rgba(200, 99, 132, .7)',
-						],
-						borderWidth: 2
-					}
-				]
-			},
-			options: {
-				responsive: true
-			}
-	});
-
 });
 
 
