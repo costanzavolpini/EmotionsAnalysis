@@ -92,6 +92,12 @@ $(document).ready(function () {
 					console.log(error);
 				}
 			});
+
+			$('#videoBoulin').contents().find('video').each(function ()
+			{
+				this.currentTime = 0;
+			});
+
 			$('#modalVideo').modal('show')
 		})
 		.catch((error) => {
@@ -148,8 +154,6 @@ $(document).ready(function () {
 $('#carouselImages').carousel({
 	interval: 1500
 	})
-
-
 
 
 	// Fancybox
