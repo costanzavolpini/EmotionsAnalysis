@@ -79,8 +79,20 @@ $(document).ready(function () {
 	$('#experiment').click(function(e){
 		navigator.permissions.query({name: 'camera'})
 		.then((permissionObj) => {
-		 console.log(permissionObj.state);
-		 $('#modalVideo').modal('show')
+			console.log(permissionObj.state);
+			$.ajax({
+				url: '/experiment',
+				type: 'GET',
+				success: function(response) {
+					// Should receive the new path image
+					console.log("EHII")
+					console.log(response)
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+			$('#modalVideo').modal('show')
 		})
 		.catch((error) => {
 		 console.log('Got error :', error);
