@@ -76,7 +76,20 @@ $(document).ready(function () {
 		});
 	});
 
+	$('#closeVideo').click(function (e) {
+		$.ajax({
+			url: '/closeCamera',
+			type: 'GET',
+			success: function (response) {
+				console.log(response)
+			},
+			error: function (error) {
+				console.log(error);
+			}
+		});
+	})
 
+	// Take photos
 	$('#experiment').click(function (e) {
 		$('#modalVideo').modal('show')
 		navigator.permissions.query({
@@ -84,8 +97,13 @@ $(document).ready(function () {
 			})
 			.then((permissionObj) => {
 				console.log(permissionObj.state);
+				$('#videoBoulin').contents().find('video').each(function () {
+					this.currentTime = 0;
+					this.play();
+					this.removeAttribute('controls');
+
 				$.ajax({
-					url: '/experiment',
+					url: '/experiment?time=' + this.currentTime + "&duration=" + this.duration,
 					type: 'GET',
 					success: function (response) {
 						// Should receive the new path image
@@ -118,6 +136,8 @@ $(document).ready(function () {
 					error: function (error) {
 						console.log(error);
 					}
+				});
+
 				});
 
 				$('#videoBoulin').contents().find('video').each(function () {

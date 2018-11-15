@@ -47,34 +47,37 @@ def get_emotions_path():
         return "no json received"
 
 
+@app.route('/closeCamera', methods=['GET'])
+def close_camera():
+    cv2.destroyAllWindows()
+    return jsonify({"res" : "camera destroyed"})
+
 @app.route('/experiment', methods=['GET'])
 def get_camera():
+    t0= time.clock()
+    i = float(request.args.get('time'))
+    l = float(request.args.get('duration'))
+    t = t0
+
+    res = l - i
     camera_port = 0
-    # camera = cv2.VideoCapture(camera_port)
-    # time.sleep(0.1)
-    # return_value, image = camera.read()
-    # cv2.imwrite("user.png", image)
-
-    cap = cv2.VideoCapture(camera_port)
+    camera = cv2.VideoCapture(camera_port)
     time.sleep(0.1)
-    framerate = cap.get(5)
-    x = 1
 
-    # while(True):
-    #     # Capture frame-by-frame
-    #     ret, frame = cap.read()
-    #     cap.release()
-    #     # Our operations on the frame come here
-    #     filename = str(int(x)) + ".png"
-    #     x = x+1
-    #     cv2.imwrite(filename, frame)
-    #     time.sleep(5)
-    #     if cv2.waitKey(1) & 0xFF == ord('q'):
-    #         break
+    while(t < res):
+        # Capture frame-by-frame
+        ret, frame = camera.read()
+        if ret == True:
+            # Our operations on the frame come here
+            filename = 'frame%d.jpg' % (t)
+            cv2.imwrite(filename, frame)
+            time.sleep(3)
 
-    # # When everything done, release the capture
-    # cap.release()
-    # cv2.destroyAllWindows()
+        t = time.clock() - t0
+        if t >= res:
+            break
+
+    # When everything done, release the capture
     del camera
 
     # Send all to microsoft and return a JSON
