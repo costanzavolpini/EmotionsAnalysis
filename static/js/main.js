@@ -1,7 +1,10 @@
 $(document).ready(function () {
-	var value_flushed = 50;
-	var value_frown = 50;
-	var value_grin = 50;
+	var value_anger = 50;
+	var value_fear = 50;
+	var value_disgust = 50;
+	var value_contempt = 50;
+	var value_happiness = 50;
+	var value_sadness = 50;
 	var value_surprise = 50;
 
 	// Header Scroll
@@ -17,28 +20,52 @@ $(document).ready(function () {
 
 
 	// EMOTIONS
-	// Flushed
-	$("input[id=flushed]").on('input change', getValRangeFlushed);
+	// Anger
+	$("input[id=anger]").on('input change', getValRangeAnger);
 
-	function getValRangeFlushed(e) {
-		value_flushed = e.target.value;
-		$("#flushedValue").text(value_flushed + "%");
+	function getValRangeAnger(e) {
+		value_anger = e.target.value;
+		$("#angerValue").text(value_anger + "%");
 	}
 
-	// Frown
-	$("input[id=frown]").on('input change', getValRangeFrown);
+	// Fear
+	$("input[id=fear]").on('input change', getValRangeFear);
 
-	function getValRangeFrown(e) {
-		value_frown = e.target.value;
-		$("#frownValue").text(value_frown + "%");
+	function getValRangeFear(e) {
+		value_fear = e.target.value;
+		$("#fearValue").text(value_fear + "%");
 	}
 
-	// Grin
-	$("input[id=grin]").on('input change', getValRangeGrin);
+	// Disgust
+	$("input[id=disgust]").on('input change', getValRangeDisgust);
 
-	function getValRangeGrin(e) {
-		value_grin = e.target.value;
-		$("#grinValue").text(value_grin + "%");
+	function getValRangeDisgust(e) {
+		value_disgust = e.target.value;
+		$("#disgustValue").text(value_disgust + "%");
+	}
+
+	// Contempt
+	$("input[id=contempt]").on('input change', getValRangeContempt);
+
+	function getValRangeContempt(e) {
+		value_contempt = e.target.value;
+		$("#contemptValue").text(value_contempt + "%");
+	}
+
+	// Happiness
+	$("input[id=happiness]").on('input change', getValRangeHappiness);
+
+	function getValRangeHappiness(e) {
+		value_happiness = e.target.value;
+		$("#happinessValue").text(value_happiness + "%");
+	}
+
+	// Sadness
+	$("input[id=sadness]").on('input change', getValRangeSadness);
+
+	function getValRangeSadness(e) {
+		value_sadness = e.target.value;
+		$("#sadnessValue").text(value_sadness + "%");
 	}
 
 	// Surprise
@@ -49,25 +76,27 @@ $(document).ready(function () {
 		$("#surpriseValue").text(value_surprise + "%");
 	}
 
-	var data_emotions_path = {
-		"flushed": value_flushed,
-		"frown": value_frown,
-		"grin": value_grin,
-		"surprise": value_surprise
-	}
 
 	// Function that handle generate and return of the emotions
 	$('#generatePath').click(function (e) {
+		var data_emotions_path = {
+			"anger": value_anger/100.0,
+			"fear": value_fear/100.0,
+			"disgust": value_disgust/100.0,
+			"contempt": value_contempt/100.0,
+			"happiness": value_happiness/100.0,
+			"sadness": value_sadness/100.0,
+			"surprise": value_surprise/100.0
+		}
+
 		e.preventDefault();
 		$.ajax({
 			url: '/path',
-			data: JSON.stringify({"c" : 1}),
-			// data: JSON.stringify(data_emotions_path),
+			data: JSON.stringify(data_emotions_path),
 			type: 'POST',
 			success: function (response) {
 				// Should receive the new path image
-				$("#pathGenerated")[0].src.replace("path", "giorda");
-				var actualPath = $("#pathGenerated")[0].src.replace("path", "giorda")
+				var actualPath = $("#pathGenerated")[0].src.replace("path.jpg", "pathGenerated.png")
 				$("#pathGenerated").attr("src", actualPath);
 			},
 			error: function (error) {
@@ -102,41 +131,41 @@ $(document).ready(function () {
 					this.play();
 					this.removeAttribute('controls');
 
-				$.ajax({
-					url: '/experiment?time=' + this.currentTime + "&duration=" + this.duration,
-					type: 'GET',
-					success: function (response) {
-						// Should receive the new path image
-						your_result = response.scores
+					$.ajax({
+						url: '/experiment?time=' + this.currentTime + "&duration=" + this.duration,
+						type: 'GET',
+						success: function (response) {
+							// Should receive the new path image
+							your_result = response.scores
 
-						var ctxRyour = document.getElementById("yourEmotion").getContext('2d');
-						var your = new Chart(ctxRyour, {
-							type: 'radar',
-							data: {
-								labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-								datasets: [{
-									label: "YOUR RESULT",
-									data: [your_result.anger * 100, your_result.contempt * 100, your_result.disgust * 100, your_result.fear * 100, your_result.happiness * 100, your_result.neutral * 100, your_result.sadness * 100, your_result.surprise * 100],
-									backgroundColor: [
-										'rgba(105, 0, 132, .2)',
-									],
-									borderColor: [
-										'rgba(200, 99, 132, .7)',
-									],
-									borderWidth: 2
-								}]
-							},
-							options: {
-								responsive: true
-							}
-						});
+							var ctxRyour = document.getElementById("yourEmotion").getContext('2d');
+							var your = new Chart(ctxRyour, {
+								type: 'radar',
+								data: {
+									labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+									datasets: [{
+										label: "YOUR RESULT",
+										data: [your_result.anger * 100, your_result.contempt * 100, your_result.disgust * 100, your_result.fear * 100, your_result.happiness * 100, your_result.neutral * 100, your_result.sadness * 100, your_result.surprise * 100],
+										backgroundColor: [
+											'rgba(105, 0, 132, .2)',
+										],
+										borderColor: [
+											'rgba(200, 99, 132, .7)',
+										],
+										borderWidth: 2
+									}]
+								},
+								options: {
+									responsive: true
+								}
+							});
 
-						$('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
-					},
-					error: function (error) {
-						console.log(error);
-					}
-				});
+							$('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
 
 				});
 
@@ -316,9 +345,9 @@ $(document).ready(function () {
 					if (j < 5) { //remove neutral
 						var normalized = result_arr[i][j] / max
 						res[j] = res[j] + normalized
-					} else if(j > 5){
+					} else if (j > 5) {
 						var normalized = result_arr[i][j] / max
-						res[j-1] = res[j-1] + normalized
+						res[j - 1] = res[j - 1] + normalized
 					}
 				}
 			}

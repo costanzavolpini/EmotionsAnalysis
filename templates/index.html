@@ -372,7 +372,7 @@
       <div class="row justify-content-md-center">
         <div class="col-md-2 text-center">
           <h5>1st Floor</h5>
-          <div class="dropdown">
+          <!-- <div class="dropdown">
             <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="selectFloor" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               Floor
@@ -381,7 +381,7 @@
               <a class="dropdown-item active">1st Floor</a>
               <a class="dropdown-item">2nd Floor</a>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
         <div class="col-md-7 text-center">
@@ -389,55 +389,93 @@
         </div>
         <div class="col-md-3 text-center">
           <h5 style="margin-bottom: 30px;">Emotions selector:</h5>
-          <form class="range-field">
-            <p>
-              <input id="anger" type="range" min="0" max="100" />
-              <span id="angerValue" class="percent-emotions">50%</span>
-              Anger
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
+
+          <div class="row range-field">
+            <div class="col">
+              <input type="range" id="anger" min="0" max="100" />
+            </div>
+            <div class="col-1">
+              <p id="angerValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:15px;">Anger</p>
+            </div>
+          </div>
+
+          <div class="row range-field">
+            <div class="col">
               <input id="fear" type="range" min="0" max="100" />
-              <span id="fearValue" class="percent-emotions">50%</span>
-              Fear
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
-              <input id="disgust" type="range" min="0" max="100" />
-              <span id="disgustValue" class="percent-emotions">50%</span>
-              Disgust
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
-              <input id="contempt" type="range" min="0" max="100" />
-              <span id="contemptValue" class="percent-emotions">50%</span>
-              Contempt
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
-              <input id="happiness" type="range" min="0" max="100" />
-              <span id="happinessValue" class="percent-emotions">50%</span>
-              Happiness
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
-              <input id="sadness" type="range" min="0" max="100" />
-              <span id="sadnessValue" class="percent-emotions">50%</span>
-              Sadness
-            </p>
-          </form>
-          <form class="range-field">
-            <p>
-              <input id="surprise" type="range" min="0" max="100" />
-              <span id="surpriseValue" class="percent-emotions">50%</span>
-              Surprise
-            </p>
-          </form>
+            </div>
+            <div class="col-1">
+              <p id="fearValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:5px;">Fear</p>
+            </div>
+          </div>
+
+
+          <div class="row range-field">
+            <div class="col">
+              <input id="disgust" type="range" min="0" max="100">
+            </div>
+            <div class="col-1">
+              <p id="disgustValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:20px;">Disgust</p>
+            </div>
+          </div>
+
+          <div class="row range-field">
+            <div class="col">
+              <input id="contempt" type="range" min="0" max="100">
+            </div>
+            <div class="col-1">
+              <p id="contemptValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:20px;">Contempt</p>
+            </div>
+          </div>
+
+          <div class="row range-field">
+            <div class="col">
+              <input id="happiness" type="range" min="0" max="100">
+            </div>
+            <div class="col-1">
+              <p id="happinessValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:20px;">Happiness</p>
+            </div>
+          </div>
+
+          <div class="row range-field">
+            <div class="col">
+              <input id="sadness" type="range" min="0" max="100">
+            </div>
+            <div class="col-1">
+              <p id="sadnessValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:20px;">Sadness</p>
+            </div>
+          </div>
+
+
+          <div class="row range-field">
+            <div class="col">
+              <input id="surprise" type="range" min="0" max="100">
+            </div>
+            <div class="col-1">
+              <p id="surpriseValue" class="percent-emotions">50%</p>
+            </div>
+            <div class="col-4">
+              <p class="percent-emotions" style="padding-left:20px;">Surprise</p>
+            </div>
+          </div>
+
           <a href="#" class="btn btn-large" id="generatePath">Generate</a>
         </div>
       </div>

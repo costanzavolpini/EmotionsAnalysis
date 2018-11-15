@@ -93,7 +93,7 @@ def copyPath(source,target):
     mapResize = scipy.misc.imread(target,mode="RGB")
     bPath = scipy.misc.imread(source,mode="RGB")
     img = Image.fromarray(bPath)
-    img = img.crop([32,12,365,228])
+    # img = img.crop([32,12,365,228])
     img= img.resize((len(mapResize[0]), len(mapResize)), Image.ANTIALIAS)
     bPath = np.array(img)
     for i in range(0,len(bPath)):
@@ -101,7 +101,7 @@ def copyPath(source,target):
             if bPath[i][j][0] <= 200 or bPath[i][j][1] < 200 or bPath[i][j][2] <= 200:
                 mapResize[i][j] = bPath[i][j]
     Image.fromarray(mapResize).show()
-    Image.fromarray(mapResize).save("path.png")
+    Image.fromarray(mapResize).save("./static/images/pathGenerated.png")
 
 def path1(map1,points):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
