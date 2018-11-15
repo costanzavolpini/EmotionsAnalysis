@@ -189,10 +189,10 @@
 
   <!-- about section -->
   <section id="algorithm" class="section database no-padding">
-    <div class="container-fluid">
+    <div class="container-fluid" id="experiment-container">
       <div class="row no-gutter align-items-center">
-        <div class="col-md-6">
-          <div class="card default-color-dark">
+        <div class="col-md-6" style="height: 100%">
+          <div class="card default-color-dark" style="height: 100%">
             <div class="view" id="cardPingu">
               <img src="{{ url_for('static', filename='images/pingu.png') }}" class="card-img-top" alt="photo">
               <a href="#">
@@ -204,12 +204,14 @@
               <p class="card-text white-text" style="text-align: justify;">
                 Run the experiment online to compare your emotions-score with the global one. For every painting we will detect a set of emotions such as anger, contempt, disgust, fear, happiness, neutral, sadness, and surprise.
                 </p>
-              <a href="#" class="btn btn-outline-white btn-md waves-effect" id="experiment">Detect your score</a>
+                <p class="card-text white-text" style="text-align: justify;">
+                Are you ready? <b>Click</b> on the button on the right!</p>
+              <!-- <a href="#" class="btn btn-outline-white btn-md waves-effect" id="experiment">Detect your score</a> -->
             </div>
-
           </div>
         </div>
         <div class="col-md-6" id="wrapCluster">
+            <img id="img-museum" src="{{ url_for('static', filename='images/museum.jpg') }}" alt="Museum">
             <a href="#" class="btn btn-outline-white btn-md waves-effect" id="experiment">Detect your score</a>
             <!-- <canvas id="yourEmotion"></canvas>
             <canvas id="emotionFinal"></canvas> -->
@@ -368,6 +370,16 @@
       <div class="row justify-content-md-center">
         <div class="col-md-2 text-center">
           <h5>1st Floor</h5>
+          <div class="dropdown">
+              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="selectFloor" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Floor
+              </button>
+              <div class="dropdown-menu" aria-labelledby="selectFloor">
+                <a class="dropdown-item active">1st Floor</a>
+                <a class="dropdown-item">2nd Floor</a>
+              </div>
+            </div>
         </div>
         <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
         <div class="col-md-7 text-center">

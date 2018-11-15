@@ -245,6 +245,16 @@ $(function () {
 		nav.toggleClass('open');
 	});
 
+	// Select floor
+	$('#selectFloor').on('show.bs.dropdown', function (ev) {
+		// do something…
+		console.log(ev.target)
+		})
+
+	$(".dropdown-menu li a").click(function(){
+		$(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
+	});
+
 
 	// JSON ------------
 	// Read from json data
@@ -279,16 +289,19 @@ $(function () {
 
 			// find mean
 			for(var i = 0; i < length; i++){
+				var max = null
+
 				for(var j = 0; j < result_arr[i].length; j++){
-					res[j] = res[j] + result_arr[i][j]
+					if((max == null) || (result_arr[i][j] > max)){
+						max = result_arr[i][j]
+					}
+				}
+
+				for(var j = 0; j < result_arr[i].length; j++){
+					var normalized = result_arr[i][j]/max
+					res[j] = res[j] + normalized
 				}
 			}
-
-			// and multiply it by 100
-			for(var i = 0; i < res.length; i++){
-				res[i] = (res[i]/length) * 1000
-			}
-
 
 			// invert happiness with neutral just for a nicer result
 			var temp = res[4]
