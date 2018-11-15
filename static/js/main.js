@@ -333,16 +333,74 @@ $(document).ready(function () {
 			var result_arr = this.res;
 			var name = this.name;
 
+			// Add Modals
+			// Generate modal
+			var div_out_modal = document.createElement("div");
+			div_out_modal.classList.add("modal", "fade");
+			div_out_modal.setAttribute("id", "modal-" + id)
+			div_out_modal.setAttribute("tabindex", "-1")
+			div_out_modal.setAttribute("role", "dialog")
+			div_out_modal.setAttribute("aria-labelledby", "painting" + id)
+			div_out_modal.setAttribute("aria-hidden", "true")
+
+			var div_modal_dialog = document.createElement("div");
+			div_modal_dialog.classList.add("modal-dialog","modal-lg")
+			div_modal_dialog.setAttribute("role", "document")
+
+			var div_modal_content = document.createElement("div");
+			div_modal_content.classList.add("modal-content")
+
+			var div_modal_header = document.createElement("div");
+			div_modal_header.classList.add("modal-header")
+
+			var modal_title = document.createElement("h4");
+			modal_title.classList.add("modal-title","w-100")
+			modal_title.setAttribute("id", "painting" + id)
+			modal_title.innerText = "Emotions analysis";
+
+			div_modal_header.appendChild(modal_title)
+
+			div_modal_content.appendChild(div_modal_header)
+
+			var div_modal_body = document.createElement("div");
+			div_modal_body.classList.add("modal-body")
+
+			var canvas = document.createElement("canvas");
+			canvas.setAttribute("id", "canvas-" + id);
+			div_modal_body.appendChild(canvas);
+
+			div_modal_content.appendChild(div_modal_body)
+
+			var div_modal_footer = document.createElement("div");
+			div_modal_footer.classList.add("modal-footer")
+
+			var button_footer = document.createElement("button");
+			button_footer.classList.add("btn","btn-sm")
+			button_footer.setAttribute("data-dismiss","modal")
+			button_footer.innerText = "Close";
+
+			div_modal_footer.appendChild(button_footer)
+			div_modal_content.appendChild(div_modal_footer)
+
+			div_modal_dialog.appendChild(div_modal_content)
+			div_out_modal.appendChild(div_modal_dialog)
+
+			$("#modalsBulin")[0].appendChild(div_out_modal)
+
 			// Populate carousel
 			// Add dynamically all the images in carousel
-
 			var div = document.createElement("div");
 			div.classList.add("col","work");
 
 			var a = document.createElement("a");
+			a.setAttribute("id", "a-" + id);
 			a.setAttribute("data-toggle", "modal");
-			a.setAttribute("data-target", id);
+			a.setAttribute("data-target", "modal-" + id);
 			a.classList.add("work-box");
+
+			a.addEventListener("click", function() {
+				$("#modal-" + id).modal('show');
+			});
 
 
 			var img = document.createElement("img");
@@ -380,19 +438,11 @@ $(document).ready(function () {
 				$("#container-bolin")[0].appendChild(div_item);
 			}
 
+
 			if(id != 123){
 				 div_row.appendChild(div);
 				 count = count + 1;
-				}
-
-
-
-
-
-			// var canvas = document.createElement("canvas");
-			// canvas.setAttribute("id", id);
-
-			// div.appendChild(canvas);
+			}
 
 			var length = result_arr.length;
 
@@ -425,6 +475,45 @@ $(document).ready(function () {
 			var temp = res[3]
 			res[3] = res[1]
 			res[1] = temp
+
+
+			// Add code for chart
+			var ctxR = document.getElementById("canvas-" + id).getContext('2d');
+			var myRadarChart = new Chart(ctxR, {
+				type: 'radar',
+				data: {
+					// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
+					// invert fear and contempt
+					// fear 3 contempt 1
+					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+					datasets: [{
+						label: name,
+						data: res,
+						backgroundColor: [
+							'rgba(244, 240, 242, .9)',
+						],
+						borderColor: [
+							'rgba(213, 208, 206, .7)',
+						],
+						pointBackgroundColor: [
+							'rgba(244, 240, 242, .9)',
+						],
+						pointBorderColor: [
+							'rgba(213, 208, 206, .7)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					responsive: true,
+					scale: {
+						ticks: {
+							display: false,
+							maxTicksLimit: 1
+						}
+					}
+				}
+			});
 
 			// // TODO: detect if we are in url /diagrams
 			// var div = document.createElement("div");
