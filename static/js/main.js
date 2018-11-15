@@ -61,7 +61,8 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			url: '/path',
-			data: JSON.stringify(data_emotions_path),
+			data: JSON.stringify({"c" : 1}),
+			// data: JSON.stringify(data_emotions_path),
 			type: 'POST',
 			success: function (response) {
 				// Should receive the new path image
@@ -141,7 +142,6 @@ $(document).ready(function () {
 
 
 	// Fancybox
-	// $('.work-box').fancybox();
 	$(function () {
 		var ctxR = document.getElementById("radarChart").getContext('2d');
 		var myRadarChart = new Chart(ctxR, {
@@ -202,12 +202,6 @@ $(document).ready(function () {
 		});
 	});
 
-
-	// // Flexslider
-	// $('.flexslider').flexslider({
-	// 	animation: "fade",
-	// 	directionNav: false,
-	// });
 
 	// Page Scroll
 	var sections = $('section')

@@ -1,11 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 import cv2
 import time
+import Path
 
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
+# export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
 # localhost:5000
 
 app = Flask(__name__)
+app.debug = True
+# app.run(host = '192.33.203.197',port=5000)
+app.run(host='0.0.0.0' , port=5000)
 
 # url_for('static', filename='animate.min.css')
 # url_for('static', filename='bootstrap.min.css')
@@ -35,6 +40,8 @@ def get_emotions_path():
     if request.json:
         mydata = request.json
         # return the new image of the path
+        print("CIAOOOO")
+        Path.EmoDist([.2, .2, .2, .2, .2, .2, .2])
         return "Thanks. Your Surprise value is %s" % mydata.get("surprise")
     else:
         return "no json received"
