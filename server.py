@@ -21,6 +21,11 @@ def hello_world():
     return render_template('index.html')
 
 
+@app.route('/diagrams', methods=['GET'])
+def diagram():
+    return render_template('diagrams.html')
+
+
 @app.route('/path', methods=['GET', 'POST'])
 # Function to get the value of the emotions in order to generate the path
 def get_emotions_path():

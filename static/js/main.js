@@ -3,7 +3,6 @@ $(document).ready(function () {
 	var value_frown = 50;
 	var value_grin = 50;
 	var value_surprise = 50;
-	// var your_result = null;
 
 	// Header Scroll
 	$(window).on('scroll', function () {
@@ -244,5 +243,111 @@ $(function () {
 	nav.find('a').on('click', function () {
 		$('.nav-toggle').toggleClass('close-nav');
 		nav.toggleClass('open');
+	});
+
+
+	// JSON ------------
+	// Read from json data
+	function readTextFile(file, callback) {
+		var rawFile = new XMLHttpRequest();
+		rawFile.overrideMimeType("application/json");
+		rawFile.open("GET", file, true);
+		rawFile.onreadystatechange = function() {
+			if (rawFile.readyState === 4 && rawFile.status == "200") {
+				callback(rawFile.responseText);
+			}
+		}
+		rawFile.send(null);
+	}
+
+	//usage:
+	readTextFile("/static/js/database.json", function(text){
+		var data = JSON.parse(text);
+		console.log("JSON LOADED");
+
+		console.log(data);
+
+		// TODO: detect if we are in url /diagrams
+		$(jQuery.parseJSON(JSON.stringify(data))).each(function() {
+			var id = this.id;
+			var result_arr = this.res;
+			var name = this.name;
+
+			var length = result_arr.length;
+
+			var res = [0,0,0,0,0,0,0,0]
+
+			// find mean
+			for(var i = 0; i < length; i++){
+				for(var j = 0; j < result_arr[i].length; j++){
+					res[j] = res[j] + result_arr[i][j]
+				}
+			}
+
+			// and multiply it by 100
+			for(var i = 0; i < res.length; i++){
+				res[i] = (res[i]/length) * 1000
+			}
+
+
+			// invert happiness with neutral just for a nicer result
+			var temp = res[4]
+			res[4] = res[5]
+			res[5] = temp
+
+			var div = document.createElement("div");
+			div.classList.add("col");
+
+			var canvas = document.createElement("canvas");
+			canvas.setAttribute("id", id);
+
+			div.appendChild(canvas);
+
+			$("#diagrams")[0].appendChild(div);
+
+			// Add code for chart
+			var ctxR = document.getElementById(id).getContext('2d');
+			var myRadarChart = new Chart(ctxR, {
+			type: 'radar',
+			data: {
+				// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
+				labels: ["Anger", "Contempt", "Disgust", "Fear", "Neutral", "Happiness", "Sadness", "Surprise"],
+				datasets: [{
+					label: name,
+					data: res,
+					backgroundColor: [
+					'rgba(244, 240, 242, .9)',
+					],
+					borderColor: [
+					'rgba(213, 208, 206, .7)',
+					],
+					pointBackgroundColor: [
+						'rgba(244, 240, 242, .9)',
+					],
+					pointBorderColor: [
+						'rgba(213, 208, 206, .7)',
+						],
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				responsive: true,
+				scale: {
+					ticks: {
+					   display: false,
+					   maxTicksLimit: 1
+					}
+				 },
+				//  showScale: false,
+				//  labels: {
+				// 	 fontFamily: "Garamond Black"
+				// }
+				}
+			});
+
+
+   		});
+
 	});
 });
