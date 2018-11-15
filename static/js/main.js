@@ -96,7 +96,8 @@ $(document).ready(function () {
 			type: 'POST',
 			success: function (response) {
 				// Should receive the new path image
-				var actualPath = $("#pathGenerated")[0].src.replace("path.jpg", "pathGenerated.png")
+				console.log($("#pathGenerated")[0])
+				var actualPath = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated.png")
 				$("#pathGenerated").attr("src", actualPath);
 			},
 			error: function (error) {
@@ -190,66 +191,66 @@ $(document).ready(function () {
 	})
 
 
-	// Fancybox
-	$(function () {
-		var ctxR = document.getElementById("radarChart").getContext('2d');
-		var myRadarChart = new Chart(ctxR, {
-			type: 'radar',
-			data: {
-				labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-				datasets: [{
-					label: "PAINTING NAME",
-					data: [65, 59, 90, 81, 56, 55, 40, 20],
-					backgroundColor: [
-						'rgba(105, 0, 132, .2)',
-					],
-					borderColor: [
-						'rgba(200, 99, 132, .7)',
-					],
-					borderWidth: 2
-				}]
-			},
-			options: {
-				responsive: true
-			}
-		});
+	// // Fancybox
+	// $(function () {
+	// 	var ctxR = document.getElementById("radarChart").getContext('2d');
+	// 	var myRadarChart = new Chart(ctxR, {
+	// 		type: 'radar',
+	// 		data: {
+	// 			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+	// 			datasets: [{
+	// 				label: "PAINTING NAME",
+	// 				data: [65, 59, 90, 81, 56, 55, 40, 20],
+	// 				backgroundColor: [
+	// 					'rgba(105, 0, 132, .2)',
+	// 				],
+	// 				borderColor: [
+	// 					'rgba(200, 99, 132, .7)',
+	// 				],
+	// 				borderWidth: 2
+	// 			}]
+	// 		},
+	// 		options: {
+	// 			responsive: true
+	// 		}
+	// 	});
 
 
-		var finalGraph = document.getElementById("emotionFinal").getContext('2d');
-		var myFinalChart = new Chart(finalGraph, {
-			type: 'radar',
-			data: {
-				labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-				datasets: [{
-						label: "PAINTING 1",
-						data: [65, 59, 90, 81, 56, 55, 40, 20],
-						backgroundColor: [
-							'rgba(105, 0, 132, .2)',
-						],
-						borderColor: [
-							'rgba(200, 99, 132, .7)',
-						],
-						borderWidth: 2
-					},
-					{
-						label: "PAINTING 2",
-						data: [5, 50, 80, 91, 96, 45, 20, 40],
-						backgroundColor: [
-							'rgba(105, 40, 132, .2)',
-						],
-						borderColor: [
-							'rgba(200, 49, 132, .7)',
-						],
-						borderWidth: 2
-					}
+	// 	var finalGraph = document.getElementById("emotionFinal").getContext('2d');
+	// 	var myFinalChart = new Chart(finalGraph, {
+	// 		type: 'radar',
+	// 		data: {
+	// 			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+	// 			datasets: [{
+	// 					label: "PAINTING 1",
+	// 					data: [65, 59, 90, 81, 56, 55, 40, 20],
+	// 					backgroundColor: [
+	// 						'rgba(105, 0, 132, .2)',
+	// 					],
+	// 					borderColor: [
+	// 						'rgba(200, 99, 132, .7)',
+	// 					],
+	// 					borderWidth: 2
+	// 				},
+	// 				{
+	// 					label: "PAINTING 2",
+	// 					data: [5, 50, 80, 91, 96, 45, 20, 40],
+	// 					backgroundColor: [
+	// 						'rgba(105, 40, 132, .2)',
+	// 					],
+	// 					borderColor: [
+	// 						'rgba(200, 49, 132, .7)',
+	// 					],
+	// 					borderWidth: 2
+	// 				}
 
-				]
-			},
-			options: {
-				responsive: true
-			}
-		});
-	});
+	// 			]
+	// 		},
+	// 		options: {
+	// 			responsive: true
+	// 		}
+	// 	});
+	// });
 
 
 	// Page Scroll
@@ -287,15 +288,15 @@ $(document).ready(function () {
 		nav.toggleClass('open');
 	});
 
-	// Select floor
-	$('#selectFloor').on('show.bs.dropdown', function (ev) {
-		// do something…
-		console.log(ev.target)
-	})
+	// // Select floor
+	// $('#selectFloor').on('show.bs.dropdown', function (ev) {
+	// 	// do something…
+	// 	console.log(ev.target)
+	// })
 
-	$(".dropdown-menu li a").click(function () {
-		$(".btn:first-child").html($(this).text() + ' <span class="caret"></span>');
-	});
+	// $(".dropdown-menu li a").click(function () {
+	// 	$(".btn:first-child").html($(this).text() + ' <span class="caret"></span>');
+	// });
 
 
 	// JSON ------------
@@ -315,15 +316,83 @@ $(document).ready(function () {
 	//usage:
 	readTextFile("/static/js/database.json", function (text) {
 		var data = JSON.parse(text);
-		console.log("JSON LOADED");
+		var count = 0;
 
-		console.log(data);
+		div_row = document.createElement("div");
+		div_row.classList.add("row");
 
-		// TODO: detect if we are in url /diagrams
+		div_item = document.createElement("div");
+		div_item.classList.add("carousel-item", "active");
+
+		div_item.appendChild(div_row)
+
+		$("#container-bolin")[0].appendChild(div_item);
+
 		$(jQuery.parseJSON(JSON.stringify(data))).each(function () {
 			var id = this.id;
 			var result_arr = this.res;
 			var name = this.name;
+
+			// Populate carousel
+			// Add dynamically all the images in carousel
+
+			var div = document.createElement("div");
+			div.classList.add("col","work");
+
+			var a = document.createElement("a");
+			a.setAttribute("data-toggle", "modal");
+			a.setAttribute("data-target", id);
+			a.classList.add("work-box");
+
+
+			var img = document.createElement("img");
+			img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
+
+			a.appendChild(img);
+
+			var div_inner = document.createElement("div");
+			div_inner.classList.add("overlay");
+
+			var div_inner2 = document.createElement("div");
+			div_inner2.classList.add("overlay-caption");
+
+			var p = document.createElement("p");
+			var span = document.createElement("span");
+			span.classList.add("icon","icon-magnifying-glass");
+			p.appendChild(span);
+
+			div_inner2.appendChild(p);
+			div_inner.appendChild(div_inner2);
+
+			a.appendChild(div_inner);
+
+			div.appendChild(a);
+
+			if(count != 0 && count % 6 == 0){
+				div_row = document.createElement("div");
+				div_row.classList.add("row");
+
+				div_item = document.createElement("div");
+				div_item.classList.add("carousel-item");
+
+				div_item.appendChild(div_row)
+
+				$("#container-bolin")[0].appendChild(div_item);
+			}
+
+			if(id != 123){
+				 div_row.appendChild(div);
+				 count = count + 1;
+				}
+
+
+
+
+
+			// var canvas = document.createElement("canvas");
+			// canvas.setAttribute("id", id);
+
+			// div.appendChild(canvas);
 
 			var length = result_arr.length;
 
@@ -352,64 +421,59 @@ $(document).ready(function () {
 				}
 			}
 
-			console.log(res)
-
 			// invert happiness with neutral just for a nicer result
 			var temp = res[3]
 			res[3] = res[1]
 			res[1] = temp
 
-			var div = document.createElement("div");
-			div.classList.add("col");
+			// // TODO: detect if we are in url /diagrams
+			// var div = document.createElement("div");
+			// div.classList.add("col");
 
-			var canvas = document.createElement("canvas");
-			canvas.setAttribute("id", id);
+			// var canvas = document.createElement("canvas");
+			// canvas.setAttribute("id", id);
 
-			div.appendChild(canvas);
+			// div.appendChild(canvas);
 
-			$("#diagrams")[0].appendChild(div);
+			// $("#diagrams")[0].appendChild(div);
 
 			// Add code for chart
-			var ctxR = document.getElementById(id).getContext('2d');
-			var myRadarChart = new Chart(ctxR, {
-				type: 'radar',
-				data: {
-					// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
-					// invert fear and contempt
-					// fear 3 contempt 1
-					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-					datasets: [{
-						label: name,
-						data: res,
-						backgroundColor: [
-							'rgba(244, 240, 242, .9)',
-						],
-						borderColor: [
-							'rgba(213, 208, 206, .7)',
-						],
-						pointBackgroundColor: [
-							'rgba(244, 240, 242, .9)',
-						],
-						pointBorderColor: [
-							'rgba(213, 208, 206, .7)',
-						],
-						borderWidth: 1
-					}]
-				},
-				options: {
-					responsive: true,
-					scale: {
-						ticks: {
-							display: false,
-							maxTicksLimit: 1
-						}
-					},
-					//  showScale: false,
-					//  labels: {
-					// 	 fontFamily: "Garamond Black"
-					// }
-				}
-			});
+			// var ctxR = document.getElementById(id).getContext('2d');
+			// var myRadarChart = new Chart(ctxR, {
+			// 	type: 'radar',
+			// 	data: {
+			// 		// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
+			// 		// invert fear and contempt
+			// 		// fear 3 contempt 1
+			// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+			// 		datasets: [{
+			// 			label: name,
+			// 			data: res,
+			// 			backgroundColor: [
+			// 				'rgba(244, 240, 242, .9)',
+			// 			],
+			// 			borderColor: [
+			// 				'rgba(213, 208, 206, .7)',
+			// 			],
+			// 			pointBackgroundColor: [
+			// 				'rgba(244, 240, 242, .9)',
+			// 			],
+			// 			pointBorderColor: [
+			// 				'rgba(213, 208, 206, .7)',
+			// 			],
+			// 			borderWidth: 1
+			// 		}]
+			// 	},
+			// 	options: {
+			// 		responsive: true,
+			// 		scale: {
+			// 			ticks: {
+			// 				display: false,
+			// 				maxTicksLimit: 1
+			// 			}
+			// 		}
+			// 	}
+			// });
 
 
 		});
