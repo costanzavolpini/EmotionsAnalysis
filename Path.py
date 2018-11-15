@@ -3,7 +3,10 @@ import numpy as np
 import networkx as nx
 import bezier
 from PIL import Image
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+plt.ioff()
 from resizeimage import resizeimage
 import random
 
@@ -51,14 +54,14 @@ def drawPath(map1, G, points):
         paths_draw.append(np.reshape(map1[:,:,0], (len(map1)*len(map1[1]))))
         paths_draw[i][path[i]] = 150
         paths_draw[i] = np.reshape(paths_draw[i], (len(map1),len(map1[1])))
-    # plt.figure(figsize=(10,10))
+    plt.figure(figsize=(10,10))
     nodes = np.asfortranarray([
         [0.0],
         [0.0],
     ])
 
     curve = bezier.Curve(nodes, degree=2)
-    # ax =  curve.plot(num_pts=256)
+    ax =  curve.plot(num_pts=256)
     for i in range(0,len(path)):
 
         controlX= np.zeros(len(path[i]))
@@ -81,9 +84,9 @@ def drawPath(map1, G, points):
         bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax)
 
 
-    # plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
+    plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
     ax.set_axis_off()
-    # plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
+    plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
 
 
 def copyPath(source,target):
