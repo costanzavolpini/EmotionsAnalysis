@@ -1095,3 +1095,7 @@ h5.text-uppercase.font-weight-bold {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
+
+.loader.medium {
+    border-top: 8px solid #feab7a;
+}

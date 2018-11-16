@@ -90,7 +90,7 @@ $(document).ready(function () {
 			"sadness": value_sadness/100.0,
 			"surprise": value_surprise/100.0
 		}
-		$("#imagePath")[0].innerHTML = `<div class="loader medium" style="height: 100%;"></div>`;
+		$("#imagePath")[0].innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
 
 		e.preventDefault();
 		$.ajax({
