@@ -150,10 +150,10 @@ $(document).ready(function () {
 										label: "YOUR RESULT",
 										data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
 										backgroundColor: [
-											'rgba(105, 0, 132, .2)',
+											'rgba(242, 116, 108, .5)',
 										],
 										borderColor: [
-											'rgba(200, 99, 132, .7)',
+											'rgba(198, 40, 40, .7)',
 										],
 										borderWidth: 2
 									}]
@@ -321,7 +321,7 @@ $(document).ready(function () {
 			div_modal_footer.classList.add("modal-footer")
 
 			var button_footer = document.createElement("button");
-			button_footer.classList.add("btn","btn-sm")
+			button_footer.classList.add("btn","sunny-morning-gradient","btn-sm")
 			button_footer.setAttribute("data-dismiss","modal")
 			button_footer.innerText = "Close";
 
@@ -436,16 +436,16 @@ $(document).ready(function () {
 						label: name,
 						data: res,
 						backgroundColor: [
-							'rgba(244, 240, 242, .9)',
+							'rgba(242, 116, 108, .5)',
 						],
 						borderColor: [
-							'rgba(213, 208, 206, .7)',
+							'rgba(198, 40, 40, .7)',
 						],
 						pointBackgroundColor: [
-							'rgba(244, 240, 242, .9)',
+							'rgba(242, 116, 108, .5)',
 						],
 						pointBorderColor: [
-							'rgba(213, 208, 206, .7)',
+							'rgba(198, 40, 40, .7)',
 						],
 						borderWidth: 1
 					}]

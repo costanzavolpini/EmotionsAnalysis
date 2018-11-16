@@ -443,7 +443,7 @@ ul li {
 }
 
 .services .icon {
-	color: #e84545;
+	color: #f2746c;
 	font-size: 36px;
 	padding-left: 15px;
 }
@@ -605,7 +605,7 @@ ul li {
 	 Testimonials
 -------------------------------------------------------------------------------*/
 .testimonials {
-	background-color: #e84545;
+	background-color: #009688b3;
 	position: relative;
 	text-align: center;
 }
