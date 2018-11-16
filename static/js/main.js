@@ -138,15 +138,17 @@ $(document).ready(function () {
 						success: function (response) {
 							// Should receive the new path image
 							your_result = response.scores
+							$('#modalVideo').modal('hide')
+							$('#modalResultExperiment').modal('show')
 
-							var ctxRyour = document.getElementById("yourEmotion").getContext('2d');
+							var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
 							var your = new Chart(ctxRyour, {
 								type: 'radar',
 								data: {
-									labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
+									labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
 									datasets: [{
 										label: "YOUR RESULT",
-										data: [your_result.anger * 100, your_result.contempt * 100, your_result.disgust * 100, your_result.fear * 100, your_result.happiness * 100, your_result.neutral * 100, your_result.sadness * 100, your_result.surprise * 100],
+										data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
 										backgroundColor: [
 											'rgba(105, 0, 132, .2)',
 										],
@@ -157,11 +159,17 @@ $(document).ready(function () {
 									}]
 								},
 								options: {
-									responsive: true
+									responsive: true,
+									scale: {
+										ticks: {
+											display: false,
+											maxTicksLimit: 1
+										}
+									}
 								}
 							});
 
-							$('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
+							// $('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
 						},
 						error: function (error) {
 							console.log(error);
@@ -189,68 +197,6 @@ $(document).ready(function () {
 	$('#carouselImages').carousel({
 		interval: 1500
 	})
-
-
-	// // Fancybox
-	// $(function () {
-	// 	var ctxR = document.getElementById("radarChart").getContext('2d');
-	// 	var myRadarChart = new Chart(ctxR, {
-	// 		type: 'radar',
-	// 		data: {
-	// 			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-	// 			datasets: [{
-	// 				label: "PAINTING NAME",
-	// 				data: [65, 59, 90, 81, 56, 55, 40, 20],
-	// 				backgroundColor: [
-	// 					'rgba(105, 0, 132, .2)',
-	// 				],
-	// 				borderColor: [
-	// 					'rgba(200, 99, 132, .7)',
-	// 				],
-	// 				borderWidth: 2
-	// 			}]
-	// 		},
-	// 		options: {
-	// 			responsive: true
-	// 		}
-	// 	});
-
-
-	// 	var finalGraph = document.getElementById("emotionFinal").getContext('2d');
-	// 	var myFinalChart = new Chart(finalGraph, {
-	// 		type: 'radar',
-	// 		data: {
-	// 			labels: ["Anger", "Contempt", "Disgust", "Happiness", "Fear", "Neutral", "Sadness", "Surprise"],
-	// 			datasets: [{
-	// 					label: "PAINTING 1",
-	// 					data: [65, 59, 90, 81, 56, 55, 40, 20],
-	// 					backgroundColor: [
-	// 						'rgba(105, 0, 132, .2)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(200, 99, 132, .7)',
-	// 					],
-	// 					borderWidth: 2
-	// 				},
-	// 				{
-	// 					label: "PAINTING 2",
-	// 					data: [5, 50, 80, 91, 96, 45, 20, 40],
-	// 					backgroundColor: [
-	// 						'rgba(105, 40, 132, .2)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(200, 49, 132, .7)',
-	// 					],
-	// 					borderWidth: 2
-	// 				}
-
-	// 			]
-	// 		},
-	// 		options: {
-	// 			responsive: true
-	// 		}
-	// 	});
-	// });
 
 
 	// Page Scroll

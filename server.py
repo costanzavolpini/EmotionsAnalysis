@@ -53,10 +53,9 @@ def close_camera():
 
 @app.route('/experiment', methods=['GET'])
 def get_camera():
-    t0= time.clock()
+    t = time.clock()
     i = float(request.args.get('time'))
     l = float(request.args.get('duration'))
-    t = t0
 
     res = l - i
     camera_port = 0
@@ -66,20 +65,22 @@ def get_camera():
     while(t < res):
         # Capture frame-by-frame
         ret, frame = camera.read()
-        if ret == True:
-            # Our operations on the frame come here
-            filename = 'frame%d.jpg' % (t)
-            cv2.imwrite(filename, frame)
-            time.sleep(3)
+        # if ret == True:
+        # Our operations on the frame come here
+        filename = 'frame%d.jpg' % (t)
+        cv2.imwrite(filename, frame)
+        time.sleep(3)
 
-        t = time.clock() - t0
+        t += time.clock()
+        print(t, res)
         if t >= res:
+            cv2.destroyAllWindows()
             break
 
     # When everything done, release the capture
     del camera
 
-    # Send all to microsoft and return a JSON
+    # Send all to microsoft (upload all photos) and return a JSON
     result =   {
         "faceRectangle": {
         "top": 141,
@@ -99,7 +100,6 @@ def get_camera():
         }
     }
 
-    # del camera
     return jsonify(result)
 
 
