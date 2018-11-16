@@ -13,7 +13,6 @@
   <title>Experience Design Project 2018</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
     crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <!-- Material Design Bootstrap -->
@@ -32,24 +31,24 @@
 <body>
   <!-- header section -->
   <section class="banner" role="banner">
-    <!--header navigation -->
-    <header id="header">
-      <div class="header-content clearfix"> <a class="logo" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}"
-            alt=""></a>
-        <nav class="navigation" role="navigation">
-          <ul class="primary-nav">
+    <nav class="navbar-expand-lg navbar-dark" id="header">
+      <div class="header-content clearfix">
+        <a class="logo navbar-brand" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#togglerNavbar" aria-controls="togglerNavbar"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navigation" id="togglerNavbar" style="margin-top: 10px;">
+          <ul class="nav navbar-nav mr-auto mt-lg-0">
             <li><a href="#projectDesc">Project</a></li>
             <li><a href="#algorithm">Algorithm</a></li>
             <li><a href="#database">Database</a></li>
             <li><a href="#museum">Museum</a></li>
-            <!-- <li><a href="#testimonials">#Social</a></li> -->
             <li><a href="#teams">Team</a></li>
           </ul>
-        </nav>
-        <a href="#" class="nav-toggle">Menu<span></span></a>
+        </div>
       </div>
-    </header>
-    <!--header navigation -->
+    </nav>
     <!-- banner text -->
     <div class="container">
       <div class="col-md-12">
@@ -194,7 +193,8 @@
         <div class="col-md-6" style="height: 100%">
           <div class="card sunny-morning-gradient" style="height: 100%">
             <div class="view" id="cardPingu">
-              <img src="{{ url_for('static', filename='images/pingu.jpg') }}" class="card-img-top img-gradient-overlay" alt="photo">
+              <img src="{{ url_for('static', filename='images/pingu.jpg') }}" class="card-img-top img-gradient-overlay"
+                alt="photo">
               <a href="#">
                 <div class="mask rgba-white-slight"></div>
               </a>
@@ -213,7 +213,8 @@
           </div>
         </div>
         <div class="col-md-6" id="wrapCluster">
-          <img id="img-museum" src="{{ url_for('static', filename='images/museum.jpg') }}" class="img-gradient-overlay" alt="Museum">
+          <img id="img-museum" src="{{ url_for('static', filename='images/museum.jpg') }}" class="img-gradient-overlay"
+            alt="Museum">
           <a href="#" class="btn sunny-morning-gradient btn-md waves-effect" id="experiment">Detect your score</a>
         </div>
       </div>
@@ -419,7 +420,7 @@
           <div class="row justify-content-md-center">
             <div class="person-content">
               <h4>Licia Tomaselli</h4>
-              <h5 class="role">Architect</h5>
+              <h5 class="role">Architecture</h5>
               <p style="text-align: justify;">Architecture exchange student at EPFL, always around informatics
                 though. Has a Facebook account just to look at kittens.</p>
             </div>
@@ -473,22 +474,23 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modalResultExperiment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <!-- Change class .modal-sm to change the size of the modal -->
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress!</h4>
-            <button type="button" id="closeVideo" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-             <canvas id="resultExperiment"></canvas>
-          </div>
+  <div class="modal fade" id="modalResultExperiment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress!</h4>
+          <button type="button" id="closeVideo" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <canvas id="resultExperiment"></canvas>
         </div>
       </div>
     </div>
+  </div>
 
   <!-- Footer -->
   <footer class="page-footer font-small teal pt-4">

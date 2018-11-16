@@ -103,6 +103,7 @@ a:focus {
 body {
 	font-family: "Source Sans Pro";
 	font-weight: 400;
+	width:100%;
 	color: #6c7279;
 }
 
@@ -367,7 +368,7 @@ ul li {
 	-o-background-size: cover;
 	-webkit-background-size: cover;
 	background-size: cover;
-	min-height: 750px;
+	min-height: 800px;
 }
 
 .banner-btn {
