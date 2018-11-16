@@ -86,7 +86,7 @@ def drawPath(map1, G, points):
         bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax)
 
     plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
-    #ax.set_axis_off()
+    ax.set_axis_off()
     plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
 
 def copyPath(source,target):
@@ -100,7 +100,7 @@ def copyPath(source,target):
         for j in range(0,len(bPath[0])):
             if bPath[i][j][0] <= 200 or bPath[i][j][1] < 200 or bPath[i][j][2] <= 200:
                 mapResize[i][j] = bPath[i][j]
-    Image.fromarray(mapResize).show()
+    # Image.fromarray(mapResize).show()
     Image.fromarray(mapResize).save("./static/images/pathGenerated.png")
 
 def path1(map1,points):
@@ -163,6 +163,7 @@ def EmoDist(emotions):
     artifacts.append(((20,12),randomEmo())) #Forest 2
     artifacts1 = artifacts[:23]
     artifacts2 = artifacts[23:]
+
 
     map1 = scipy.misc.imread("./map/pixel_floor1.jpg")
     map2 = scipy.misc.imread("./map/pixel_floor2.jpg")
@@ -244,4 +245,4 @@ def EmoDist(emotions):
             pointsFinal2.append(artifacts2[i][0])
     pointsFinal2.append(entrance2)
     path1(map1,pointsFinal1)
-EmoDist([.0,.0,.0,.0,.0,.2,.0])
+#EmoDist([.0,.0,.0,.0,.0,.2,.0])

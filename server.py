@@ -5,7 +5,8 @@ import Path
 
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
-# localhost:5000
+# to kill: sudo lsof -i :5000
+# kill -9 *id*
 
 app = Flask(__name__)
 app.debug = True

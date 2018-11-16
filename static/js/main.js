@@ -79,6 +79,8 @@ $(document).ready(function () {
 
 	// Function that handle generate and return of the emotions
 	$('#generatePath').click(function (e) {
+		var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated.png");
+		console.log(path)
 		var data_emotions_path = {
 			"anger": value_anger/100.0,
 			"fear": value_fear/100.0,
@@ -88,6 +90,7 @@ $(document).ready(function () {
 			"sadness": value_sadness/100.0,
 			"surprise": value_surprise/100.0
 		}
+		$("#imagePath")[0].innerHTML = `<div class="loader medium" style="height: 100%;"></div>`;
 
 		e.preventDefault();
 		$.ajax({
@@ -96,9 +99,7 @@ $(document).ready(function () {
 			type: 'POST',
 			success: function (response) {
 				// Should receive the new path image
-				console.log($("#pathGenerated")[0])
-				var actualPath = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated.png")
-				$("#pathGenerated").attr("src", actualPath);
+				$("#imagePath")[0].innerHTML = `<img src="${path}" id="pathGenerated" alt="Path of museum" style="width: 60%;">`
 			},
 			error: function (error) {
 				console.log(error);
