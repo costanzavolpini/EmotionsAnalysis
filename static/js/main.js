@@ -79,7 +79,8 @@ $(document).ready(function () {
 
 	// Function that handle generate and return of the emotions
 	$('#generatePath').click(function (e) {
-		var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated.png");
+		var d = new Date
+		var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated"+ d +".png");
 		console.log(path)
 		var data_emotions_path = {
 			"anger": value_anger/100.0,
@@ -88,7 +89,8 @@ $(document).ready(function () {
 			"contempt": value_contempt/100.0,
 			"happiness": value_happiness/100.0,
 			"sadness": value_sadness/100.0,
-			"surprise": value_surprise/100.0
+			"surprise": value_surprise/100.0,
+			"date":  "" + d
 		}
 		$("#imagePath")[0].innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
 

@@ -41,7 +41,7 @@ def get_emotions_path():
     if request.json:
         mydata = request.json
         # return the new image of the path
-        Path.EmoDist([mydata["anger"], mydata["fear"], mydata["disgust"], mydata["contempt"], mydata["happiness"], mydata["sadness"], mydata["surprise"]])
+        Path.EmoDist([mydata["anger"], mydata["fear"], mydata["disgust"], mydata["contempt"], mydata["happiness"], mydata["sadness"], mydata["surprise"]], mydata["date"])
         return "Thanks. Your Surprise value is %s" % mydata.get("surprise")
     else:
         return "no json received"

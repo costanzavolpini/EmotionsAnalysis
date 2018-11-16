@@ -89,7 +89,7 @@ def drawPath(map1, G, points):
     ax.set_axis_off()
     plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
 
-def copyPath(source,target):
+def copyPath(source,target, name):
     mapResize = scipy.misc.imread(target,mode="RGB")
     bPath = scipy.misc.imread(source,mode="RGB")
     img = Image.fromarray(bPath)
@@ -101,17 +101,17 @@ def copyPath(source,target):
             if bPath[i][j][0] <= 200 or bPath[i][j][1] < 200 or bPath[i][j][2] <= 200:
                 mapResize[i][j] = bPath[i][j]
     # Image.fromarray(mapResize).show()
-    Image.fromarray(mapResize).save("./static/images/pathGenerated.png")
+    Image.fromarray(mapResize).save("./static/images/pathGenerated"+ name +".png")
 
-def path1(map1,points):
+def path1(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/Elysee quello vero-Model-1.jpg")
+    copyPath("./sexyPath.jpg","./map/Elysee quello vero-Model-1.jpg", name)
 
-def path2(map1,points):
+def path2(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/Elysee quello vero2-1.jpg")
+    copyPath("./sexyPath.jpg","./map/Elysee quello vero2-1.jpg", name)
 
 def randomEmo(seed=None):
     random.seed(seed)
@@ -119,7 +119,7 @@ def randomEmo(seed=None):
 
 #Create distance and emotion arrays for each floor
 
-def EmoDist(emotions):
+def EmoDist(emotions, name):
     emotions = dict({'disgust':emotions[2], 'fear':emotions[1], 'surprise':emotions[6], 'contempt':emotions[3], 'anger':emotions[0], 'neutral':0.0, 'sadness':emotions[5], 'happiness':emotions[4]})
     emotions = [emotions['disgust'],emotions['fear'],emotions['surprise'],emotions['contempt'],emotions['anger'],emotions['neutral'],emotions['sadness'],emotions['happiness']]
 
@@ -244,5 +244,5 @@ def EmoDist(emotions):
         if(i<len(artifacts2)):
             pointsFinal2.append(artifacts2[i][0])
     pointsFinal2.append(entrance2)
-    path1(map1,pointsFinal1)
+    path1(map1,pointsFinal1, name)
 #EmoDist([.0,.0,.0,.0,.0,.2,.0])
