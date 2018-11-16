@@ -150,7 +150,7 @@ $(document).ready(function () {
 										label: "YOUR RESULT",
 										data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
 										backgroundColor: [
-											'rgba(242, 116, 108, .5)',
+											'rgb(254, 164, 126)',
 										],
 										borderColor: [
 											'rgba(198, 40, 40, .7)',
@@ -400,13 +400,13 @@ $(document).ready(function () {
 						label: name,
 						data: res,
 						backgroundColor: [
-							'rgba(242, 116, 108, .5)',
+							'rgba(254, 164, 126, .7)',
 						],
 						borderColor: [
 							'rgba(198, 40, 40, .7)',
 						],
 						pointBackgroundColor: [
-							'rgba(242, 116, 108, .5)',
+							'rgba(254, 164, 126, .7)',
 						],
 						pointBorderColor: [
 							'rgba(198, 40, 40, .7)',
