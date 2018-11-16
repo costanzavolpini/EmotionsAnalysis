@@ -2,11 +2,10 @@ import scipy.misc
 import numpy as np
 import networkx as nx
 import bezier
-from PIL import Image
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-plt.ioff()
+from PIL import Image
 from resizeimage import resizeimage
 import random
 
@@ -54,6 +53,8 @@ def drawPath(map1, G, points):
         paths_draw.append(np.reshape(map1[:,:,0], (len(map1)*len(map1[1]))))
         paths_draw[i][path[i]] = 150
         paths_draw[i] = np.reshape(paths_draw[i], (len(map1),len(map1[1])))
+
+    plt.ioff()
     plt.figure(figsize=(10,10))
     nodes = np.asfortranarray([
         [0.0],
@@ -62,6 +63,7 @@ def drawPath(map1, G, points):
 
     curve = bezier.Curve(nodes, degree=2)
     ax =  curve.plot(num_pts=256)
+
     for i in range(0,len(path)):
 
         controlX= np.zeros(len(path[i]))
@@ -83,17 +85,15 @@ def drawPath(map1, G, points):
         #curves on same plot
         bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax)
 
-
     plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
-    ax.set_axis_off()
+    #ax.set_axis_off()
     plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
-
 
 def copyPath(source,target):
     mapResize = scipy.misc.imread(target,mode="RGB")
     bPath = scipy.misc.imread(source,mode="RGB")
     img = Image.fromarray(bPath)
-    # img = img.crop([32,12,365,228])
+    img = img.crop([50,21,535,383])
     img= img.resize((len(mapResize[0]), len(mapResize)), Image.ANTIALIAS)
     bPath = np.array(img)
     for i in range(0,len(bPath)):
@@ -179,7 +179,7 @@ def EmoDist(emotions):
         #entrance
         for i in artifacts:
             distance.append(1/nx.shortest_path_length(G,entrance[0]*len(map1[0])+entrance[1],i[0][0]*len(map1[0])+i[0][1]))
-        distance = np.array(distance)/( max(distance) + np.exp(-5))
+        distance = np.array(distance)/max(distance)
         distances.append(distance)
 
         for i in range(0,len(artifacts)):
@@ -189,7 +189,7 @@ def EmoDist(emotions):
                     distance.append(1/nx.shortest_path_length(G,artifacts[i][0][0]*len(map1[0])+artifacts[i][0][1],artifacts[j][0][0]*len(map1[0])+artifacts[j][0][1]))
                 else:
                     distance.append(-1)
-            distance = np.array(distance)/ ( max(distance) + np.exp(-5))
+            distance = np.array(distance)/max(distance)
             distances.append(distance)
 
         return distances
@@ -221,7 +221,6 @@ def EmoDist(emotions):
     current=-1
     for i in range(max_hops):
         nextHop = findNextHop(distances1[current+1],emo_score1,current,final_indices1)
-        print(nextHop)
         final_indices1.append(nextHop)
         current = nextHop
 
@@ -229,7 +228,6 @@ def EmoDist(emotions):
     current=-1
     for i in range(max_hops):
         nextHop = findNextHop(distances2[current+1],emo_score2,current,final_indices2)
-        print(nextHop)
         final_indices2.append(nextHop)
         current = nextHop
 
@@ -246,3 +244,4 @@ def EmoDist(emotions):
             pointsFinal2.append(artifacts2[i][0])
     pointsFinal2.append(entrance2)
     path1(map1,pointsFinal1)
+EmoDist([.0,.0,.0,.0,.0,.2,.0])
