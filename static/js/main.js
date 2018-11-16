@@ -150,10 +150,10 @@ $(document).ready(function () {
 										label: "YOUR RESULT",
 										data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
 										backgroundColor: [
-											'rgba(105, 0, 132, .2)',
+											'rgb(254, 164, 126)',
 										],
 										borderColor: [
-											'rgba(200, 99, 132, .7)',
+											'rgba(198, 40, 40, .7)',
 										],
 										borderWidth: 2
 									}]
@@ -197,42 +197,6 @@ $(document).ready(function () {
 	$('#carouselImages').carousel({
 		interval: 1500
 	})
-
-
-	// Page Scroll
-	var sections = $('section')
-	nav = $('nav[role="navigation"]');
-
-	$(window).on('scroll', function () {
-		var cur_pos = $(this).scrollTop();
-		sections.each(function () {
-			var top = $(this).offset().top - 76
-			bottom = top + $(this).outerHeight();
-			if (cur_pos >= top && cur_pos <= bottom) {
-				nav.find('a').removeClass('active');
-				nav.find('a[href="#' + $(this).attr('id') + '"]').addClass('active');
-			}
-		});
-	});
-	nav.find('a').on('click', function () {
-		var $el = $(this)
-		id = $el.attr('href');
-		$('html, body').animate({
-			scrollTop: $(id).offset().top - 75
-		}, 500);
-		return false;
-	});
-
-	// Mobile Navigation
-	$('.nav-toggle').on('click', function () {
-		$(this).toggleClass('close-nav');
-		nav.toggleClass('open');
-		return false;
-	});
-	nav.find('a').on('click', function () {
-		$('.nav-toggle').toggleClass('close-nav');
-		nav.toggleClass('open');
-	});
 
 	// // Select floor
 	// $('#selectFloor').on('show.bs.dropdown', function (ev) {
@@ -321,7 +285,7 @@ $(document).ready(function () {
 			div_modal_footer.classList.add("modal-footer")
 
 			var button_footer = document.createElement("button");
-			button_footer.classList.add("btn","btn-sm")
+			button_footer.classList.add("btn","sunny-morning-gradient","btn-sm")
 			button_footer.setAttribute("data-dismiss","modal")
 			button_footer.innerText = "Close";
 
@@ -436,16 +400,16 @@ $(document).ready(function () {
 						label: name,
 						data: res,
 						backgroundColor: [
-							'rgba(244, 240, 242, .9)',
+							'rgba(254, 164, 126, .7)',
 						],
 						borderColor: [
-							'rgba(213, 208, 206, .7)',
+							'rgba(198, 40, 40, .7)',
 						],
 						pointBackgroundColor: [
-							'rgba(244, 240, 242, .9)',
+							'rgba(254, 164, 126, .7)',
 						],
 						pointBorderColor: [
-							'rgba(213, 208, 206, .7)',
+							'rgba(198, 40, 40, .7)',
 						],
 						borderWidth: 1
 					}]
