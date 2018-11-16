@@ -62,7 +62,6 @@ h5 {
 }
 
 .btn {
-	background-color: #3bc492;
 	color: #fff;
 	font-size: 13px;
 	font-weight: 600;
@@ -465,7 +464,7 @@ ul li {
 }
 
 .work .overlay {
-	background: rgba(232, 69, 69, 0.9);
+	background: rgba(249, 193, 106, 0.7);
 	height: 100%;
 	left: 0;
 	opacity: 0;
@@ -605,7 +604,6 @@ ul li {
 	 Testimonials
 -------------------------------------------------------------------------------*/
 .testimonials {
-	background-color: #009688b3;
 	position: relative;
 	text-align: center;
 }
@@ -745,10 +743,6 @@ blockquote p {
 
 .rounded-image {
 	border-radius: 50%;
-}
-
-.work .overlay {
-	background: rgba(193, 158, 150, 0.9);
 }
 
 
@@ -991,7 +985,7 @@ blockquote p {
 }
 
 .services .icon {
-	color: #e84545;
+	color: #fea47e;
 }
 
 #header .logo {
@@ -1032,7 +1026,7 @@ h5.text-uppercase.font-weight-bold {
 }
 
 .role {
-	color: #e84545
+	color: rgb(255, 164, 122);
 }
 
 .work {
