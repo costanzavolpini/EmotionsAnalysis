@@ -181,6 +181,7 @@
           </div>
         </div>
       </div>
+      <p class="description-project">Be the curator of your own emotions!</p>
     </div>
   </section>
   <!-- services section -->
@@ -461,16 +462,21 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress!</h4>
+          <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress! (To close: ESC, arrow left and right)</h4>
           <button type="button" id="closeVideo" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-            <iframe class="embed-responsive-item" id="videoBoulin" src="{{ url_for('static', filename='videos/1.mp4') }}"
-              allowfullscreen></iframe>
+          <!-- <div class="embed-responsive embed-responsive-16by9 z-depth-1-half"> -->
+            <!-- <iframe class="embed-responsive-item" id="videoBoulin" src="{{ url_for('static', filename='videos/1.mp4') }}"
+              allowfullscreen></iframe> -->
+          <!-- </div> -->
+
+          <div id="slideShowExperiment" class="carousel slide" data-ride="carousel">
           </div>
+
+
         </div>
       </div>
     </div>

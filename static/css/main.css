@@ -1099,3 +1099,31 @@ h5.text-uppercase.font-weight-bold {
 .loader.medium {
     border-top: 8px solid #feab7a;
 }
+
+.description-project{
+	color: #000;
+	text-align: center;
+	font-weight: bold;
+	font-family: 'Adiescode';
+	font-weight: 500;
+	text-transform: initial;
+	font-size: 40px;
+	padding: 20px;
+}
+
+.no-margin{
+	margin: 0px;
+}
+
+.category{
+	font-weight: bold
+}
+
+.mg-8-top{
+	margin: 0px;
+	margin-top: 8px;
+}
+
+.mg-20-top{
+	margin-top: 20px;
+}

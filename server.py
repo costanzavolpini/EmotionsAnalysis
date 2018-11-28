@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import cv2
 import time
 import Path
+import os
 
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
@@ -13,14 +14,8 @@ app.debug = True
 # app.run(host = '192.33.203.197',port=5000)
 app.run(host='0.0.0.0' , port=5000)
 
-# url_for('static', filename='animate.min.css')
-# url_for('static', filename='bootstrap.min.css')
-# url_for('static', filename='flexslider.css')
-# url_for('static', filename='font-icon.css')
-# url_for('static', filename='main.css')
-# url_for('static', filename='responsive.css')
-# url_for('static', filename='jquery.fancybox.css')
-
+global closeCamera
+global nameFile
 
 @app.route('/')
 def hello_world():
@@ -49,37 +44,60 @@ def get_emotions_path():
 
 @app.route('/closeCamera', methods=['GET'])
 def close_camera():
+    closeCamera = True
     cv2.destroyAllWindows()
     return jsonify({"res" : "camera destroyed"})
 
 @app.route('/experiment', methods=['GET'])
 def get_camera():
-    t = time.clock()
-    i = float(request.args.get('time'))
-    l = float(request.args.get('duration'))
+    closeCamera = False
 
-    res = l - i
+    sequence = request.args.get('sequence').split("-")
+    print(sequence)
+
+    # id = request.args.get('image')
+
+    # i = float(request.args.get('time'))
+    # l = float(request.args.get('duration'))
+
+    # save time for each painting
+
+    # res = l - i
     camera_port = 0
     camera = cv2.VideoCapture(camera_port)
     time.sleep(0.1)
 
-    while(t < res):
+    # i = 0
+
+    # cur_char = -1
+    # prev_char = -1
+
+    dirname = 'test' + time.strftime("%c")
+
+    if os.path.exists(dirname):
+        os.mkdir(dirname)
+    os.mkdir(dirname)
+
+    nameFile = sequence[0]
+    prev = nameFile
+
+    # while i < len(sequence):
+    while closeCamera == False:
         # Capture frame-by-frame
         ret, frame = camera.read()
         # if ret == True:
         # Our operations on the frame come here
-        filename = 'frame%d.jpg' % (t)
+        if(prev == nameFile):
+            nameFile = nameFile + "-"
+        filename = '%s.jpg' % (nameFile)
+        prev = nameFile
         cv2.imwrite(filename, frame)
-        time.sleep(3)
+        time.sleep(1)
 
-        t += time.clock()
-        print(t, res)
-        if t >= res:
-            cv2.destroyAllWindows()
-            break
+    cv2.destroyAllWindows()
 
-    # When everything done, release the capture
-    del camera
+    # # When everything done, release the capture
+    # del camera
 
     # Send all to microsoft (upload all photos) and return a JSON
     result =   {
@@ -103,4 +121,6 @@ def get_camera():
 
     return jsonify(result)
 
-
+@app.route('/next', methods=['GET'])
+def update_name():
+    nameFile = request.args.get('name')

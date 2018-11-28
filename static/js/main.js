@@ -6,6 +6,7 @@ $(document).ready(function () {
 	var value_happiness = 50;
 	var value_sadness = 50;
 	var value_surprise = 50;
+	var global_sequence = [];
 
 	// Header Scroll
 	$(window).on('scroll', function () {
@@ -80,17 +81,17 @@ $(document).ready(function () {
 	// Function that handle generate and return of the emotions
 	$('#generatePath').click(function (e) {
 		var d = new Date
-		var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated"+ d +".png");
+		var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
 		console.log(path)
 		var data_emotions_path = {
-			"anger": value_anger/100.0,
-			"fear": value_fear/100.0,
-			"disgust": value_disgust/100.0,
-			"contempt": value_contempt/100.0,
-			"happiness": value_happiness/100.0,
-			"sadness": value_sadness/100.0,
-			"surprise": value_surprise/100.0,
-			"date":  "" + d
+			"anger": value_anger / 100.0,
+			"fear": value_fear / 100.0,
+			"disgust": value_disgust / 100.0,
+			"contempt": value_contempt / 100.0,
+			"happiness": value_happiness / 100.0,
+			"sadness": value_sadness / 100.0,
+			"surprise": value_surprise / 100.0,
+			"date": "" + d
 		}
 		$("#imagePath")[0].innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
 
@@ -122,6 +123,30 @@ $(document).ready(function () {
 		});
 	})
 
+	function setupSeqExperiment(sequence) {
+		global_sequence = sequence
+	}
+
+	function getNextExperimentImage() {
+		if (global_sequence.length == 0) {
+			$.ajax({
+				url: '/closeCamera',
+				type: 'GET',
+				success: function (response) {
+					console.log(response)
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+			return null
+		} else {
+			var head = global_sequence[0]
+			setupSeqExperiment(global_sequence.shift)
+			return head
+		}
+	}
+
 	// Take photos
 	$('#experiment').click(function (e) {
 		$('#modalVideo').modal('show')
@@ -129,61 +154,62 @@ $(document).ready(function () {
 				name: 'camera'
 			})
 			.then((permissionObj) => {
+				var sequence = experiment();
+				setupSeqExperiment(sequence);
+				console.log("ehi", sequence)
+				//Generate path to pass in the get
+				var sequenceurl = sequence.join("-");
 				console.log(permissionObj.state);
-				$('#videoBoulin').contents().find('video').each(function () {
-					this.currentTime = 0;
-					this.play();
-					this.removeAttribute('controls');
 
-					$.ajax({
-						url: '/experiment?time=' + this.currentTime + "&duration=" + this.duration,
-						type: 'GET',
-						success: function (response) {
-							// Should receive the new path image
-							your_result = response.scores
-							$('#modalVideo').modal('hide')
-							$('#modalResultExperiment').modal('show')
+				$.ajax({
+					url: '/experiment?sequence=' + sequenceurl,
+					type: 'GET',
+					success: function (response) {
+						// Should receive the new path image
+						your_result = response.scores
+						$('#modalVideo').modal('hide')
+						$('#modalResultExperiment').modal('show')
 
-							var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
-							var your = new Chart(ctxRyour, {
-								type: 'radar',
-								data: {
-									labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-									datasets: [{
-										label: "YOUR RESULT",
-										data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
-										backgroundColor: [
-											'rgb(254, 164, 126)',
-										],
-										borderColor: [
-											'rgba(198, 40, 40, .7)',
-										],
-										borderWidth: 2
-									}]
-								},
-								options: {
-									responsive: true,
-									scale: {
-										ticks: {
-											display: false,
-											maxTicksLimit: 1
-										}
+						var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
+						var your = new Chart(ctxRyour, {
+							type: 'radar',
+							data: {
+								labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+								datasets: [{
+									label: "YOUR RESULT",
+									data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
+									backgroundColor: [
+										'rgb(254, 164, 126)',
+									],
+									borderColor: [
+										'rgba(198, 40, 40, .7)',
+									],
+									borderWidth: 2
+								}]
+							},
+							options: {
+								responsive: true,
+								scale: {
+									ticks: {
+										display: false,
+										maxTicksLimit: 1
 									}
 								}
-							});
+							}
+						});
 
-							// $('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
-						},
-						error: function (error) {
-							console.log(error);
-						}
-					});
-
+						// $('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
+					},
+					error: function (error) {
+						console.log(error);
+					}
 				});
 
-				$('#videoBoulin').contents().find('video').each(function () {
-					this.currentTime = 0;
-				});
+				// });
+
+				// $('#videoBoulin').contents().find('video').each(function () {
+				// 	this.currentTime = 0;
+				// });
 			})
 			.catch((error) => {
 				console.log('Got error :', error);
@@ -210,6 +236,94 @@ $(document).ready(function () {
 	// $(".dropdown-menu li a").click(function () {
 	// 	$(".btn:first-child").html($(this).text() + ' <span class="caret"></span>');
 	// });
+
+	// Function to generate a sequence of slideshow and so on
+	// open on click!
+	function experiment() {
+		// 101 - 122
+		// 201-214
+		var sequence = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214]
+
+		function shuffle(array) {
+			var currentIndex = array.length,
+				temporaryValue, randomIndex;
+
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+
+				// Pick a remaining element...
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex -= 1;
+
+				// And swap it with the current element.
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}
+			return array;
+		}
+
+		// Used like so
+		sequence = shuffle(sequence);
+		//   console.log(sequence);
+
+		// var inner = document.createElement("div");
+		// inner.classList.add("carousel-inner");
+		var inner = "<div class='carousel-inner'>"
+
+		var first = true;
+
+		sequence.forEach(function (value_random) {
+			// var el = document.createElement("div");
+			// el.classList.add("carousel-item");
+			if (first) {
+				inner += "<div class='carousel-item active'>"
+				first = false
+			} else inner += "<div class='carousel-item'>"
+			inner += "<img class='d-block w-100' src='/static/images/bolin/"
+			inner += value_random + ".jpg'>"
+
+			inner += "</div>";
+		})
+		inner += "</div><a class='carousel-control-prev' href='#experimentRunning' role='button' data-slide='prev'><span class='carousel-control-prev-icon' aria-hidden='true'></span><span class='sr-only'>Previous</span></a><a class='carousel-control-next' href='#experimentRunning' role='button' data-slide='next'><span class='carousel-control-next-icon' aria-hidden='true'></span><span class='sr-only'>Next</span></a>";
+
+		$("#slideShowExperiment")[0].innerHTML = inner;
+
+		$("#slideShowExperiment").carousel({
+			interval: false,
+			keyboard: true
+		})
+
+		return sequence;
+	}
+
+	// Handle movement with key
+	$(document).keydown(function (e) {
+		if (e.keyCode === 37) {
+			// Previous
+			// $("#slideShowExperiment").carousel('prev')
+			return false;
+		}
+		if (e.keyCode === 39) {
+			// Next
+			$("#slideShowExperiment").carousel('next')
+			var next = getNextExperimentImage()
+			if (next == null) return
+			else {
+				$.ajax({
+					url: '/next?name=' + next,
+					type: 'GET',
+					success: function (response) {
+						print("next is: " + next)
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
+				return false;
+			}
+		}
+	});
 
 
 	// JSON ------------
@@ -257,7 +371,7 @@ $(document).ready(function () {
 			div_out_modal.setAttribute("aria-hidden", "true")
 
 			var div_modal_dialog = document.createElement("div");
-			div_modal_dialog.classList.add("modal-dialog","modal-lg")
+			div_modal_dialog.classList.add("modal-dialog", "modal-lg")
 			div_modal_dialog.setAttribute("role", "document")
 
 			var div_modal_content = document.createElement("div");
@@ -267,7 +381,7 @@ $(document).ready(function () {
 			div_modal_header.classList.add("modal-header")
 
 			var modal_title = document.createElement("h4");
-			modal_title.classList.add("modal-title","w-100")
+			modal_title.classList.add("modal-title", "w-100")
 			modal_title.setAttribute("id", "painting" + id)
 			modal_title.innerText = "Emotions analysis";
 
@@ -282,14 +396,75 @@ $(document).ready(function () {
 			canvas.setAttribute("id", "canvas-" + id);
 			div_modal_body.appendChild(canvas);
 
-			div_modal_content.appendChild(div_modal_body)
+			div_modal_content.appendChild(div_modal_body);
+
+			var statistics = document.createElement("div");
+			statistics.classList.add("row", "mg-20-top");
+
+			var statistics_left = document.createElement("div");
+			statistics_left.classList.add("col");
+
+			var statistics_left_p_title = document.createElement("h5");
+			statistics_left_p_title.classList.add("category");
+			statistics_left_p_title.innerText = "Age";
+			statistics_left.appendChild(statistics_left_p_title);
+
+
+			var statistics_left_p_ad = document.createElement("p");
+			statistics_left_p_ad.classList.add("no-margin");
+			// TODO: update!
+			statistics_left_p_ad.innerText = "Adult: Happiness"
+			statistics_left.appendChild(statistics_left_p_ad);
+
+			var statistics_left_p_children = document.createElement("p");
+			statistics_left_p_children.classList.add("no-margin");
+			// TODO: update!
+			statistics_left_p_children.innerText = "Children: -"
+			statistics_left.appendChild(statistics_left_p_children);
+
+			var statistics_left_p_senior = document.createElement("p");
+			statistics_left_p_senior.classList.add("no-margin");
+			// TODO: update!
+			statistics_left_p_senior.innerText = "Senior: -"
+			statistics_left.appendChild(statistics_left_p_senior);
+
+			var statistics_left_p_title2 = document.createElement("h5");
+			statistics_left_p_title2.classList.add("category", "mg-8-top");
+			statistics_left_p_title2.innerText = "Sex";
+			statistics_left.appendChild(statistics_left_p_title2);
+
+			var statistics_left_p_female = document.createElement("p");
+			statistics_left_p_female.classList.add("no-margin");
+			// TODO: update!
+			statistics_left_p_female.innerText = "Female: Sadness"
+			statistics_left.appendChild(statistics_left_p_female);
+
+			var statistics_left_p_male = document.createElement("p");
+			statistics_left_p_male.classList.add("no-margin");
+			// TODO: update!
+			statistics_left_p_male.innerText = "Male: Happy"
+			statistics_left.appendChild(statistics_left_p_male);
+
+			var statistics_right = document.createElement("div");
+			statistics_right.classList.add("col");
+
+			var canvas_line = document.createElement("canvas");
+			canvas_line.setAttribute("id", "canvasline-" + id);
+			statistics_right.appendChild(canvas_line);
+
+			statistics.appendChild(statistics_left);
+			statistics.appendChild(statistics_right);
+
+			// <i class="fas fa-female"></i>
+
+			div_modal_body.appendChild(statistics);
 
 			var div_modal_footer = document.createElement("div");
 			div_modal_footer.classList.add("modal-footer")
 
 			var button_footer = document.createElement("button");
-			button_footer.classList.add("btn","sunny-morning-gradient","btn-sm")
-			button_footer.setAttribute("data-dismiss","modal")
+			button_footer.classList.add("btn", "sunny-morning-gradient", "btn-sm")
+			button_footer.setAttribute("data-dismiss", "modal")
 			button_footer.innerText = "Close";
 
 			div_modal_footer.appendChild(button_footer)
@@ -303,7 +478,7 @@ $(document).ready(function () {
 			// Populate carousel
 			// Add dynamically all the images in carousel
 			var div = document.createElement("div");
-			div.classList.add("col","work");
+			div.classList.add("col", "work");
 
 			var a = document.createElement("a");
 			a.setAttribute("id", "a-" + id);
@@ -311,7 +486,7 @@ $(document).ready(function () {
 			a.setAttribute("data-target", "modal-" + id);
 			a.classList.add("work-box");
 
-			a.addEventListener("click", function() {
+			a.addEventListener("click", function () {
 				$("#modal-" + id).modal('show');
 			});
 
@@ -329,7 +504,7 @@ $(document).ready(function () {
 
 			var p = document.createElement("p");
 			var span = document.createElement("span");
-			span.classList.add("icon","icon-magnifying-glass");
+			span.classList.add("icon", "icon-magnifying-glass");
 			p.appendChild(span);
 
 			div_inner2.appendChild(p);
@@ -339,7 +514,7 @@ $(document).ready(function () {
 
 			div.appendChild(a);
 
-			if(count != 0 && count % 6 == 0){
+			if (count != 0 && count % 6 == 0) {
 				div_row = document.createElement("div");
 				div_row.classList.add("row");
 
@@ -352,9 +527,9 @@ $(document).ready(function () {
 			}
 
 
-			if(id != 123){
-				 div_row.appendChild(div);
-				 count = count + 1;
+			if (id != 123) {
+				div_row.appendChild(div);
+				count = count + 1;
 			}
 
 			var length = result_arr.length;
@@ -425,6 +600,97 @@ $(document).ready(function () {
 							maxTicksLimit: 1
 						}
 					}
+				}
+			});
+
+			// Add code for chart line
+			var ctxLine = document.getElementById("canvasline-" + id).getContext('2d');
+			var myRadarChart = new Chart(ctxLine, {
+				type: 'line',
+				data: {
+					labels: ["1s", "5s", "10s", "15s", "20s", "25s", "30s"],
+					datasets: [{
+							label: "Anger",
+							data: [1, 0, 0, 5, 4, 1, 2],
+							backgroundColor: [
+								'rgba(254, 164, 126, .7)',
+							],
+							borderColor: [
+								'rgba(198, 40, 40, .7)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Fear",
+							data: [1, 3, 4, 5, 8, 1, 2],
+							backgroundColor: [
+								'rgba(186, 160, 148, .7)',
+							],
+							borderColor: [
+								'rgba(186, 160, 148, .9)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Disgust",
+							data: [1, 0, 4, 3, 4, 9, 2],
+							backgroundColor: [
+								'rgba(137, 110, 97, .7)',
+							],
+							borderColor: [
+								'rgba(137, 110, 97, .9)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Contempt",
+							data: [9, 0, 0, 5, 8, 1, 2],
+							backgroundColor: [
+								'rgba(193, 148, 118, .7)',
+							],
+							borderColor: [
+								'rgba(193, 148, 118, .9)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Happiness",
+							data: [1, 5, 3, 5, 4, 1, 2],
+							backgroundColor: [
+								'rgba(191, 127, 97, .7)',
+							],
+							borderColor: [
+								'rgba(191, 127, 97, .9)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Sadness",
+							data: [1, 0, 0, 5, 4, 9, 8],
+							backgroundColor: [
+								'rgba(226, 115, 63, .7)',
+							],
+							borderColor: [
+								'rgba(226, 115, 63, .9)',
+							],
+							borderWidth: 1
+						},
+						{
+							label: "Surprise",
+							data: [1, 9, 0, 5, 4, 9, 2],
+							backgroundColor: [
+								'rgba(114, 103, 98, .7)',
+							],
+							borderColor: [
+								'rgba(114, 103, 98, .9)',
+							],
+							borderWidth: 1
+						}
+					]
+
+				},
+				options: {
+					responsive: true
 				}
 			});
 
