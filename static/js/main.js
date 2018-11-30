@@ -110,42 +110,42 @@ $(document).ready(function () {
 		});
 	});
 
-	$('#closeVideo').click(function (e) {
-		$.ajax({
-			url: '/closeCamera',
-			type: 'GET',
-			success: function (response) {
-				console.log(response)
-			},
-			error: function (error) {
-				console.log(error);
-			}
-		});
-	})
+	// $('#closeVideo').click(function (e) {
+	// 	$.ajax({
+	// 		url: '/closeCamera',
+	// 		type: 'GET',
+	// 		success: function (response) {
+	// 			console.log(response)
+	// 		},
+	// 		error: function (error) {
+	// 			console.log(error);
+	// 		}
+	// 	});
+	// })
 
 	function setupSeqExperiment(sequence) {
 		global_sequence = sequence
 	}
 
-	function getNextExperimentImage() {
-		if (global_sequence.length == 0) {
-			$.ajax({
-				url: '/closeCamera',
-				type: 'GET',
-				success: function (response) {
-					console.log(response)
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
-			return null
-		} else {
-			var head = global_sequence[0]
-			setupSeqExperiment(global_sequence.shift)
-			return head
-		}
-	}
+	// function getNextExperimentImage() {
+	// 	if (global_sequence.length == 0) {
+	// 		$.ajax({
+	// 			url: '/closeCamera',
+	// 			type: 'GET',
+	// 			success: function (response) {
+	// 				console.log(response)
+	// 			},
+	// 			error: function (error) {
+	// 				console.log(error);
+	// 			}
+	// 		});
+	// 		return null
+	// 	} else {
+	// 		var head = global_sequence[0]
+	// 		setupSeqExperiment(global_sequence.shift)
+	// 		return head
+	// 	}
+	// }
 
 	// Take photos
 	$('#experiment').click(function (e) {
@@ -290,40 +290,42 @@ $(document).ready(function () {
 		$("#slideShowExperiment")[0].innerHTML = inner;
 
 		$("#slideShowExperiment").carousel({
-			interval: false,
-			keyboard: true
+			interval: 5,
+			keyboard: false,
+			wrap: false,
+			ride: 'carousel'
 		})
 
 		return sequence;
 	}
 
-	// Handle movement with key
-	$(document).keydown(function (e) {
-		if (e.keyCode === 37) {
-			// Previous
-			// $("#slideShowExperiment").carousel('prev')
-			return false;
-		}
-		if (e.keyCode === 39) {
-			// Next
-			$("#slideShowExperiment").carousel('next')
-			var next = getNextExperimentImage()
-			if (next == null) return
-			else {
-				$.ajax({
-					url: '/next?name=' + next,
-					type: 'GET',
-					success: function (response) {
-						print("next is: " + next)
-					},
-					error: function (error) {
-						console.log(error);
-					}
-				});
-				return false;
-			}
-		}
-	});
+	// // Handle movement with key
+	// $(document).keydown(function (e) {
+	// 	if (e.keyCode === 37) {
+	// 		// Previous
+	// 		// $("#slideShowExperiment").carousel('prev')
+	// 		return false;
+	// 	}
+	// 	if (e.keyCode === 39) {
+	// 		// Next
+	// 		$("#slideShowExperiment").carousel('next')
+	// 		var next = getNextExperimentImage()
+	// 		if (next == null) return
+	// 		else {
+	// 			$.ajax({
+	// 				url: '/next?name=' + next,
+	// 				type: 'GET',
+	// 				success: function (response) {
+	// 					print("next is: " + next)
+	// 				},
+	// 				error: function (error) {
+	// 					console.log(error);
+	// 				}
+	// 			});
+	// 			return false;
+	// 		}
+	// 	}
+	// });
 
 
 	// JSON ------------
@@ -611,7 +613,7 @@ $(document).ready(function () {
 					labels: ["1s", "5s", "10s", "15s", "20s", "25s", "30s"],
 					datasets: [{
 							label: "Anger",
-							data: [1, 0, 0, 5, 4, 1, 2],
+							data: [10, 0, 0, 50, 40, 10, 20],
 							backgroundColor: [
 								'rgba(254, 164, 126, .7)',
 							],
@@ -622,7 +624,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Fear",
-							data: [1, 3, 4, 5, 8, 1, 2],
+							data: [10, 30, 40, 50, 80, 10, 20],
 							backgroundColor: [
 								'rgba(186, 160, 148, .7)',
 							],
@@ -633,7 +635,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Disgust",
-							data: [1, 0, 4, 3, 4, 9, 2],
+							data: [10, 0, 40, 30, 40, 90, 20],
 							backgroundColor: [
 								'rgba(137, 110, 97, .7)',
 							],
@@ -644,7 +646,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Contempt",
-							data: [9, 0, 0, 5, 8, 1, 2],
+							data: [90, 0, 0, 50, 80, 10, 20],
 							backgroundColor: [
 								'rgba(193, 148, 118, .7)',
 							],
@@ -655,7 +657,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Happiness",
-							data: [1, 5, 3, 5, 4, 1, 2],
+							data: [1, 50, 30, 5, 40, 1, 2],
 							backgroundColor: [
 								'rgba(191, 127, 97, .7)',
 							],
@@ -666,7 +668,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Sadness",
-							data: [1, 0, 0, 5, 4, 9, 8],
+							data: [1, 0, 0, 5, 40, 90, 8],
 							backgroundColor: [
 								'rgba(226, 115, 63, .7)',
 							],
@@ -677,7 +679,7 @@ $(document).ready(function () {
 						},
 						{
 							label: "Surprise",
-							data: [1, 9, 0, 5, 4, 9, 2],
+							data: [1, 9, 0, 50, 4, 9, 2],
 							backgroundColor: [
 								'rgba(114, 103, 98, .7)',
 							],

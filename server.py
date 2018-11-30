@@ -55,10 +55,7 @@ def get_camera():
     sequence = request.args.get('sequence').split("-")
     print(sequence)
 
-    # id = request.args.get('image')
-
-    # i = float(request.args.get('time'))
-    # l = float(request.args.get('duration'))
+    # 36 elements * 5 = 180seconds
 
     # save time for each painting
 
@@ -72,32 +69,38 @@ def get_camera():
     # cur_char = -1
     # prev_char = -1
 
-    dirname = 'test' + time.strftime("%c")
+    dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
 
     if os.path.exists(dirname):
         os.mkdir(dirname)
     os.mkdir(dirname)
 
-    nameFile = sequence[0]
-    prev = nameFile
+    timer = 180
+    i = -1
+    c = 0
 
     # while i < len(sequence):
-    while closeCamera == False:
+    while i < len(sequence) & timer != 0 & closeCamera == False:
+        timer = timer-1
         # Capture frame-by-frame
         ret, frame = camera.read()
-        # if ret == True:
-        # Our operations on the frame come here
-        if(prev == nameFile):
-            nameFile = nameFile + "-"
-        filename = '%s.jpg' % (nameFile)
-        prev = nameFile
+        if(timer % 5 == 0):
+            # Our operations on the frame come here
+            i = i + 1
+            print(i)
+            c = 0
+        c = c + 1
+        filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
         cv2.imwrite(filename, frame)
         time.sleep(1)
+        print(timer)
+
+    print(i, timer, closeCamera)
 
     cv2.destroyAllWindows()
 
-    # # When everything done, release the capture
-    # del camera
+    # When everything done, release the capture
+    del camera
 
     # Send all to microsoft (upload all photos) and return a JSON
     result =   {
