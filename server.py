@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import cv2
 import time
 import Path
+import os
 
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
@@ -13,14 +14,8 @@ app.debug = True
 # app.run(host = '192.33.203.197',port=5000)
 app.run(host='0.0.0.0' , port=5000)
 
-# url_for('static', filename='animate.min.css')
-# url_for('static', filename='bootstrap.min.css')
-# url_for('static', filename='flexslider.css')
-# url_for('static', filename='font-icon.css')
-# url_for('static', filename='main.css')
-# url_for('static', filename='responsive.css')
-# url_for('static', filename='jquery.fancybox.css')
-
+global closeCamera
+global nameFile
 
 @app.route('/')
 def hello_world():
@@ -49,34 +44,53 @@ def get_emotions_path():
 
 @app.route('/closeCamera', methods=['GET'])
 def close_camera():
-    cv2.destroyAllWindows()
+    print("QUIII")
+    # closeCamera = True
+    # cv2.destroyAllWindows()
     return jsonify({"res" : "camera destroyed"})
 
 @app.route('/experiment', methods=['GET'])
 def get_camera():
-    t = time.clock()
-    i = float(request.args.get('time'))
-    l = float(request.args.get('duration'))
+    closeCamera = False
 
-    res = l - i
+    sequence = request.args.get('sequence').split("-")
+    print(sequence)
+
+    # 36 elements * 5 = 180seconds
+
+    # res = l - i
     camera_port = 0
     camera = cv2.VideoCapture(camera_port)
     time.sleep(0.1)
 
-    while(t < res):
+    dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
+
+    if os.path.exists(dirname):
+        os.mkdir(dirname)
+    os.mkdir(dirname)
+
+    timer = 180
+    i = -1
+    c = 0
+
+    while (i < len(sequence)) & (timer != 0) & (closeCamera == False):
+        timer = timer-1
         # Capture frame-by-frame
         ret, frame = camera.read()
-        # if ret == True:
-        # Our operations on the frame come here
-        filename = 'frame%d.jpg' % (t)
+        if(timer % 5 == 0):
+            # Our operations on the frame come here
+            i = i + 1
+            c = 0
+        c = c + 1
+        # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
+        filename = '%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
-        time.sleep(3)
+        time.sleep(1)
+        print(timer)
 
-        t += time.clock()
-        print(t, res)
-        if t >= res:
-            cv2.destroyAllWindows()
-            break
+    print(i, timer, closeCamera)
+
+    cv2.destroyAllWindows()
 
     # When everything done, release the capture
     del camera
@@ -103,4 +117,6 @@ def get_camera():
 
     return jsonify(result)
 
-
+@app.route('/next', methods=['GET'])
+def update_name():
+    nameFile = request.args.get('name')
