@@ -270,10 +270,15 @@ $(document).ready(function () {
 
 		$("#slideShowExperiment").carousel({
 			interval: 5,
+			pause: false,
 			keyboard: false,
 			wrap: false,
 			ride: 'carousel'
 		})
+
+		$('#slideShowExperiment').hover(function(){
+			$("#slideShowExperiment").carousel('cycle');
+		 });
 
 		return sequence;
 	}
