@@ -14,8 +14,6 @@ app.debug = True
 # app.run(host = '192.33.203.197',port=5000)
 app.run(host='0.0.0.0' , port=5000)
 
-global closeCamera
-global nameFile
 
 @app.route('/')
 def hello_world():
@@ -41,26 +39,15 @@ def get_emotions_path():
     else:
         return "no json received"
 
-
-@app.route('/closeCamera', methods=['GET'])
-def close_camera():
-    print("QUIII")
-    # closeCamera = True
-    # cv2.destroyAllWindows()
-    return jsonify({"res" : "camera destroyed"})
-
 @app.route('/experiment', methods=['GET'])
 def get_camera():
-    closeCamera = False
-
     sequence = request.args.get('sequence').split("-")
     print(sequence)
 
     # 36 elements * 5 = 180seconds
 
     # res = l - i
-    camera_port = 0
-    camera = cv2.VideoCapture(camera_port)
+    camera = cv2.VideoCapture(0)
     time.sleep(0.1)
 
     dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
@@ -73,7 +60,7 @@ def get_camera():
     i = -1
     c = 0
 
-    while (i < len(sequence)) & (timer != 0) & (closeCamera == False):
+    while (i < len(sequence)) & (timer != 0):
         timer = timer-1
         # Capture frame-by-frame
         ret, frame = camera.read()
@@ -88,7 +75,7 @@ def get_camera():
         time.sleep(1)
         print(timer)
 
-    print(i, timer, closeCamera)
+    print(i, timer)
 
     cv2.destroyAllWindows()
 
@@ -117,6 +104,3 @@ def get_camera():
 
     return jsonify(result)
 
-@app.route('/next', methods=['GET'])
-def update_name():
-    nameFile = request.args.get('name')

@@ -110,19 +110,6 @@ $(document).ready(function () {
 		});
 	});
 
-	// $('#closeVideo').click(function (e) {
-	// 	$.ajax({
-	// 		url: '/closeCamera',
-	// 		type: 'GET',
-	// 		success: function (response) {
-	// 			console.log(response)
-	// 		},
-	// 		error: function (error) {
-	// 			console.log(error);
-	// 		}
-	// 	});
-	// })
-
 	function setupSeqExperiment(sequence) {
 		global_sequence = sequence
 	}
@@ -149,7 +136,7 @@ $(document).ready(function () {
 
 	// Take photos
 	$('#experiment').click(function (e) {
-		$('#modalVideo').modal('show')
+		$('#modalVideo').modal({'show': true, backdrop:'static'})
 		navigator.permissions.query({
 				name: 'camera'
 			})
