@@ -156,7 +156,7 @@ $(document).ready(function () {
 			.then((permissionObj) => {
 				var sequence = experiment();
 				setupSeqExperiment(sequence);
-				console.log("ehi", sequence)
+
 				//Generate path to pass in the get
 				var sequenceurl = sequence.join("-");
 				console.log(permissionObj.state);
@@ -197,19 +197,11 @@ $(document).ready(function () {
 								}
 							}
 						});
-
-						// $('#wrapCluster').removeClass("col-md-6").addClass("col-md-5");
 					},
 					error: function (error) {
 						console.log(error);
 					}
 				});
-
-				// });
-
-				// $('#videoBoulin').contents().find('video').each(function () {
-				// 	this.currentTime = 0;
-				// });
 			})
 			.catch((error) => {
 				console.log('Got error :', error);

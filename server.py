@@ -44,8 +44,9 @@ def get_emotions_path():
 
 @app.route('/closeCamera', methods=['GET'])
 def close_camera():
-    closeCamera = True
-    cv2.destroyAllWindows()
+    print("QUIII")
+    # closeCamera = True
+    # cv2.destroyAllWindows()
     return jsonify({"res" : "camera destroyed"})
 
 @app.route('/experiment', methods=['GET'])
@@ -57,17 +58,10 @@ def get_camera():
 
     # 36 elements * 5 = 180seconds
 
-    # save time for each painting
-
     # res = l - i
     camera_port = 0
     camera = cv2.VideoCapture(camera_port)
     time.sleep(0.1)
-
-    # i = 0
-
-    # cur_char = -1
-    # prev_char = -1
 
     dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
 
@@ -79,18 +73,17 @@ def get_camera():
     i = -1
     c = 0
 
-    # while i < len(sequence):
-    while i < len(sequence) & timer != 0 & closeCamera == False:
+    while (i < len(sequence)) & (timer != 0) & (closeCamera == False):
         timer = timer-1
         # Capture frame-by-frame
         ret, frame = camera.read()
         if(timer % 5 == 0):
             # Our operations on the frame come here
             i = i + 1
-            print(i)
             c = 0
         c = c + 1
-        filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
+        # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
+        filename = '%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
         time.sleep(1)
         print(timer)
