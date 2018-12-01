@@ -28,9 +28,7 @@ assert subscription_key
 # Free trial subscription keys are generated in the "westus" region.
 # If you use a free trial subscription key, you shouldn't need to change
 # this region.
-vision_base_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
-
-analyze_url = vision_base_url + "analyze"
+emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
 
 #Start application:
 app = Flask(__name__)
@@ -68,13 +66,19 @@ def get_camera():
     sequence = request.args.get('sequence').split("-")
     print(sequence)
 
+    if "localhost:" in request.base_url:
+        base_url = "http://localhost:5000/"
+    # else:
+    #     #setup new link
+
+
     # 36 elements * 5 = 180seconds
 
     # res = l - i
     camera = cv2.VideoCapture(0)
     time.sleep(0.1)
 
-    dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
+    dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("static/experiments/" + dirname)
 
     timer = 180
@@ -85,6 +89,7 @@ def get_camera():
         timer = timer-1
         # Capture frame-by-frame
         ret, frame = camera.read()
+        time.sleep(1)
         if(timer % 5 == 0):
             # Our operations on the frame come here
             i = i + 1
@@ -93,7 +98,6 @@ def get_camera():
         # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
         filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
-        time.sleep(1)
         print(timer)
 
     print(i, timer)
@@ -103,28 +107,21 @@ def get_camera():
     # When everything done, release the capture
     del camera
 
-    # Set image_url to the URL of an image that you want to analyze.
-    # image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/" + \
-    #     "Broadway_and_Times_Square_by_night.jpg/450px-Broadway_and_Times_Square_by_night.jpg"
+    for el in sequence:
+        print(el)
+        print(sequence)
+        for index in range(1, 5):
+            filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(index))
+            # send to microsoft azure
+            image_url = base_url + filename #image_url to the URL of an image that you want to analyze
+            image_data = open(image_url, "rb").read()
+            header = {'Ocp-Apim-Subscription-Key': subscription_key, "Content-Type": "application/octet-stream" }
+            response = requests.post(emotion_recognition_url, headers=header, data=image_data)
+            response.raise_for_status()
+            analysis = response.json()
+            print(analysis)
+        print("Finish one photo")
 
-    # headers = {'Ocp-Apim-Subscription-Key': subscription_key }
-    # params  = {'visualFeatures': 'Categories,Description,Color'}
-    # data    = {'url': image_url}
-    # response = requests.post(analyze_url, headers=headers, params=params, json=data)
-    # response.raise_for_status()
-
-    # # The 'analysis' object contains various fields that describe the image. The most
-    # # relevant caption for the image is obtained from the 'description' property.
-    # analysis = response.json()
-    # print(json.dumps(response.json()))
-    # image_caption = analysis["description"]["captions"][0]["text"].capitalize()
-
-    # # Display the image and overlay it with the caption.
-    # image = Image.open(BytesIO(requests.get(image_url).content))
-    # plt.imshow(image)
-    # plt.axis("off")
-    # _ = plt.title(image_caption, size="x-large", y=-0.1)
-    # plt.show()
 
     # Send all to microsoft (upload all photos) and return a JSON
     result =   {
