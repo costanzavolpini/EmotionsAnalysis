@@ -4,11 +4,35 @@ import time
 import Path
 import os
 
+# Azure
+import requests
+import matplotlib.pyplot as plt
+import json
+from PIL import Image
+from io import BytesIO
+
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run
 # export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
 # to kill: sudo lsof -i :5000
 # kill -9 *id*
 
+#Setup azure
+# Replace <Subscription Key> with your valid subscription key.
+subscription_key = "1e94ebc81f34468a9e9bea9bf04052cb"
+assert subscription_key
+
+# You must use the same region in your REST call as you used to get your
+# subscription keys. For example, if you got your subscription keys from
+# westus, replace "westcentralus" in the URI below with "westus".
+#
+# Free trial subscription keys are generated in the "westus" region.
+# If you use a free trial subscription key, you shouldn't need to change
+# this region.
+vision_base_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
+
+analyze_url = vision_base_url + "analyze"
+
+#Start application:
 app = Flask(__name__)
 app.debug = True
 # app.run(host = '192.33.203.197',port=5000)
@@ -51,10 +75,7 @@ def get_camera():
     time.sleep(0.1)
 
     dirname = request.args.get('sequence') + '&time=' + time.strftime("%c")
-
-    if os.path.exists(dirname):
-        os.mkdir(dirname)
-    os.mkdir(dirname)
+    os.mkdir("static/experiments/" + dirname)
 
     timer = 180
     i = -1
@@ -70,7 +91,7 @@ def get_camera():
             c = 0
         c = c + 1
         # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
-        filename = '%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
+        filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
         time.sleep(1)
         print(timer)
@@ -81,6 +102,29 @@ def get_camera():
 
     # When everything done, release the capture
     del camera
+
+    # Set image_url to the URL of an image that you want to analyze.
+    # image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/" + \
+    #     "Broadway_and_Times_Square_by_night.jpg/450px-Broadway_and_Times_Square_by_night.jpg"
+
+    # headers = {'Ocp-Apim-Subscription-Key': subscription_key }
+    # params  = {'visualFeatures': 'Categories,Description,Color'}
+    # data    = {'url': image_url}
+    # response = requests.post(analyze_url, headers=headers, params=params, json=data)
+    # response.raise_for_status()
+
+    # # The 'analysis' object contains various fields that describe the image. The most
+    # # relevant caption for the image is obtained from the 'description' property.
+    # analysis = response.json()
+    # print(json.dumps(response.json()))
+    # image_caption = analysis["description"]["captions"][0]["text"].capitalize()
+
+    # # Display the image and overlay it with the caption.
+    # image = Image.open(BytesIO(requests.get(image_url).content))
+    # plt.imshow(image)
+    # plt.axis("off")
+    # _ = plt.title(image_caption, size="x-large", y=-0.1)
+    # plt.show()
 
     # Send all to microsoft (upload all photos) and return a JSON
     result =   {
