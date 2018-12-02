@@ -33,7 +33,6 @@ assert subscription_key
 # If you use a free trial subscription key, you shouldn't need to change
 # this region.
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
-# emotion_recognition_url = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize"
 
 
 #Start application:
@@ -119,7 +118,6 @@ def get_camera():
                 name_frame = 'static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
                 # send to microsoft azure
                 image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
-                # image_url = './' + name_frame #image_url to the URL of an image that you want to analyze
                 image_data = open(image_url, "rb").read()
 
                 header = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': subscription_key}
@@ -128,17 +126,12 @@ def get_camera():
                     'returnFaceLandmarks': 'false',
                     'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
                 }
-
-                # data = {'url': image_url}
-
-                # response = requests.post(emotion_recognition_url, params=params, headers=header, data=image_data)
                 response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
-                # response.raise_for_status()
                 analysis = response.json()
 
-                # header = {'Ocp-Apim-Subscription-Key': subscription_key, "Content-Type": "application/octet-stream" }
-                # response = requests.post(emotion_recognition_url, headers=header, data=image_data)
-                print(analysis)
+                emotions_found = analysis[0]['faceAttributes']['emotion']
+                age_found = analysis[0]['faceAttributes']['age']
+                gender_found = analysis[0]['faceAttributes']['gender']
 
             except Exception as e:
 	            print("Photo not found:%s-%s" % (el, str(index)))
