@@ -33,6 +33,8 @@ assert subscription_key
 # If you use a free trial subscription key, you shouldn't need to change
 # this region.
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
+# emotion_recognition_url = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize"
+
 
 #Start application:
 app = Flask(__name__)
@@ -77,7 +79,7 @@ def get_camera():
     #     #setup new link
 
 
-    # 21 elements * 5 = 105seconds (one element is bad quality)
+    # 23 elements * 7.5 = 172.5seconds (one element is bad quality)
 
     # res = l - i
     camera = cv2.VideoCapture(0)
@@ -86,16 +88,16 @@ def get_camera():
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("static/experiments/" + dirname)
 
-    timer = 105
+    # timer = 172.5
+    timer = 7.5
     i = -1
     c = 0
 
-    while (i < len(sequence)) & (timer != 0):
-        timer = timer-1
+    while (i < len(sequence)) & (timer > 0):
+        timer = timer-1.5
         # Capture frame-by-frame
         ret, frame = camera.read()
-        time.sleep(1)
-        if(timer % 5 == 0):
+        if(timer % 7.5 == 0):
             # Our operations on the frame come here
             i = i + 1
             c = 0
@@ -103,9 +105,8 @@ def get_camera():
         # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
         filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
+        time.sleep(1.5)
         print(timer)
-
-    print(i, timer)
 
     cv2.destroyAllWindows()
 
@@ -113,19 +114,34 @@ def get_camera():
     del camera
 
     for el in sequence:
-        print(el)
-        print(sequence)
         for index in range(1, 5):
-            filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(index))
-            # send to microsoft azure
-            image_url = base_url + filename #image_url to the URL of an image that you want to analyze
-            image_data = open(image_url, "rb").read()
-            header = {'Ocp-Apim-Subscription-Key': subscription_key, "Content-Type": "application/octet-stream" }
-            response = requests.post(emotion_recognition_url, headers=header, data=image_data)
-            response.raise_for_status()
-            analysis = response.json()
-            print(analysis)
-        print("Finish one photo")
+            try:
+                name_frame = 'static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
+                # send to microsoft azure
+                image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
+                # image_url = './' + name_frame #image_url to the URL of an image that you want to analyze
+                image_data = open(image_url, "rb").read()
+
+                header = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': subscription_key}
+                params = {
+                    'returnFaceId': 'true',
+                    'returnFaceLandmarks': 'false',
+                    'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+                }
+
+                # data = {'url': image_url}
+
+                # response = requests.post(emotion_recognition_url, params=params, headers=header, data=image_data)
+                response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
+                # response.raise_for_status()
+                analysis = response.json()
+
+                # header = {'Ocp-Apim-Subscription-Key': subscription_key, "Content-Type": "application/octet-stream" }
+                # response = requests.post(emotion_recognition_url, headers=header, data=image_data)
+                print(analysis)
+
+            except Exception as e:
+	            print("Photo not found:%s-%s" % (el, str(index)))
 
 
     # Send all to microsoft (upload all photos) and return a JSON
