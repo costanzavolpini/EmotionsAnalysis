@@ -220,8 +220,9 @@ $(document).ready(function () {
 	// open on click!
 	function experiment() {
 		// 101 - 122
-		// 201-214
-		var sequence = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214]
+		// 201-214 NO
+		// var sequence = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214]
+		var sequence = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123]
 
 		function shuffle(array) {
 			var currentIndex = array.length,
@@ -317,6 +318,16 @@ $(document).ready(function () {
 			var id = this.id;
 			var result_arr = this.res;
 			var name = this.name;
+
+			var temp_for_later_res;
+
+			if (id == 107) { //to duplicate
+				temp_for_later_res = this.res;
+			}
+
+			if(id == 1077){
+				result_arr = temp_for_later_res;
+			}
 
 			// Add Modals
 			// Generate modal
@@ -448,9 +459,9 @@ $(document).ready(function () {
 				$("#modal-" + id).modal('show');
 			});
 
-
 			var img = document.createElement("img");
-			img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
+			if(id == 1077) img.setAttribute("src", "/static/images/bolin/107.jpg");
+			else img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
 
 			a.appendChild(img);
 
@@ -472,7 +483,7 @@ $(document).ready(function () {
 
 			div.appendChild(a);
 
-			if (count != 0 && count % 6 == 0) {
+			if (count != 0 & count % 6 == 0) {
 				div_row = document.createElement("div");
 				div_row.classList.add("row");
 
@@ -485,10 +496,9 @@ $(document).ready(function () {
 			}
 
 
-			if (id != 123) {
-				div_row.appendChild(div);
-				count = count + 1;
-			}
+			div_row.appendChild(div);
+			count = count + 1;
+
 
 			var length = result_arr.length;
 

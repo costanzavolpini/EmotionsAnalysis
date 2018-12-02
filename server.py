@@ -72,7 +72,7 @@ def get_camera():
     #     #setup new link
 
 
-    # 36 elements * 5 = 180seconds
+    # 21 elements * 5 = 105seconds (one element is bad quality)
 
     # res = l - i
     camera = cv2.VideoCapture(0)
@@ -81,7 +81,7 @@ def get_camera():
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("static/experiments/" + dirname)
 
-    timer = 180
+    timer = 105
     i = -1
     c = 0
 
