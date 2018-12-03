@@ -1,9 +1,14 @@
-from flask import Flask, render_template, request, jsonify
+import functools
+
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, session, url_for
+)
+from flaskr.database import get_db
+
 import cv2
 import time
 import Path
 import os
-import database as db
 
 # Azure
 import requests
@@ -12,71 +17,20 @@ import json
 from PIL import Image
 from io import BytesIO
 
+bp = Blueprint('experiment', __name__, url_prefix='/experiment')
 
-
-
-# export FLASK_APP=server.py && export FLASK_ENV=development && flask run && flask init-db
-# export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0
-# to kill: sudo lsof -i :5000
-# kill -9 *id*
-
-#Setup azure
+# Setup azure
 # Replace <Subscription Key> with your valid subscription key.
 subscription_key = "1e94ebc81f34468a9e9bea9bf04052cb"
 assert subscription_key
 
-# You must use the same region in your REST call as you used to get your
-# subscription keys. For example, if you got your subscription keys from
-# westus, replace "westcentralus" in the URI below with "westus".
-#
-# Free trial subscription keys are generated in the "westus" region.
-# If you use a free trial subscription key, you shouldn't need to change
-# this region.
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
 
 
-#Start application:
-app = Flask(__name__)
-app.debug = True
-# app.run(host = '192.33.203.197',port=5000)
-app.run(host='0.0.0.0' , port=5000)
-db.init_app(app)
-
-
-@app.route('/')
-def hello_world():
-    return render_template('index.html')
-
-
-@app.route('/diagrams', methods=['GET'])
-def diagram():
-    return render_template('diagrams.html')
-
-
-@app.route('/path', methods=['GET', 'POST'])
-# Function to get the value of the emotions in order to generate the path
-def get_emotions_path():
-    app.logger.debug("JSON received...")
-    app.logger.debug(request.get_json(force=True))
-
-    if request.json:
-        mydata = request.json
-        # return the new image of the path
-        Path.EmoDist([mydata["anger"], mydata["fear"], mydata["disgust"], mydata["contempt"], mydata["happiness"], mydata["sadness"], mydata["surprise"]], mydata["date"])
-        return "Thanks. Your Surprise value is %s" % mydata.get("surprise")
-    else:
-        return "no json received"
-
-@app.route('/experiment', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def get_camera():
     sequence = request.args.get('sequence').split("-")
     print(sequence)
-
-    if "localhost:" in request.base_url:
-        base_url = "http://localhost:5000/"
-    # else:
-    #     #setup new link
-
 
     # 23 elements * 7.5 = 172.5seconds (one element is bad quality)
 
@@ -88,7 +42,7 @@ def get_camera():
     os.mkdir("static/experiments/" + dirname)
 
     # timer = 172.5
-    timer = 7.5
+    timer = 0
     i = -1
     c = 0
 
@@ -128,13 +82,23 @@ def get_camera():
                 }
                 response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
                 analysis = response.json()
+                print(analysis[0]['faceAttributes']['emotion'])
+                try:
+                    emotions_found = analysis[0]['faceAttributes']['emotion']
+                    # db.findIdPerson(el)
+                except:
+                    print("No emotions found")
 
-                emotions_found = analysis[0]['faceAttributes']['emotion']
-                age_found = analysis[0]['faceAttributes']['age']
-                gender_found = analysis[0]['faceAttributes']['gender']
+                # emotions_found = analysis[0]['faceAttributes']['emotion']
+                # age_found = analysis[0]['faceAttributes']['age']
+                # gender_found = analysis[0]['faceAttributes']['gender']
+                # db.findIdPerson(el)
+                # db.insert(fields=('id','person','time','name','anger','contempt','disgust','fear','happiness','neutral','sadness','surprise'), values=(el, TODO, index, emotions_found['anger'], emotions_found['contempt'], emotions_found['disgust'], emotions_found['fear'], emotions_found['happiness'], emotions_found['neutral'], emotions_found['sadness'], emotions_found['surprise']))
 
             except Exception as e:
 	            print("Photo not found:%s-%s" % (el, str(index)))
+
+    db.findIdPerson()
 
 
     # Send all to microsoft (upload all photos) and return a JSON
@@ -158,4 +122,3 @@ def get_camera():
     }
 
     return jsonify(result)
-
