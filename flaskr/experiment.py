@@ -42,7 +42,7 @@ def get_camera():
     os.mkdir("flaskr/static/experiments/" + dirname)
 
     # timer = 172.5
-    timer = 0
+    timer = 10
     i = -1
     c = 0
 
@@ -56,7 +56,7 @@ def get_camera():
             c = 0
         c = c + 1
         # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
-        filename = 'static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
+        filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
         time.sleep(1.5)
         print(timer)
@@ -67,9 +67,10 @@ def get_camera():
     del camera
 
     for el in sequence:
+        f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
         for index in range(1, 5):
             try:
-                name_frame = 'static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
+                name_frame = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
                 # send to microsoft azure
                 image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
                 image_data = open(image_url, "rb").read()
@@ -82,12 +83,13 @@ def get_camera():
                 }
                 response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
                 analysis = response.json()
-                print(analysis[0]['faceAttributes']['emotion'])
                 try:
                     emotions_found = analysis[0]['faceAttributes']['emotion']
-                    # db.findIdPerson(el)
+                    person = int(db.findIdPerson()) + 1
+                    print(emotions_found)
+                    print(person)
                 except:
-                    print("No emotions found")
+                    f.write("No emotion found in photo: %s-%s.jpg\r\n" % (el, str(index)))
 
                 # emotions_found = analysis[0]['faceAttributes']['emotion']
                 # age_found = analysis[0]['faceAttributes']['age']
@@ -96,9 +98,9 @@ def get_camera():
                 # db.insert(fields=('id','person','time','name','anger','contempt','disgust','fear','happiness','neutral','sadness','surprise'), values=(el, TODO, index, emotions_found['anger'], emotions_found['contempt'], emotions_found['disgust'], emotions_found['fear'], emotions_found['happiness'], emotions_found['neutral'], emotions_found['sadness'], emotions_found['surprise']))
 
             except Exception as e:
-	            print("Photo not found:%s-%s" % (el, str(index)))
+	            f.write("No photo found (%s-%s.jpg)\r\n" % (el, str(index)))
+        f.close()
 
-    db.findIdPerson()
 
 
     # Send all to microsoft (upload all photos) and return a JSON
