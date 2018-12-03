@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 )
 
 import cv2
@@ -66,6 +66,8 @@ def get_camera():
     # When everything done, release the capture
     del camera
 
+    person = int(db.findIdPerson()) + 1
+
     for el in sequence:
         f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
         for index in range(1, 5):
@@ -85,9 +87,7 @@ def get_camera():
                 analysis = response.json()
                 try:
                     emotions_found = analysis[0]['faceAttributes']['emotion']
-                    person = int(db.findIdPerson()) + 1
-                    print(emotions_found)
-                    print(person)
+                    db.insertEmotion(emotions_found, person, el, index)
                 except:
                     f.write("No emotion found in photo: %s-%s.jpg\r\n" % (el, str(index)))
 

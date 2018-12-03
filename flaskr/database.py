@@ -54,7 +54,13 @@ def findIdPerson():
     if max_person:
         return max_person[0]
     else:
-        return 0
+        return -1
+
+def insertEmotion(emotion, person, painting, time):
+    """Insert row of emotion into the database."""
+    db = get_db()
+    db.cursor().execute('insert into experience experience(id,person,time,name,anger,contempt,disgust,fear,happiness,neutral,sadness,surprise) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' % (painting, person, time, emotion['anger'], emotion['contempt'], emotion['disgust'], emotion['fear'], emotion['happiness'], emotion['neutral'], emotion['sadness'], emotion['surprise']))
+    db.commit()
 
 
 @click.command('init-db')
