@@ -42,7 +42,7 @@ def get_camera():
     os.mkdir("flaskr/static/experiments/" + dirname)
 
     # timer = 172.5
-    timer = 10
+    timer = 7.5
     i = -1
     c = 0
 
@@ -91,36 +91,16 @@ def get_camera():
                 except:
                     f.write("No emotion found in photo: %s-%s.jpg\r\n" % (el, str(index)))
 
-                # emotions_found = analysis[0]['faceAttributes']['emotion']
-                # age_found = analysis[0]['faceAttributes']['age']
-                # gender_found = analysis[0]['faceAttributes']['gender']
-                # db.findIdPerson(el)
-                # db.insert(fields=('id','person','time','name','anger','contempt','disgust','fear','happiness','neutral','sadness','surprise'), values=(el, TODO, index, emotions_found['anger'], emotions_found['contempt'], emotions_found['disgust'], emotions_found['fear'], emotions_found['happiness'], emotions_found['neutral'], emotions_found['sadness'], emotions_found['surprise']))
-
             except Exception as e:
 	            f.write("No photo found (%s-%s.jpg)\r\n" % (el, str(index)))
         f.close()
 
+    return str(person)
 
 
-    # Send all to microsoft (upload all photos) and return a JSON
-    result =   {
-        "faceRectangle": {
-        "top": 141,
-        "left": 130,
-        "width": 162,
-        "height": 162
-        },
-        "scores": {
-        "anger": 9.29041E-06,
-        "contempt": 0.000118981574,
-        "disgust": 3.15619363E-05,
-        "fear": 0.000589638,
-        "happiness": 0.06630674,
-        "neutral": 0.00555004273,
-        "sadness": 7.44669524E-06,
-        "surprise": 0.9273863
-        }
-    }
-
-    return jsonify(result)
+@bp.route('/emotion', methods=['GET'])
+def getEmotion():
+    person = request.args.get('person')
+    paintings = db.getEmotionsByPerson(person)
+    return jsonify(paintings)
+    # print(painting)

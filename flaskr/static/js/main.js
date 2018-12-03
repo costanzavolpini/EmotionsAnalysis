@@ -151,39 +151,50 @@ $(document).ready(function () {
 				$.ajax({
 					url: '/experiment?sequence=' + sequenceurl,
 					type: 'GET',
-					success: function (response) {
-						// Should receive the new path image
-						your_result = response.scores
-						$('#modalVideo').modal('hide')
-						$('#modalResultExperiment').modal('show')
-
-						var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
-						var your = new Chart(ctxRyour, {
-							type: 'radar',
-							data: {
-								labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-								datasets: [{
-									label: "YOUR RESULT",
-									data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
-									backgroundColor: [
-										'rgb(254, 164, 126)',
-									],
-									borderColor: [
-										'rgba(198, 40, 40, .7)',
-									],
-									borderWidth: 2
-								}]
+					success: function (person) {
+						console.log(person)
+						$.ajax({
+							url: '/experiment/emotion?person=' + person,
+							type: 'GET',
+							success: function (results) {
+								console.log(results)
 							},
-							options: {
-								responsive: true,
-								scale: {
-									ticks: {
-										display: false,
-										maxTicksLimit: 1
-									}
-								}
+							error: function (error) {
+								console.log(error);
 							}
-						});
+						})
+						// // Should receive the new path image
+						// your_result = response.scores
+						// $('#modalVideo').modal('hide')
+						// $('#modalResultExperiment').modal('show')
+
+						// var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
+						// var your = new Chart(ctxRyour, {
+						// 	type: 'radar',
+						// 	data: {
+						// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+						// 		datasets: [{
+						// 			label: "YOUR RESULT",
+						// 			data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
+						// 			backgroundColor: [
+						// 				'rgb(254, 164, 126)',
+						// 			],
+						// 			borderColor: [
+						// 				'rgba(198, 40, 40, .7)',
+						// 			],
+						// 			borderWidth: 2
+						// 		}]
+						// 	},
+						// 	options: {
+						// 		responsive: true,
+						// 		scale: {
+						// 			ticks: {
+						// 				display: false,
+						// 				maxTicksLimit: 1
+						// 			}
+						// 		}
+						// 	}
+						// });
 					},
 					error: function (error) {
 						console.log(error);

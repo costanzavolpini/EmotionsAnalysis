@@ -4,6 +4,32 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
+def generatePaintingsMap():
+    paintingsDic = {}
+    paintingsDic["101"] = "Chinese fans"
+    paintingsDic["102"] = "Chinese fans 4"
+    paintingsDic["103"] = "Creeping forward"
+    paintingsDic["104"] = "Forklift"
+    paintingsDic["105"] = "Head portrait"
+    paintingsDic["106"] = "Info port"
+    paintingsDic["107"] = "Info wall"
+    paintingsDic["108"] = "Learn by figure"
+    paintingsDic["109"] = "Monastery"
+    paintingsDic["110"] = "New culture need more _"
+    paintingsDic["111"] = "Nine-dragon screen"
+    paintingsDic["112"] = "Open field of finance"
+    paintingsDic["113"] = "Pipes"
+    paintingsDic["114"] = "Policier and civilian 2"
+    paintingsDic["115"] = "Provisional wall"
+    paintingsDic["116"] = "Road block"
+    paintingsDic["117"] = "Sawmill"
+    paintingsDic["118"] = "Suojia Village 1"
+    paintingsDic["119"] = "The inheritance"
+    paintingsDic["120"] = "The laid-off workers"
+    paintingsDic["121"] = "Unify the thoughts to promote education"
+    paintingsDic["122"] = "United struggling"
+    paintingsDic["123"] = "Vore registration is in accordance with the law"
+    return paintingsDic
 
 def get_db():
     if 'db' not in g:
@@ -47,6 +73,9 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
+def getEmotionsByPerson(person):
+    paintings = query_db('select * from experience where person = %s' % (person), one=False)
+    return paintings
 
 def findIdPerson():
     """Find the maximum id used for a person until now. The person id is used to identify an user."""
@@ -58,9 +87,17 @@ def findIdPerson():
 
 def insertEmotion(emotion, person, painting, time):
     """Insert row of emotion into the database."""
-    db = get_db()
-    db.cursor().execute('insert into experience experience(id,person,time,name,anger,contempt,disgust,fear,happiness,neutral,sadness,surprise) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' % (painting, person, time, emotion['anger'], emotion['contempt'], emotion['disgust'], emotion['fear'], emotion['happiness'], emotion['neutral'], emotion['sadness'], emotion['surprise']))
-    db.commit()
+    print("eh")
+    try:
+        paintingsDic = generatePaintingsMap()
+        db = get_db()
+        db.commit()
+        query = ('INSERT INTO experience (id,person,time,name,anger,contempt,disgust,fear,happiness,neutral,sadness,surprise) VALUES (%s, %s, %s, "%s", %s, %s, %s, %s, %s, %s, %s, %s)' % (painting, person, time, paintingsDic[painting], emotion['anger'], emotion['contempt'], emotion['disgust'], emotion['fear'], emotion['happiness'], emotion['neutral'], emotion['sadness'], emotion['surprise']))
+        print(query)
+        db.cursor().execute(query)
+        db.commit()
+    except Exception as e:
+        print(str(e))
 
 
 @click.command('init-db')
