@@ -3,12 +3,12 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from flaskr.database import get_db
 
 import cv2
 import time
 import Path
 import os
+import database as db
 
 # Azure
 import requests
@@ -39,7 +39,7 @@ def get_camera():
     time.sleep(0.1)
 
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
-    os.mkdir("static/experiments/" + dirname)
+    os.mkdir("flaskr/static/experiments/" + dirname)
 
     # timer = 172.5
     timer = 0

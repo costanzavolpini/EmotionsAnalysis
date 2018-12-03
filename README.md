@@ -2,6 +2,7 @@ emotions-museum.github.io
 
 
 # Initialize database
+Delete flaskr.sqlite inside instance folder
 ```flask init-db```
 
 # For Linux and Mac:
