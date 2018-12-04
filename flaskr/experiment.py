@@ -117,6 +117,22 @@ def getEmotion():
 
     return jsonify(ps)
 
+@bp.route('/table', methods=['GET'])
+def getTable():
+    table = {}
+    ts = db.query_db("select * from experience", one=False)
+    emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
+    for t in ts:
+        id = t[0]
+        if id not in table:
+            table[id] = {"count": 0, "name": t[3], "anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "neutral": 0, "sadness": 0, "surprise": 0}
+
+        table[id]['count'] += 1
+        c = table[id]['count']
+        for i, emotion in enumerate(emotions):
+            table[id][emotion] = ((table[id][emotion]*(c-1))/c) + (t[i+4]/c)
+
+    return jsonify(table)
 
 # TODO:
 # fix bugs

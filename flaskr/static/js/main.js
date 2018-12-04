@@ -115,23 +115,23 @@ $(document).ready(function () {
 	}
 
 	// Generate chart
-	function generateChart(idCanvas, res){
+	function generateChart(idCanvas, res) {
 		var ctx = document.getElementById(idCanvas).getContext('2d');
 		max = null;
 		min = null;
 		// Find max and min
-		for (i in res){
-			if(i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
-				if(max == null || res[i] > max) max = res[i]
-				if(min == null || res[i] < min) min = res[i]
+		for (i in res) {
+			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
+				if (max == null || res[i] > max) max = res[i]
+				if (min == null || res[i] < min) min = res[i]
 			}
 		}
 		data = {}
 		//normalize and log(x + 1)
-		for(i in res){
-			if(i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time")
-				var normalized = (res[i]-min)/(max - min)
-				data[i] = Math.log(normalized + 1)
+		for (i in res) {
+			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time")
+				var normalized = (res[i] - min) / (max - min)
+			data[i] = Math.log(normalized + 1)
 		}
 
 		// Add comparison with other people
@@ -165,79 +165,93 @@ $(document).ready(function () {
 
 	// Take photos
 	$('#experiment').click(function (e) {
-		$('#modalVideo').modal({'show': true, backdrop:'static'})
-		navigator.permissions.query({
-				name: 'camera'
-			})
-			.then((permissionObj) => {
-				var sequence = experiment();
-				setupSeqExperiment(sequence);
+		$.ajax({
+			url: '/experiment/table',
+			type: 'GET',
+			success: function (table) {
+				console.log(table)
+				$('#modalVideo').modal({
+					'show': true,
+					backdrop: 'static'
+				})
+				navigator.permissions.query({
+						name: 'camera'
+					})
+					.then((permissionObj) => {
+						var sequence = experiment();
+						setupSeqExperiment(sequence);
 
-				//Generate path to pass in the get
-				var sequenceurl = sequence.join("-");
-				console.log(permissionObj.state);
+						//Generate path to pass in the get
+						var sequenceurl = sequence.join("-");
+						console.log(permissionObj.state);
 
-				$.ajax({
-					url: '/experiment?sequence=' + sequenceurl,
-					type: 'GET',
-					success: function (person) {
-						console.log(person)
 						$.ajax({
-							url: '/experiment/emotion?person=' + person,
+							url: '/experiment?sequence=' + sequenceurl,
 							type: 'GET',
-							success: function (results) {
-								$('#modalVideo').modal('hide')
-								$('#modalResultExperiment').modal('show')
+							success: function (person) {
+								console.log(person)
+								$.ajax({
+									url: '/experiment/emotion?person=' + person,
+									type: 'GET',
+									success: function (results) {
+										$('#modalVideo').modal('hide')
+										$('#modalResultExperiment').modal('show')
 
-								for (var i in results) {
-									res = results[i]
-									var container = document.getElementById("resultExperiment");
-									container.innerHTML += `<div><canvas id="${res['person'] + "-" + res['id']}"></canvas></div>`
-									var idCanvas = `${res['person'] + "-" + res['id']}`
-									generateChart(idCanvas, res)
-								}
+										for (var i in results) {
+											res = results[i]
+											// send get request for actual value of this painting!
+											var container = document.getElementById("resultExperiment");
+											container.innerHTML += `<div><canvas id="${res['person'] + "-" + res['id']}"></canvas></div>`
+											var idCanvas = `${res['person'] + "-" + res['id']}`
+											generateChart(idCanvas, res)
+										}
+									},
+									error: function (error) {
+										console.log(error);
+									}
+								})
+
+
+								// var your = new Chart(ctxRyour, {
+								// 	type: 'radar',
+								// 	data: {
+								// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+								// 		datasets: [{
+								// 			label: "YOUR RESULT",
+								// 			data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
+								// 			backgroundColor: [
+								// 				'rgb(254, 164, 126)',
+								// 			],
+								// 			borderColor: [
+								// 				'rgba(198, 40, 40, .7)',
+								// 			],
+								// 			borderWidth: 2
+								// 		}]
+								// 	},
+								// 	options: {
+								// 		responsive: true,
+								// 		scale: {
+								// 			ticks: {
+								// 				display: false,
+								// 				maxTicksLimit: 1
+								// 			}
+								// 		}
+								// 	}
+								// });
 							},
 							error: function (error) {
 								console.log(error);
 							}
-						})
-
-
-						// var your = new Chart(ctxRyour, {
-						// 	type: 'radar',
-						// 	data: {
-						// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-						// 		datasets: [{
-						// 			label: "YOUR RESULT",
-						// 			data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
-						// 			backgroundColor: [
-						// 				'rgb(254, 164, 126)',
-						// 			],
-						// 			borderColor: [
-						// 				'rgba(198, 40, 40, .7)',
-						// 			],
-						// 			borderWidth: 2
-						// 		}]
-						// 	},
-						// 	options: {
-						// 		responsive: true,
-						// 		scale: {
-						// 			ticks: {
-						// 				display: false,
-						// 				maxTicksLimit: 1
-						// 			}
-						// 		}
-						// 	}
-						// });
-					},
-					error: function (error) {
-						console.log(error);
-					}
-				});
-			})
-			.catch((error) => {
-				console.log('Got error :', error);
-			})
+						});
+					})
+					.catch((error) => {
+						console.log('Got error :', error);
+					})
+			},
+			error: function (error) {
+				console.log(error);
+			}
+		})
 	});
 
 
@@ -322,9 +336,9 @@ $(document).ready(function () {
 			ride: 'carousel'
 		})
 
-		$('#slideShowExperiment').hover(function(){
+		$('#slideShowExperiment').hover(function () {
 			$("#slideShowExperiment").carousel('cycle');
-		 });
+		});
 
 		return sequence;
 	}
@@ -370,7 +384,7 @@ $(document).ready(function () {
 				temp_for_later_res = this.res;
 			}
 
-			if(id == 1077){
+			if (id == 1077) {
 				result_arr = temp_for_later_res;
 			}
 
@@ -505,7 +519,7 @@ $(document).ready(function () {
 			});
 
 			var img = document.createElement("img");
-			if(id == 1077) img.setAttribute("src", "/static/images/bolin/107.jpg");
+			if (id == 1077) img.setAttribute("src", "/static/images/bolin/107.jpg");
 			else img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
 
 			a.appendChild(img);
