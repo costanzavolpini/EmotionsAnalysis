@@ -1127,3 +1127,9 @@ h5.text-uppercase.font-weight-bold {
 .mg-20-top{
 	margin-top: 20px;
 }
+
+#resultExperiment {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 10px;
+  }

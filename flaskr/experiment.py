@@ -102,5 +102,28 @@ def get_camera():
 def getEmotion():
     person = request.args.get('person')
     paintings = db.getEmotionsByPerson(person)
-    return jsonify(paintings)
-    # print(painting)
+    ps = {}
+    print(paintings)
+    emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
+    for paint in paintings:
+        print(paint)
+        pain_id = paint[0]
+
+        if pain_id not in ps:
+            ps[pain_id] = {"person": paint[1], "time": 0, "name": paint[3], "anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "neutral": 0, "sadness": 0, "surprise": 0}
+
+        ps[pain_id]['time'] += 1
+        t = ps[pain_id]['time']
+        for i, emotion in enumerate(emotions):
+            ps[pain_id][emotion] = ((ps[pain_id][emotion]*(t-1))/t) + (paint[i+4]/t)
+
+    return jsonify(ps)
+
+
+# TODO:
+# fix bugs
+# put high quality photo for experiment
+# return cluster as result with overlap global results
+# put photos already saved (upload it!)
+# add waiting gif!
+# server?

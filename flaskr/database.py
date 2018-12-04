@@ -87,18 +87,12 @@ def findIdPerson():
 
 def insertEmotion(emotion, person, painting, time):
     """Insert row of emotion into the database."""
-    print("eh")
-    try:
-        paintingsDic = generatePaintingsMap()
-        db = get_db()
-        db.commit()
-        query = ('INSERT INTO experience (id,person,time,name,anger,contempt,disgust,fear,happiness,neutral,sadness,surprise) VALUES (%s, %s, %s, "%s", %s, %s, %s, %s, %s, %s, %s, %s)' % (painting, person, time, paintingsDic[painting], emotion['anger'], emotion['contempt'], emotion['disgust'], emotion['fear'], emotion['happiness'], emotion['neutral'], emotion['sadness'], emotion['surprise']))
-        print(query)
-        db.cursor().execute(query)
-        db.commit()
-    except Exception as e:
-        print(str(e))
-
+    paintingsDic = generatePaintingsMap()
+    db = get_db()
+    db.commit()
+    query = ('INSERT INTO experience (id,person,time,name,anger,contempt,disgust,fear,happiness,neutral,sadness,surprise) VALUES (%s, %s, %s, "%s", %s, %s, %s, %s, %s, %s, %s, %s)' % (painting, person, time, paintingsDic[painting], emotion['anger'], emotion['contempt'], emotion['disgust'], emotion['fear'], emotion['happiness'], emotion['neutral'], emotion['sadness'], emotion['surprise']))
+    db.cursor().execute(query)
+    db.commit()
 
 @click.command('init-db')
 @with_appcontext

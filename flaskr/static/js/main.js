@@ -157,18 +157,49 @@ $(document).ready(function () {
 							url: '/experiment/emotion?person=' + person,
 							type: 'GET',
 							success: function (results) {
+								$('#modalVideo').modal('hide')
+								$('#modalResultExperiment').modal('show')
 								console.log(results)
+								for (var i in results) {
+									res = results[i]
+									var container = document.getElementById("resultExperiment");
+									container.innerHTML += `<div><canvas id="${res['person'] + "-" + res['id']}"></canvas></div>`
+									var ctx = document.getElementById(`${res['person'] + "-" + res['id']}`).getContext('2d');
+									// Add comparison with other people
+									var yourRes = new Chart(ctx, {
+											type: 'radar',
+											data: {
+												labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+												datasets: [{
+													label: res['name'],
+													data: [res['anger'], res['contempt'], res['disgust'], res['fear'], res['happiness'], res['sadness'], res['surprise']],
+													backgroundColor: [
+														'rgb(254, 164, 126)',
+													],
+													borderColor: [
+														'rgba(198, 40, 40, .7)',
+													],
+													borderWidth: 2
+												}]
+											},
+											options: {
+												responsive: true,
+												scale: {
+													ticks: {
+														display: false,
+														maxTicksLimit: 1
+													}
+												}
+											}
+										});
+								}
 							},
 							error: function (error) {
 								console.log(error);
 							}
 						})
-						// // Should receive the new path image
-						// your_result = response.scores
-						// $('#modalVideo').modal('hide')
-						// $('#modalResultExperiment').modal('show')
 
-						// var ctxRyour = document.getElementById("resultExperiment").getContext('2d');
+
 						// var your = new Chart(ctxRyour, {
 						// 	type: 'radar',
 						// 	data: {
