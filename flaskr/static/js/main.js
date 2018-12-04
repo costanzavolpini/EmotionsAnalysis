@@ -114,27 +114,7 @@ $(document).ready(function () {
 		global_sequence = sequence
 	}
 
-	// function getNextExperimentImage() {
-	// 	if (global_sequence.length == 0) {
-	// 		$.ajax({
-	// 			url: '/closeCamera',
-	// 			type: 'GET',
-	// 			success: function (response) {
-	// 				console.log(response)
-	// 			},
-	// 			error: function (error) {
-	// 				console.log(error);
-	// 			}
-	// 		});
-	// 		return null
-	// 	} else {
-	// 		var head = global_sequence[0]
-	// 		setupSeqExperiment(global_sequence.shift)
-	// 		return head
-	// 	}
-	// }
-
-
+	// Generate chart
 	function generateChart(idCanvas, res){
 		var ctx = document.getElementById(idCanvas).getContext('2d');
 		max = null;
@@ -147,13 +127,13 @@ $(document).ready(function () {
 			}
 		}
 		data = {}
-		//normalize
+		//normalize and log(x + 1)
 		for(i in res){
 			if(i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time")
-				data[i] = (res[i]-min)/(max - min)
+				var normalized = (res[i]-min)/(max - min)
+				data[i] = Math.log(normalized + 1)
 		}
 
-		// res['anger'], res['contempt'], res['disgust'], res['fear'], res['happiness'], res['sadness'], res['surprise']
 		// Add comparison with other people
 		var yourRes = new Chart(ctx, {
 			type: 'radar',
@@ -208,7 +188,7 @@ $(document).ready(function () {
 							success: function (results) {
 								$('#modalVideo').modal('hide')
 								$('#modalResultExperiment').modal('show')
-								console.log(results)
+
 								for (var i in results) {
 									res = results[i]
 									var container = document.getElementById("resultExperiment");
