@@ -77,6 +77,11 @@ def getEmotionsByPerson(person):
     paintings = query_db('select * from experience where person = %s' % (person), one=False)
     return paintings
 
+def getEmotionByPaiting(painting):
+    datas = query_db('select * from experience where id = %s' % (painting), one=False)
+    return datas
+
+
 def findIdPerson():
     """Find the maximum id used for a person until now. The person id is used to identify an user."""
     max_person = query_db('select max(person) from experience', one=True)

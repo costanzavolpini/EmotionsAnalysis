@@ -114,53 +114,80 @@ $(document).ready(function () {
 		global_sequence = sequence
 	}
 
-	// Generate chart
-	function generateChart(idCanvas, res) {
-		var ctx = document.getElementById(idCanvas).getContext('2d');
-		max = null;
-		min = null;
-		// Find max and min
-		for (i in res) {
-			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
-				if (max == null || res[i] > max) max = res[i]
-				if (min == null || res[i] < min) min = res[i]
-			}
-		}
-		data = {}
-		//normalize and log(x + 1)
-		for (i in res) {
-			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time")
-				var normalized = (res[i] - min) / (max - min)
-			data[i] = Math.log(normalized + 1)
-		}
-
-		// Add comparison with other people
-		var yourRes = new Chart(ctx, {
-			type: 'radar',
-			data: {
-				labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-				datasets: [{
-					label: res['name'],
-					data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
-					backgroundColor: [
-						'rgb(254, 164, 126)',
-					],
-					borderColor: [
-						'rgba(198, 40, 40, .7)',
-					],
-					borderWidth: 2
-				}]
-			},
-			options: {
-				responsive: true,
-				scale: {
-					ticks: {
-						display: false,
-						maxTicksLimit: 1
-					}
+	function normalizeData(res) {
+		return new Promise(function (resolve, reject) {
+			max = null;
+			min = null;
+			// Find max and min
+			for (i in res) {
+				if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
+					if (max == null || res[i] > max) max = res[i]
+					if (min == null || res[i] < min) min = res[i]
 				}
 			}
+			data = {}
+			//normalize and log(x + 1)
+			for (i in res) {
+				if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
+					var normalized = (res[i] - min) / (max - min)
+					data[i] = Math.log(normalized + 1)
+				}
+			}
+			resolve(data);
 		});
+	}
+
+	// Generate chart
+	function generateChart(idCanvas, res, table) {
+		return new Promise(async function (resolve, reject) {
+			var canvas = document.getElementById(idCanvas);
+			console.log("CANVAS ", canvas);
+
+			if (canvas == null) reject("id not valid");
+			var ctx = canvas.getContext('2d');
+			normalizeData(res).then(async function (data) {
+				name_painting = res['name']
+				dataset_1 = {
+					label: "you",
+					data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
+					backgroundColor: ['rgba(254, 164, 126, .5)', ],
+					borderColor: ['rgba(198, 40, 40, .7)', ],
+					borderWidth: 2
+				}
+				if (table) {
+					data_table = await normalizeData(table)
+					dataset_2 = {
+						label: "general",
+						data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
+						backgroundColor: ['rgba(139, 69, 19, .5)', ],
+						borderColor: ['rgba(139, 69, 19, .9)', ],
+						borderWidth: 2
+					}
+					datasets = [dataset_1, dataset_2]
+				} else datasets = [dataset_1]
+
+				// Add comparison with other people
+				var yourRes = new Chart(ctx, {
+					type: 'radar',
+					data: {
+						labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+						datasets: datasets
+					},
+					options: {
+						responsive: true,
+						scale: {
+							ticks: {
+								display: false,
+								maxTicksLimit: 1
+							}
+						}
+					}
+				});
+
+				resolve(yourRes);
+			});
+		});
+
 	}
 
 	// Take photos
@@ -194,50 +221,33 @@ $(document).ready(function () {
 									url: '/experiment/emotion?person=' + person,
 									type: 'GET',
 									success: function (results) {
-										$('#modalVideo').modal('hide')
-										$('#modalResultExperiment').modal('show')
+										$('#modalVideo').modal('hide');
+										$('#modalResultExperiment').modal('show');
 
-										for (var i in results) {
-											res = results[i]
-											// send get request for actual value of this painting!
-											var container = document.getElementById("resultExperiment");
-											container.innerHTML += `<div><canvas id="${res['person'] + "-" + res['id']}"></canvas></div>`
-											var idCanvas = `${res['person'] + "-" + res['id']}`
-											generateChart(idCanvas, res)
-										}
+										// for (var i in results) {
+										// 	res = results[i]
+										// 	// send get request for actual value of this painting!
+										// 	var container = document.getElementById("resultExperiment");
+										// 	container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+										// 	var idCanvas = `${res['person'] + "-" + i}`
+										// 	generateChart(idCanvas, res, table[i])
+										// }
+
+										(async () => {
+											for (var i in results) {
+												res = results[i]
+												// send get request for actual value of this painting!
+												var container = document.getElementById("resultExperiment");
+												container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+												var idCanvas = `${res['person'] + "-" + i}`
+												await generateChart(idCanvas, res, table[i]);
+											}
+										})()
 									},
 									error: function (error) {
 										console.log(error);
 									}
 								})
-
-
-								// var your = new Chart(ctxRyour, {
-								// 	type: 'radar',
-								// 	data: {
-								// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-								// 		datasets: [{
-								// 			label: "YOUR RESULT",
-								// 			data: [your_result.anger, your_result.contempt, your_result.disgust, your_result.fear, your_result.happiness, your_result.sadness, your_result.surprise],
-								// 			backgroundColor: [
-								// 				'rgb(254, 164, 126)',
-								// 			],
-								// 			borderColor: [
-								// 				'rgba(198, 40, 40, .7)',
-								// 			],
-								// 			borderWidth: 2
-								// 		}]
-								// 	},
-								// 	options: {
-								// 		responsive: true,
-								// 		scale: {
-								// 			ticks: {
-								// 				display: false,
-								// 				maxTicksLimit: 1
-								// 			}
-								// 		}
-								// 	}
-								// });
 							},
 							error: function (error) {
 								console.log(error);
@@ -264,16 +274,6 @@ $(document).ready(function () {
 	$('#carouselImages').carousel({
 		interval: 1500
 	})
-
-	// // Select floor
-	// $('#selectFloor').on('show.bs.dropdown', function (ev) {
-	// 	// do something…
-	// 	console.log(ev.target)
-	// })
-
-	// $(".dropdown-menu li a").click(function () {
-	// 	$(".btn:first-child").html($(this).text() + ' <span class="caret"></span>');
-	// });
 
 	// Function to generate a sequence of slideshow and so on
 	// open on click!
@@ -304,17 +304,11 @@ $(document).ready(function () {
 
 		// Used like so
 		sequence = shuffle(sequence);
-		//   console.log(sequence);
-
-		// var inner = document.createElement("div");
-		// inner.classList.add("carousel-inner");
 		var inner = "<div class='carousel-inner'>"
 
 		var first = true;
 
 		sequence.forEach(function (value_random) {
-			// var el = document.createElement("div");
-			// el.classList.add("carousel-item");
 			if (first) {
 				inner += "<div class='carousel-item active'>"
 				first = false
@@ -344,23 +338,133 @@ $(document).ready(function () {
 	}
 
 
-	// JSON ------------
-	// Read from json data
-	function readTextFile(file, callback) {
-		var rawFile = new XMLHttpRequest();
-		rawFile.overrideMimeType("application/json");
-		rawFile.open("GET", file, true);
-		rawFile.onreadystatechange = function () {
-			if (rawFile.readyState === 4 && rawFile.status == "200") {
-				callback(rawFile.responseText);
+	function openModalChart(e) {
+		// "modal-" + id
+		$.ajax({
+			url: '/experiment/painting?id=' + e,
+			type: 'GET',
+			success: async function (result) {
+				datas = {}
+
+				for (var r in result) {
+					datas[r] = await normalizeData(result[r]);
+				}
+
+				datasMean = {"anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "sadness": 0, "surprise": 0}
+				emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
+				t = 0;
+
+				for (var i in datas){
+					t ++;
+					for (el in emotions){
+						emotion = emotions[el]
+						datasMean[emotion] = (((datasMean[emotion]*(t-1))/t) + datas[i][emotion]/t)
+					}
+				}
+
+				generateChart(`canvas-${e}`, datasMean);
+
+				// console.log(datas);
+
+				// // Add code for chart line
+				// var ctxLine = document.getElementById(`canvasline-${e}`).getContext('2d');
+				// var myRadarChart = new Chart(ctxLine, {
+				// 	type: 'line',
+				// 	data: {
+				// 		labels: ["1s", "2s", "3s", "4s", "5s"],
+				// 		datasets: [{
+				// 				label: "Anger",
+				// 				data: [datas['1']['anger'], datas['2']['anger'], datas['3']['anger'], datas['4']['anger'], datas['5']['anger']],
+				// 				backgroundColor: [
+				// 					'rgba(244, 237, 212, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(244, 237, 212, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Fear",
+				// 				data: [datas['1']['fear'], datas['2']['fear'], datas['3']['fear'], datas['4']['fear'], datas['5']['fear']],
+				// 				backgroundColor: [
+				// 					'rgba(244, 223, 151, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(244, 223, 151, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Disgust",
+				// 				data: [datas['1']['disgust'], datas['2']['disgust'], datas['3']['disgust'], datas['4']['disgust'], datas['5']['disgust']],
+				// 				backgroundColor: [
+				// 					'rgba(236, 200, 106, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(236, 200, 106, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Contempt",
+				// 				data: [datas['1']['contempt'], datas['2']['contempt'], datas['3']['contempt'], datas['4']['contempt'], datas['5']['contempt']],
+				// 				backgroundColor: [
+				// 					'rgba(253, 160, 133, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(253, 160, 133, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Happiness",
+				// 				data: [datas['1']['happiness'], datas['2']['happiness'], datas['3']['happiness'], datas['4']['happiness'], datas['5']['happiness']],
+				// 				backgroundColor: [
+				// 					'rgba(208, 131, 109, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(208, 131, 109, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Sadness",
+				// 				data: [datas['1']['sadness'], datas['2']['sadness'], datas['3']['sadness'], datas['4']['sadness'], datas['5']['sadness']],
+				// 				backgroundColor: [
+				// 					'rgba(139, 88, 73, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(139, 88, 73, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			},
+				// 			{
+				// 				label: "Surprise",
+				// 				data: [datas['1']['surprise'], datas['2']['surprise'], datas['3']['surprise'], datas['4']['surprise'], datas['5']['surprise']],
+				// 				backgroundColor: [
+				// 					'rgba(69, 44, 37, .5)',
+				// 				],
+				// 				borderColor: [
+				// 					'rgba(69, 44, 37, .9)',
+				// 				],
+				// 				borderWidth: 1
+				// 			}
+				// 		]
+				// 	},
+				// 	options: {
+				// 		responsive: true
+				// 	}
+				// });
+			},
+			error: function (error) {
+				console.log(error);
 			}
-		}
-		rawFile.send(null);
+		});
 	}
 
-	//usage:
-	readTextFile("/static/js/database.json", function (text) {
-		var data = JSON.parse(text);
+
+	function fillCarousel() {
+		var ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"]
 		var count = 0;
 
 		div_row = document.createElement("div");
@@ -369,25 +473,12 @@ $(document).ready(function () {
 		div_item = document.createElement("div");
 		div_item.classList.add("carousel-item", "active");
 
-		div_item.appendChild(div_row)
+		div_item.appendChild(div_row);
 
 		$("#container-bolin")[0].appendChild(div_item);
 
-		$(jQuery.parseJSON(JSON.stringify(data))).each(function () {
-			var id = this.id;
-			var result_arr = this.res;
-			var name = this.name;
-
-			var temp_for_later_res;
-
-			if (id == 107) { //to duplicate
-				temp_for_later_res = this.res;
-			}
-
-			if (id == 1077) {
-				result_arr = temp_for_later_res;
-			}
-
+		for (i in ids) {
+			id = ids[i]
 			// Add Modals
 			// Generate modal
 			var div_out_modal = document.createElement("div");
@@ -483,8 +574,6 @@ $(document).ready(function () {
 			statistics.appendChild(statistics_left);
 			statistics.appendChild(statistics_right);
 
-			// <i class="fas fa-female"></i>
-
 			div_modal_body.appendChild(statistics);
 
 			var div_modal_footer = document.createElement("div");
@@ -512,15 +601,14 @@ $(document).ready(function () {
 			a.setAttribute("id", "a-" + id);
 			a.setAttribute("data-toggle", "modal");
 			a.setAttribute("data-target", "modal-" + id);
-			a.classList.add("work-box");
+			a.classList.add("work-box", "imageBolin");
 
 			a.addEventListener("click", function () {
 				$("#modal-" + id).modal('show');
 			});
 
 			var img = document.createElement("img");
-			if (id == 1077) img.setAttribute("src", "/static/images/bolin/107.jpg");
-			else img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
+			img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
 
 			a.appendChild(img);
 
@@ -554,224 +642,87 @@ $(document).ready(function () {
 				$("#container-bolin")[0].appendChild(div_item);
 			}
 
-
 			div_row.appendChild(div);
 			count = count + 1;
 
+		}
 
-			var length = result_arr.length;
-
-			var res = [0, 0, 0, 0, 0, 0, 0]
-
-			// find mean
-			for (var i = 0; i < length; i++) {
-				var max = null
-
-				for (var j = 0; j < result_arr[i].length; j++) {
-					if (j != 5) { //remove neutral
-						if ((max == null) || (result_arr[i][j] > max)) {
-							max = result_arr[i][j]
-						}
-					}
-				}
-
-				for (var j = 0; j < result_arr[i].length; j++) {
-					if (j < 5) { //remove neutral
-						var normalized = result_arr[i][j] / max
-						res[j] = res[j] + normalized
-					} else if (j > 5) {
-						var normalized = result_arr[i][j] / max
-						res[j - 1] = res[j - 1] + normalized
-					}
-				}
-			}
-
-			// invert happiness with neutral just for a nicer result
-			var temp = res[3]
-			res[3] = res[1]
-			res[1] = temp
-
-
-			// Add code for chart
-			var ctxR = document.getElementById("canvas-" + id).getContext('2d');
-			var myRadarChart = new Chart(ctxR, {
-				type: 'radar',
-				data: {
-					// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
-					// invert fear and contempt
-					// fear 3 contempt 1
-					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-					datasets: [{
-						label: name,
-						data: res,
-						backgroundColor: [
-							'rgba(254, 164, 126, .7)',
-						],
-						borderColor: [
-							'rgba(198, 40, 40, .7)',
-						],
-						pointBackgroundColor: [
-							'rgba(254, 164, 126, .7)',
-						],
-						pointBorderColor: [
-							'rgba(198, 40, 40, .7)',
-						],
-						borderWidth: 1
-					}]
-				},
-				options: {
-					responsive: true,
-					scale: {
-						ticks: {
-							display: false,
-							maxTicksLimit: 1
-						}
-					}
-				}
+		setTimeout(function () {
+			$(".imageBolin").each(function () {
+				$(this)[0].addEventListener('click', openModalChart(($(this)[0].id).split('-')[1]), false);
 			});
+		}, 500);
+	}
 
-			// Add code for chart line
-			var ctxLine = document.getElementById("canvasline-" + id).getContext('2d');
-			var myRadarChart = new Chart(ctxLine, {
-				type: 'line',
-				data: {
-					labels: ["1s", "5s", "10s", "15s", "20s", "25s", "30s"],
-					datasets: [{
-							label: "Anger",
-							data: [10, 0, 0, 50, 40, 10, 20],
-							backgroundColor: [
-								'rgba(244, 237, 212, .5)',
-							],
-							borderColor: [
-								'rgba(244, 237, 212, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Fear",
-							data: [10, 30, 40, 50, 80, 10, 20],
-							backgroundColor: [
-								'rgba(244, 223, 151, .5)',
-							],
-							borderColor: [
-								'rgba(244, 223, 151, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Disgust",
-							data: [10, 0, 40, 30, 40, 90, 20],
-							backgroundColor: [
-								'rgba(236, 200, 106, .5)',
-							],
-							borderColor: [
-								'rgba(236, 200, 106, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Contempt",
-							data: [90, 0, 0, 50, 80, 10, 20],
-							backgroundColor: [
-								'rgba(253, 160, 133, .5)',
-							],
-							borderColor: [
-								'rgba(253, 160, 133, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Happiness",
-							data: [1, 50, 30, 5, 40, 1, 2],
-							backgroundColor: [
-								'rgba(208, 131, 109, .5)',
-							],
-							borderColor: [
-								'rgba(208, 131, 109, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Sadness",
-							data: [1, 0, 0, 5, 40, 90, 8],
-							backgroundColor: [
-								'rgba(139, 88, 73, .5)',
-							],
-							borderColor: [
-								'rgba(139, 88, 73, .9)',
-							],
-							borderWidth: 1
-						},
-						{
-							label: "Surprise",
-							data: [1, 9, 0, 50, 4, 9, 2],
-							backgroundColor: [
-								'rgba(69, 44, 37, .5)',
-							],
-							borderColor: [
-								'rgba(69, 44, 37, .9)',
-							],
-							borderWidth: 1
-						}
-					]
-
-				},
-				options: {
-					responsive: true
-				}
-			});
-
-			// // TODO: detect if we are in url /diagrams
-			// var div = document.createElement("div");
-			// div.classList.add("col");
-
-			// var canvas = document.createElement("canvas");
-			// canvas.setAttribute("id", id);
-
-			// div.appendChild(canvas);
-
-			// $("#diagrams")[0].appendChild(div);
-
-			// Add code for chart
-			// var ctxR = document.getElementById(id).getContext('2d');
-			// var myRadarChart = new Chart(ctxR, {
-			// 	type: 'radar',
-			// 	data: {
-			// 		// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
-			// 		// invert fear and contempt
-			// 		// fear 3 contempt 1
-			// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-			// 		datasets: [{
-			// 			label: name,
-			// 			data: res,
-			// 			backgroundColor: [
-			// 				'rgba(244, 240, 242, .9)',
-			// 			],
-			// 			borderColor: [
-			// 				'rgba(213, 208, 206, .7)',
-			// 			],
-			// 			pointBackgroundColor: [
-			// 				'rgba(244, 240, 242, .9)',
-			// 			],
-			// 			pointBorderColor: [
-			// 				'rgba(213, 208, 206, .7)',
-			// 			],
-			// 			borderWidth: 1
-			// 		}]
-			// 	},
-			// 	options: {
-			// 		responsive: true,
-			// 		scale: {
-			// 			ticks: {
-			// 				display: false,
-			// 				maxTicksLimit: 1
-			// 			}
-			// 		}
-			// 	}
-			// });
+	fillCarousel();
 
 
-		});
 
-	});
+	//usage:
+	// readTextFile("/static/js/database.json", function (text) {
+	// 	// ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"]
+
+
+	// 	$(jQuery.parseJSON(JSON.stringify(data))).each(function () {
+	// 		var id = this.id;
+	// 		var result_arr = this.res;
+	// 		var name = this.name;
+
+	// 		var temp_for_later_res;
+
+
+
+	// 		// // TODO: detect if we are in url /diagrams
+	// 		// var div = document.createElement("div");
+	// 		// div.classList.add("col");
+
+	// 		// var canvas = document.createElement("canvas");
+	// 		// canvas.setAttribute("id", id);
+
+	// 		// div.appendChild(canvas);
+
+	// 		// $("#diagrams")[0].appendChild(div);
+
+	// 		// Add code for chart
+	// 		// var ctxR = document.getElementById(id).getContext('2d');
+	// 		// var myRadarChart = new Chart(ctxR, {
+	// 		// 	type: 'radar',
+	// 		// 	data: {
+	// 		// 		// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
+	// 		// 		// invert fear and contempt
+	// 		// 		// fear 3 contempt 1
+	// 		// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+	// 		// 		datasets: [{
+	// 		// 			label: name,
+	// 		// 			data: res,
+	// 		// 			backgroundColor: [
+	// 		// 				'rgba(244, 240, 242, .9)',
+	// 		// 			],
+	// 		// 			borderColor: [
+	// 		// 				'rgba(213, 208, 206, .7)',
+	// 		// 			],
+	// 		// 			pointBackgroundColor: [
+	// 		// 				'rgba(244, 240, 242, .9)',
+	// 		// 			],
+	// 		// 			pointBorderColor: [
+	// 		// 				'rgba(213, 208, 206, .7)',
+	// 		// 			],
+	// 		// 			borderWidth: 1
+	// 		// 		}]
+	// 		// 	},
+	// 		// 	options: {
+	// 		// 		responsive: true,
+	// 		// 		scale: {
+	// 		// 			ticks: {
+	// 		// 				display: false,
+	// 		// 				maxTicksLimit: 1
+	// 		// 			}
+	// 		// 		}
+	// 		// 	}
+	// 		// });
+
+
+	// 	});
+
+	// });
 });

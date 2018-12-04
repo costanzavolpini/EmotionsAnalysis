@@ -97,6 +97,25 @@ def get_camera():
 
     return str(person)
 
+@bp.route('/painting', methods=['GET'])
+def getPainting():
+    id = request.args.get('id')
+    datas = db.getEmotionByPaiting(id)
+    print(datas)
+    ds = {}
+    emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
+    for d in datas:
+        frame = d[2]
+        if(d[2] == None):
+            frame = '3'
+        if frame not in ds:
+            ds[frame] = {"count": 0, "name": d[3], "anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "neutral": 0, "sadness": 0, "surprise": 0}
+        ds[frame]['count'] += 1
+        t = ds[frame]['count']
+        for i, emotion in enumerate(emotions):
+            ds[frame][emotion] = ((ds[frame][emotion]*(t-1))/t) + (d[i+4]/t)
+    return jsonify(ds)
+
 
 @bp.route('/emotion', methods=['GET'])
 def getEmotion():
