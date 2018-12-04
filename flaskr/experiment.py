@@ -103,10 +103,8 @@ def getEmotion():
     person = request.args.get('person')
     paintings = db.getEmotionsByPerson(person)
     ps = {}
-    print(paintings)
     emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
     for paint in paintings:
-        print(paint)
         pain_id = paint[0]
 
         if pain_id not in ps:

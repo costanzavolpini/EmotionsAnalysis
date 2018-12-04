@@ -134,6 +134,55 @@ $(document).ready(function () {
 	// 	}
 	// }
 
+
+	function generateChart(idCanvas, res){
+		var ctx = document.getElementById(idCanvas).getContext('2d');
+		max = null;
+		min = null;
+		// Find max and min
+		for (i in res){
+			if(i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
+				if(max == null || res[i] > max) max = res[i]
+				if(min == null || res[i] < min) min = res[i]
+			}
+		}
+		data = {}
+		//normalize
+		for(i in res){
+			if(i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time")
+				data[i] = (res[i]-min)/(max - min)
+		}
+
+		// res['anger'], res['contempt'], res['disgust'], res['fear'], res['happiness'], res['sadness'], res['surprise']
+		// Add comparison with other people
+		var yourRes = new Chart(ctx, {
+			type: 'radar',
+			data: {
+				labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+				datasets: [{
+					label: res['name'],
+					data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
+					backgroundColor: [
+						'rgb(254, 164, 126)',
+					],
+					borderColor: [
+						'rgba(198, 40, 40, .7)',
+					],
+					borderWidth: 2
+				}]
+			},
+			options: {
+				responsive: true,
+				scale: {
+					ticks: {
+						display: false,
+						maxTicksLimit: 1
+					}
+				}
+			}
+		});
+	}
+
 	// Take photos
 	$('#experiment').click(function (e) {
 		$('#modalVideo').modal({'show': true, backdrop:'static'})
@@ -164,34 +213,8 @@ $(document).ready(function () {
 									res = results[i]
 									var container = document.getElementById("resultExperiment");
 									container.innerHTML += `<div><canvas id="${res['person'] + "-" + res['id']}"></canvas></div>`
-									var ctx = document.getElementById(`${res['person'] + "-" + res['id']}`).getContext('2d');
-									// Add comparison with other people
-									var yourRes = new Chart(ctx, {
-											type: 'radar',
-											data: {
-												labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-												datasets: [{
-													label: res['name'],
-													data: [res['anger'], res['contempt'], res['disgust'], res['fear'], res['happiness'], res['sadness'], res['surprise']],
-													backgroundColor: [
-														'rgb(254, 164, 126)',
-													],
-													borderColor: [
-														'rgba(198, 40, 40, .7)',
-													],
-													borderWidth: 2
-												}]
-											},
-											options: {
-												responsive: true,
-												scale: {
-													ticks: {
-														display: false,
-														maxTicksLimit: 1
-													}
-												}
-											}
-										});
+									var idCanvas = `${res['person'] + "-" + res['id']}`
+									generateChart(idCanvas, res)
 								}
 							},
 							error: function (error) {
