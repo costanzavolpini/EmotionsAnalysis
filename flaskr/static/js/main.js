@@ -138,7 +138,7 @@ $(document).ready(function () {
 	}
 
 	// Generate chart
-	function generateChart(idCanvas, res, table) {
+	function generateChart(nameCanvas, idCanvas, res, table) {
 		return new Promise(async function (resolve, reject) {
 			var canvas = document.getElementById(idCanvas);
 			console.log("CANVAS ", canvas);
@@ -148,7 +148,7 @@ $(document).ready(function () {
 			normalizeData(res).then(async function (data) {
 				name_painting = res['name']
 				dataset_1 = {
-					label: "you",
+					label: nameCanvas,
 					data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
 					backgroundColor: ['rgba(254, 164, 126, .5)', ],
 					borderColor: ['rgba(198, 40, 40, .7)', ],
@@ -240,7 +240,7 @@ $(document).ready(function () {
 												var container = document.getElementById("resultExperiment");
 												container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
 												var idCanvas = `${res['person'] + "-" + i}`
-												await generateChart(idCanvas, res, table[i]);
+												await generateChart("you", idCanvas, res, table[i]);
 											}
 										})()
 									},
@@ -348,23 +348,23 @@ $(document).ready(function () {
 
 				for (var r in result) {
 					datas[r] = await normalizeData(result[r]);
+					datas[r]["name"] = result[r]["name"];
 				}
 
-				datasMean = {"anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "sadness": 0, "surprise": 0}
+				datasMean = {"name": null, "anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "sadness": 0, "surprise": 0}
 				emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
 				t = 0;
 
 				for (var i in datas){
 					t ++;
+					datasMean["name"] = datas[i]['name']
 					for (el in emotions){
 						emotion = emotions[el]
 						datasMean[emotion] = (((datasMean[emotion]*(t-1))/t) + datas[i][emotion]/t)
 					}
 				}
 
-				generateChart(`canvas-${e}`, datasMean);
-
-				// console.log(datas);
+				generateChart(datasMean['name'], `canvas-${e}`, datasMean);
 
 				// // Add code for chart line
 				// var ctxLine = document.getElementById(`canvasline-${e}`).getContext('2d');
@@ -648,8 +648,8 @@ $(document).ready(function () {
 		}
 
 		setTimeout(function () {
-			$(".imageBolin").each(function () {
-				$(this)[0].addEventListener('click', openModalChart(($(this)[0].id).split('-')[1]), false);
+			$(".imageBolin").each(async function () {
+				await $(this)[0].addEventListener('click', openModalChart(($(this)[0].id).split('-')[1]), false);
 			});
 		}, 500);
 	}
