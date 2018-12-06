@@ -4,7 +4,7 @@ from flask import Flask, Blueprint
 import database as db
 import experiment
 import homepage
-import pathGenerator
+import pathgenerator
 
 # Initialize database
 # flask init-db
@@ -31,6 +31,9 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
+    app.debug = False
+
+
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
@@ -40,8 +43,9 @@ def create_app(test_config=None):
     db.init_app(app)
 
     app.register_blueprint(homepage.bp)
+    app.register_blueprint(pathgenerator.bp)
     app.register_blueprint(experiment.bp)
-    app.register_blueprint(pathGenerator.bp)
+    app.register_blueprint(pathgenerator.bp)
 
 
     # # a simple page that says hello

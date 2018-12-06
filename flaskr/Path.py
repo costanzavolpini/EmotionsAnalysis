@@ -83,35 +83,41 @@ def drawPath(map1, G, points):
         normalizedCurve[1] = normalizedCurve[1]/len(map1)
 
         #curves on same plot
-        bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax)
+        c0=(255-244)*i/len(path)+244
+        c1=(237-160)*i/len(path)+160
+        c2= (160-101)*i/len(path)+101
+        bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax,color=[c0/255.0,c1/255.0,c2/255.0])
 
     plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
     ax.set_axis_off()
     plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
 
-def copyPath(source,target, name):
+def copyPath(source,target,scale, name):
     mapResize = scipy.misc.imread(target,mode="RGB")
+    scaleMap = scipy.misc.imread(scale,mode="RGB")
     bPath = scipy.misc.imread(source,mode="RGB")
     img = Image.fromarray(bPath)
     img = img.crop([50,21,535,383])
-    img= img.resize((len(mapResize[0]), len(mapResize)), Image.ANTIALIAS)
+    img= img.resize((len(scaleMap[0]), len(scaleMap)), Image.ANTIALIAS)
     bPath = np.array(img)
+    diff1 = len(mapResize) - len(bPath)
+    diff2 = len(mapResize[0]) - len(bPath[0])
     for i in range(0,len(bPath)):
         for j in range(0,len(bPath[0])):
-            if bPath[i][j][0] <= 200 or bPath[i][j][1] < 200 or bPath[i][j][2] <= 200:
-                mapResize[i][j] = bPath[i][j]
+            if bPath[i][j][0] <= 240 or bPath[i][j][1] < 240 or bPath[i][j][2] <= 240:
+                mapResize[i+int(diff1/2)][j+int(diff2/2)] = bPath[i][j]
     # Image.fromarray(mapResize).show()
     Image.fromarray(mapResize).save("./static/images/pathGenerated"+ name +".png")
 
 def path1(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/Elysee quello vero-Model-1.jpg", name)
+    copyPath("./sexyPath.jpg","./map/prospettometrico.jpg","./map/prospettometricoScale.jpg", name)
 
 def path2(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/Elysee quello vero2-1.jpg", name)
+    copyPath("./sexyPath.jpg","./map/Elysee quello vero2-1.jpg","./map/prospettometricoScale.jpg", name)
 
 def randomEmo(seed=None):
     random.seed(seed)
@@ -124,29 +130,29 @@ def EmoDist(emotions, name):
     emotions = [emotions['disgust'],emotions['fear'],emotions['surprise'],emotions['contempt'],emotions['anger'],emotions['neutral'],emotions['sadness'],emotions['happiness']]
 
     artifacts = []
-    artifacts.append(((32,2),randomEmo())) #pipes
-    artifacts.append(((28,2),randomEmo()))#Provisional wall
+    artifacts.append(((35,2),randomEmo())) #pipes
+    artifacts.append(((31,2),randomEmo()))#Provisional wall
     artifacts.append(((17,2),randomEmo())) #The laid-off workers
-    artifacts.append(((10,4),randomEmo())) #Open field
-    artifacts.append(((10,8),randomEmo())) #Unify the though to promote education
-    artifacts.append(((10,12),randomEmo())) #Voter registration is in accordance with the law
-    artifacts.append(((5,19),randomEmo())) #Chinese fan 3
-    artifacts.append(((2,21),randomEmo())) #8 Nine-dragon screen
-    artifacts.append(((13,14),randomEmo())) #Info port
-    artifacts.append(((10,25),randomEmo())) #Monastery
-    artifacts.append(((5,24),randomEmo())) #Chinese fan 2
-    artifacts.append(((12,27),randomEmo())) #United struggling
-    artifacts.append(((16,27),randomEmo())) #New culture needs more
-    artifacts.append(((20,27),randomEmo())) #Suoja Village 2
+    artifacts.append(((10,2),randomEmo())) #Open field
+    artifacts.append(((10,6),randomEmo())) #Unify the though to promote education
+    artifacts.append(((10,9),randomEmo())) #Voter registration is in accordance with the law
+    artifacts.append(((3,19),randomEmo())) #Chinese fan 3
+    artifacts.append(((1,21),randomEmo())) #8 Nine-dragon screen
+    artifacts.append(((13,10),randomEmo())) #Info port
+    artifacts.append(((10,28),randomEmo())) #Monastery
+    artifacts.append(((3,24),randomEmo())) #Chinese fan 2
+    artifacts.append(((12,28),randomEmo())) #United struggling
+    artifacts.append(((16,28),randomEmo())) #New culture needs more
+    artifacts.append(((20,28),randomEmo())) #Suoja Village 2
     artifacts.append(((10,18),randomEmo())) #Learn by figure
     artifacts.append(((12,18),randomEmo())) #Head portrait (Mao)
     artifacts.append(((15,18),randomEmo())) #In front of the party flag
-    artifacts.append(((23,25),randomEmo())) #Policeman and civilian 2
+    artifacts.append(((23,27),randomEmo())) #Policeman and civilian 2
     artifacts.append(((23,13),randomEmo())) #The inheritance
-    artifacts.append(((23,8),randomEmo())) #Info wall
-    artifacts.append(((28,7),randomEmo())) #Road block
-    artifacts.append(((32,7),randomEmo())) #Forklift
-    artifacts.append(((35,4),randomEmo())) #Creeping forward
+    artifacts.append(((23,10),randomEmo())) #Info wall
+    artifacts.append(((31,7),randomEmo())) #Road block
+    artifacts.append(((35,7),randomEmo())) #Forklift
+    artifacts.append(((37,4),randomEmo())) #Creeping forward
     artifacts.append(((23,8),randomEmo())) #Temple of heaven
     artifacts.append(((17,8),randomEmo())) #Birds nest
     artifacts.append(((9,7),randomEmo())) #Green food
@@ -163,7 +169,6 @@ def EmoDist(emotions, name):
     artifacts.append(((20,12),randomEmo())) #Forest 2
     artifacts1 = artifacts[:23]
     artifacts2 = artifacts[23:]
-
 
     map1 = scipy.misc.imread("./map/pixel_floor1.jpg")
     map2 = scipy.misc.imread("./map/pixel_floor2.jpg")
@@ -196,7 +201,7 @@ def EmoDist(emotions, name):
         return distances
 
     distances1 = computeDistance(map1,artifacts1,G1,entrance1)
-    distances2 = computeDistance(map2,artifacts2,G2,entrance2)
+    #distances2 = computeDistance(map2,artifacts2,G2,entrance2)
 
     emo_score1 = []
     for i in artifacts1:
@@ -217,7 +222,7 @@ def EmoDist(emotions, name):
         return final_indices[i]
 
     final_indices1 = []
-    max_hops = 8
+    max_hops = 12
 
     current=-1
     for i in range(max_hops):
@@ -227,10 +232,10 @@ def EmoDist(emotions, name):
 
     final_indices2 = []
     current=-1
-    for i in range(max_hops):
-        nextHop = findNextHop(distances2[current+1],emo_score2,current,final_indices2)
-        final_indices2.append(nextHop)
-        current = nextHop
+    #for i in range(max_hops):
+    #    nextHop = findNextHop(distances2[current+1],emo_score2,current,final_indices2)
+    #    final_indices2.append(nextHop)
+    #    current = nextHop
 
     pointsFinal1 = [entrance1]
     pointsFinal2 = [entrance2]
@@ -240,9 +245,9 @@ def EmoDist(emotions, name):
             pointsFinal1.append(artifacts1[i][0])
     pointsFinal1.append(entrance1)
 
-    for i in final_indices2:
-        if(i<len(artifacts2)):
-            pointsFinal2.append(artifacts2[i][0])
-    pointsFinal2.append(entrance2)
+    #for i in final_indices2:
+    #    if(i<len(artifacts2)):
+    #        pointsFinal2.append(artifacts2[i][0])
+    #pointsFinal2.append(entrance2)
     path1(map1,pointsFinal1, name)
 #EmoDist([.0,.0,.0,.0,.0,.2,.0])
