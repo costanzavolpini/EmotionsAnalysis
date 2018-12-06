@@ -84,26 +84,27 @@ $(document).ready(function () {
 		function fillModalChart(container, keys, inputs1, inputs2){
 
 			if(keys.length > 0){
-				var bool = 0;
 				var k = keys[0];
 				var resultPerson = inputs1[k];
 				var resultPeople = inputs2[k];
 				var s = null;
 
 				var div = document.createElement("div");
+				var h5 = document.createElement("h5");
+				h5.innerHTML = `${resultPerson['name']}`
 				var canvas = document.createElement("canvas");
 				canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
-
+				div.appendChild(h5);
 	 		    div.appendChild(canvas);
-
-				 container.appendChild(div);
+				container.appendChild(div);
 
 				// container.innerHTML += `<div><h5>${resultPerson['name']}</h5><canvas id="${resultPerson['person'] + "-" + k}"></canvas></div>`
 				var idCanvas = `${resultPerson['person'] + "-" + k}`
-				s = fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
-				setTimeout(function(){
-					if(s != null) fillModalChart(container, keys.slice(1), inputs1, inputs2)
-				}, 500);
+				fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+				fillModalChart(container, keys.slice(1), inputs1, inputs2)
+				// setTimeout(function(){
+				// 	if(s != null) fillModalChart(container, keys.slice(1), inputs1, inputs2)
+				// }, 500);
 			} else {
 				return;
 			}
