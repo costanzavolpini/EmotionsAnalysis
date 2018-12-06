@@ -2,9 +2,10 @@ $(document).ready(function () {
 	scrollHeader();
 	sliderEmotions();
 	generatePath();
+	runExperiment();
 
 	// HEADER SCROLL
-	function scrollHeader(){
+	function scrollHeader() {
 		$(window).on('scroll', function () {
 			var scroll = $(window).scrollTop();
 
@@ -17,11 +18,18 @@ $(document).ready(function () {
 	}
 
 	// Slider emotions
-	function sliderEmotions(){
-		var emotions = {anger: 50, fear: 50, disgust: 50, contempt: 50, happiness: 50, surprise: 50}
+	function sliderEmotions() {
+		var emotions = {
+			anger: 50,
+			fear: 50,
+			disgust: 50,
+			contempt: 50,
+			happiness: 50,
+			surprise: 50
+		}
 
-		$.each(emotions, function(key, obj) {
-			$(`input[id=${key}]`).on('input change', function(e){
+		$.each(emotions, function (key, obj) {
+			$(`input[id=${key}]`).on('input change', function (e) {
 				$(`#${key}Value`).text(e.target.value + "%");
 			});
 		});
@@ -30,9 +38,9 @@ $(document).ready(function () {
 	// Generate path
 	// TODO: Skander: Why cannot find pixel_floor1 img?
 	// Error received: No such file or directory: './map/pixel_floor1.jpg'
-	function generatePath(){
+	function generatePath() {
 		$('#generatePath').click(function (e) {
-			var d =  new Date / 1E3 | 0;
+			var d = new Date / 1E3 | 0;
 			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
 			console.log(path);
 
@@ -54,7 +62,7 @@ $(document).ready(function () {
 			$.ajax({
 				url: '/pathgenerator',
 				dataType: "json",
-            	contentType: "application/json;charset=utf-8",
+				contentType: "application/json;charset=utf-8",
 				data: JSON.stringify(data_emotions_path),
 				type: 'POST',
 				success: function (response) {
@@ -70,95 +78,329 @@ $(document).ready(function () {
 		});
 	}
 
+	// Take pictures, update database, return result obtained on Azure Microsoft
+	function runExperiment() {
+		function fillChart(typeChar, idCanvas, nameCanvas1, input1, nameCanvas2, input2) {
+			var canvas = document.getElementById(idCanvas);
+
+			if (canvas == null) reject("id not valid");
+			var ctx = canvas.getContext('2d');
+
+			var data = normalizeData(input1);
+			var datasets = [];
+			var dataset_1 = {
+				label: nameCanvas1,
+				data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
+				backgroundColor: ['rgba(254, 164, 126, .5)', ],
+				borderColor: ['rgba(198, 40, 40, .7)', ],
+				borderWidth: 2
+			};
+
+			if (input2) {
+				console.log(input2);
+				var data_table = normalizeData(input2);
+				console.log(data_table);
+
+				var dataset_2 = {
+					label: nameCanvas2,
+					data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
+					backgroundColor: ['rgba(139, 69, 19, .5)', ],
+					borderColor: ['rgba(139, 69, 19, .9)', ],
+					borderWidth: 2
+				}
+				datasets = [dataset_1, dataset_2];
+			} else {
+				datasets = [dataset_1];
+			}
+
+			// Generate chart
+			var yourRes = new Chart(ctx, {
+				type: typeChar,
+				data: {
+					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+					datasets: datasets
+				},
+				options: {
+					responsive: true,
+					scale: {
+						ticks: {
+							display: false,
+							maxTicksLimit: 1
+						}
+					}
+				}
+			});
+
+			console.log("done! function fillChart")
+
+			return 1
+
+		}
+
+
+		// Function to generate a sequence of slideshow and so on
+		// open on click!
+		function experiment() {
+			// 101 - 123
+			var sequence = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123]
+
+			// function to random generate a sequence
+			function shuffle(array) {
+				var currentIndex = array.length,
+					temporaryValue, randomIndex;
+
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
+
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
+				}
+				return array;
+			}
+
+			sequence = shuffle(sequence);
+			var inner = "<div class='carousel-inner'>"
+
+			var first = true;
+			sequence.forEach(function (value_random) {
+				if (first) {
+					inner += "<div class='carousel-item active'>"
+					first = false
+				} else inner += "<div class='carousel-item'>"
+				inner += "<img class='d-block w-100' src='/static/images/bolin/"
+				inner += value_random + ".jpg'>"
+
+				inner += "</div>";
+			});
+			inner += "</div><a class='carousel-control-prev' href='#experimentRunning' role='button' data-slide='prev'><span class='carousel-control-prev-icon' aria-hidden='true'></span><span class='sr-only'>Previous</span></a><a class='carousel-control-next' href='#experimentRunning' role='button' data-slide='next'><span class='carousel-control-next-icon' aria-hidden='true'></span><span class='sr-only'>Next</span></a>";
+
+			$("#slideShowExperiment")[0].innerHTML = inner;
+
+			$("#slideShowExperiment").carousel({
+				interval: 5,
+				pause: false,
+				keyboard: false,
+				wrap: false,
+				ride: 'carousel'
+			})
+
+			$('#slideShowExperiment').hover(function () {
+				$("#slideShowExperiment").carousel('cycle');
+			});
+
+			return sequence;
+		}
+
+		function startExperiment() {
+			$.ajax({
+				url: '/experiment/table',
+				type: 'GET',
+				success: function (table) {
+					$('#modalVideo').modal({
+						'show': true,
+						backdrop: 'static' //TODO: serve?
+					});
+					navigator.permissions.query({
+							name: 'camera'
+						}).then((permissionObj) => {
+							console.log(permissionObj.state);
+							var sequence = experiment();
+							//Generate path to pass in the get
+							var sequenceurl = sequence.join("-");
+
+							$.ajax({
+								url: '/experiment?sequence=' + sequenceurl,
+								type: 'GET',
+								success: function (person) {
+									$.ajax({
+										url: '/experiment/emotion?person=' + person,
+										type: 'GET',
+										success: function (resultsPainting) {
+											$('#modalVideo').modal('hide');
+											$('#modalResultExperiment').modal('show');
+
+											console.log(resultsPainting);
+											console.log(table);
+											var container = document.getElementById("resultExperiment");
+											for (var k in resultsPainting){
+												console.log(k)
+												var resultPerson = resultsPainting[k];
+												var resultPeople = table[k];
+												container.innerHTML += `<div><h5>${resultPerson['name']}</h5><canvas id="${resultPerson['person'] + "-" + k}"></canvas></div>`
+												console.log(`${resultPerson['name']}`, `${resultPerson['person'] + "-" + k}`);
+												var idCanvas = `${resultPerson['person'] + "-" + k}`
+												var bool = fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+												if(bool != 1){
+													console.log("ERRRRORE!")
+												}
+											}
+
+
+
+											// for (var i in results) {
+											// 	res = results[i]
+											// 	// send get request for actual value of this painting!
+											// 	var container = document.getElementById("resultExperiment");
+											// 	container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+											// 	var idCanvas = `${res['person'] + "-" + i}`
+											// 	generateChart(idCanvas, res, table[i])
+											// }
+
+											// (async () => {
+											// 	for (var i in results) {
+											// 		var res = results[i]
+											// 		// send get request for actual value of this painting!
+											// 		var container = document.getElementById("resultExperiment");
+											// 		container.appendChild()
+											// 		container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+											// 		var idCanvas = `${res['person'] + "-" + i}`
+											// 		setInterval(async function () {
+											// 				await generateChart("you", idCanvas, res, table[i])
+											// 			},
+											// 			500);
+											// 	}
+											// })()
+										},
+										error: function (error) { // error for retrieve the emotion of a person
+											console.log(error);
+										}
+									})
+								},
+								error: function (error) { // error for send sequence and do the experiment
+									console.log(error);
+								}
+							});
+
+
+						})
+						.catch((error) => { //error for navigation permission
+							console.log('Got error :', error);
+						})
+
+				},
+				error: function (error) { //error for /experiment/table
+					console.log(error);
+				}
+			});
+
+		}
+
+		$('#experiment').click(startExperiment);
+
+		// $('#experiment').click(function (e) {
+		// 	$.ajax({
+		// 		url: '/experiment/table',
+		// 		type: 'GET',
+		// 		success: function (table) {
+		// 			console.log(table)
+		// 			$('#modalVideo').modal({
+		// 				'show': true,
+		// 				backdrop: 'static'
+		// 			})
+		// 			navigator.permissions.query({
+		// 					name: 'camera'
+		// 				})
+		// 				.then((permissionObj) => {
+		// 					var sequence = experiment();
+		// 					setupSeqExperiment(sequence);
+
+		// 					//Generate path to pass in the get
+		// 					var sequenceurl = sequence.join("-");
+		// 					console.log(permissionObj.state);
+
+		// 					$.ajax({
+		// 						url: '/experiment?sequence=' + sequenceurl,
+		// 						type: 'GET',
+		// 						success: function (person) {
+		// 							console.log(person)
+		// 							$.ajax({
+		// 								url: '/experiment/emotion?person=' + person,
+		// 								type: 'GET',
+		// 								success: function (results) {
+		// 									$('#modalVideo').modal('hide');
+		// 									$('#modalResultExperiment').modal('show');
+
+		// 									// for (var i in results) {
+		// 									// 	res = results[i]
+		// 									// 	// send get request for actual value of this painting!
+		// 									// 	var container = document.getElementById("resultExperiment");
+		// 									// 	container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+		// 									// 	var idCanvas = `${res['person'] + "-" + i}`
+		// 									// 	generateChart(idCanvas, res, table[i])
+		// 									// }
+
+		// 									(async () => {
+		// 										for (var i in results) {
+		// 											var res = results[i]
+		// 											// send get request for actual value of this painting!
+		// 											var container = document.getElementById("resultExperiment");
+		// 											container.appendChild()
+		// 											container.innerHTML += `<div><h5>${res['name']}</h5><canvas id="${res['person'] + "-" + i}"></canvas></div>`
+		// 											var idCanvas = `${res['person'] + "-" + i}`
+		// 											setInterval(async function () {
+		// 													await generateChart("you", idCanvas, res, table[i])
+		// 												},
+		// 												500);
+		// 										}
+		// 									})()
+		// 								},
+		// 								error: function (error) {
+		// 									console.log(error);
+		// 								}
+		// 							})
+		// 						},
+		// 						error: function (error) {
+		// 							console.log(error);
+		// 						}
+		// 					});
+		// 				})
+		// 				.catch((error) => {
+		// 					console.log('Got error :', error);
+		// 				})
+		// 		},
+		// 		error: function (error) {
+		// 			console.log(error);
+		// 		}
+		// 	})
+		// });
+
+
+
+	}
+
+	// Helper functions:
+	function normalizeData(input) {
+		var max = null;
+		var min = null;
+		var emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
+		// Find max and min
+		for (var i in input) {
+			if(emotions.includes(i)){
+				if (max == null || input[i] > max) max = input[i]
+				if (min == null || input[i] < min) min = input[i]
+			}
+		}
+		var data = {}
+		//normalize and log(x + 1)
+		for (var i in input) {
+			if(emotions.includes(i)){
+				var normalized = (input[i] - min) / (max - min)
+				data[i] = Math.log(normalized + 1)
+			}
+		}
+		return data;
+	}
+
 
 
 	// function setupSeqExperiment(sequence) {
 	// 	global_sequence = sequence
-	// }
-
-	// function normalizeData(res) {
-	// 	return new Promise(function (resolve, reject) {
-	// 		max = null;
-	// 		min = null;
-	// 		// Find max and min
-	// 		for (var i in res) {
-	// 			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
-	// 				if (max == null || res[i] > max) max = res[i]
-	// 				if (min == null || res[i] < min) min = res[i]
-	// 			}
-	// 		}
-	// 		data = {}
-	// 		//normalize and log(x + 1)
-	// 		for (var i in res) {
-	// 			if (i != "neutral" && i != "person" && i != "name" && i != "id" && i != "time") {
-	// 				var normalized = (res[i] - min) / (max - min)
-	// 				data[i] = Math.log(normalized + 1)
-	// 			}
-	// 		}
-	// 		resolve(data);
-	// 	});
-	// }
-
-	// // Generate chart
-	// function generateChart(nameCanvas, idCanvas, res, table) {
-	// 	console.log("EHEHEH3a");
-
-	// 	return new Promise(async function (resolve, reject) {
-	// 		var canvas = document.getElementById(idCanvas);
-	// 		console.log("EHEHEH3b");
-
-
-	// 		if (canvas == null) reject("id not valid");
-	// 		var ctx = canvas.getContext('2d');
-	// 		normalizeData(res).then(async function (data) {
-	// 			console.log("EHEHEH3c");
-
-	// 			name_painting = res['name']
-	// 			dataset_1 = {
-	// 				label: nameCanvas,
-	// 				data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
-	// 				backgroundColor: ['rgba(254, 164, 126, .5)', ],
-	// 				borderColor: ['rgba(198, 40, 40, .7)', ],
-	// 				borderWidth: 2
-	// 			}
-	// 			if (table) {
-	// 				data_table = await normalizeData(table)
-	// 				dataset_2 = {
-	// 					label: "general",
-	// 					data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
-	// 					backgroundColor: ['rgba(139, 69, 19, .5)', ],
-	// 					borderColor: ['rgba(139, 69, 19, .9)', ],
-	// 					borderWidth: 2
-	// 				}
-	// 				datasets = [dataset_1, dataset_2]
-	// 			} else datasets = [dataset_1]
-	// 			console.log("EHEHEH3d");
-
-
-	// 			// Add comparison with other people
-	// 			var yourRes = new Chart(ctx, {
-	// 				type: 'radar',
-	// 				data: {
-	// 					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-	// 					datasets: datasets
-	// 				},
-	// 				options: {
-	// 					responsive: true,
-	// 					scale: {
-	// 						ticks: {
-	// 							display: false,
-	// 							maxTicksLimit: 1
-	// 						}
-	// 					}
-	// 				}
-	// 			});
-	// 			console.log("EHEHEH3e");
-
-
-	// 			resolve("Generated Chart Radar");
-	// 		});
-	// 	});
-
 	// }
 
 	// // Take photos

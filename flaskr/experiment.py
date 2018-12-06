@@ -41,7 +41,8 @@ def get_camera():
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("flaskr/static/experiments/" + dirname)
 
-    timer = 172.5
+    # timer = 172.5
+    timer = 7.5
     i = -1
     c = 0
 
