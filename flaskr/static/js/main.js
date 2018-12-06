@@ -80,12 +80,36 @@ $(document).ready(function () {
 
 	// Take pictures, update database, return result obtained on Azure Microsoft
 	function runExperiment() {
+
+		function fillModalChart(container, keys, inputs1, inputs2){
+
+			if(keys.length > 0){
+				var bool = 0;
+				var k = keys[0];
+				var resultPerson = inputs1[k];
+				var resultPeople = inputs2[k];
+				var s = null;
+
+				var div = document.createElement("div");
+				var canvas = document.createElement("canvas");
+				canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
+
+	 		    div.appendChild(canvas);
+
+				 container.appendChild(div);
+
+				// container.innerHTML += `<div><h5>${resultPerson['name']}</h5><canvas id="${resultPerson['person'] + "-" + k}"></canvas></div>`
+				var idCanvas = `${resultPerson['person'] + "-" + k}`
+				s = fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+				setTimeout(function(){
+					if(s != null) fillModalChart(container, keys.slice(1), inputs1, inputs2)
+				}, 500);
+			} else {
+				return;
+			}
+		}
+
 		function fillChart(typeChar, idCanvas, nameCanvas1, input1, nameCanvas2, input2) {
-			var canvas = document.getElementById(idCanvas);
-
-			if (canvas == null) reject("id not valid");
-			var ctx = canvas.getContext('2d');
-
 			var data = normalizeData(input1);
 			var datasets = [];
 			var dataset_1 = {
@@ -114,7 +138,24 @@ $(document).ready(function () {
 			}
 
 			// Generate chart
-			var yourRes = new Chart(ctx, {
+			// return new Chart(document.getElementById(idCanvas).getContext('2d'), {
+			// 	type: typeChar,
+			// 	data: {
+			// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+			// 		datasets: datasets
+			// 	},
+			// 	options: {
+			// 		responsive: true,
+			// 		scale: {
+			// 			ticks: {
+			// 				display: false,
+			// 				maxTicksLimit: 1
+			// 			}
+			// 		}
+			// 	}
+			// });
+
+			var config = {
 				type: typeChar,
 				data: {
 					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
@@ -129,12 +170,13 @@ $(document).ready(function () {
 						}
 					}
 				}
-			});
+			};
+			// $(function() {
+			var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
+			console.log(chart);
+			return chart;
 
-			console.log("done! function fillChart")
-
-			return 1
-
+			//   });
 		}
 
 
@@ -228,19 +270,14 @@ $(document).ready(function () {
 											console.log(resultsPainting);
 											console.log(table);
 											var container = document.getElementById("resultExperiment");
-											for (var k in resultsPainting){
-												console.log(k)
-												var resultPerson = resultsPainting[k];
-												var resultPeople = table[k];
-												container.innerHTML += `<div><h5>${resultPerson['name']}</h5><canvas id="${resultPerson['person'] + "-" + k}"></canvas></div>`
-												console.log(`${resultPerson['name']}`, `${resultPerson['person'] + "-" + k}`);
-												var idCanvas = `${resultPerson['person'] + "-" + k}`
-												var bool = fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
-												if(bool != 1){
-													console.log("ERRRRORE!")
-												}
-											}
-
+											var length_resultsPainting = Object.keys(resultsPainting).length;
+											console.log(length_resultsPainting);
+											// container.innerHTML += `<div class="row">`
+											var keys = Object.keys(resultsPainting);
+											fillModalChart(container, keys, resultsPainting, table)
+											// for(let k of Object.keys(options)) {
+											// 	console.log(`Property ${k}, ${options[k]}`);
+											//   };
 
 
 											// for (var i in results) {
