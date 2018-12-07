@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	scrollHeader();
+	fillCarousel();
 	sliderEmotions();
 	generatePath();
 	runExperiment();
@@ -78,80 +79,63 @@ $(document).ready(function () {
 		});
 	}
 
-	// Take pictures, update database, return result obtained on Azure Microsoft
-	function runExperiment() {
+	// fill a chart
+	function fillChart(typeChar, idCanvas, nameCanvas1, input1, nameCanvas2, input2) {
+		var data = normalizeData(input1);
+		var datasets = [];
+		var dataset_1 = {
+			label: nameCanvas1,
+			data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
+			backgroundColor: ['rgba(254, 164, 126, .5)', ],
+			borderColor: ['rgba(198, 40, 40, .7)', ],
+			borderWidth: 2
+		};
 
-		function fillChart(typeChar, idCanvas, nameCanvas1, input1, nameCanvas2, input2) {
-			var data = normalizeData(input1);
-			var datasets = [];
-			var dataset_1 = {
-				label: nameCanvas1,
-				data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
-				backgroundColor: ['rgba(254, 164, 126, .5)', ],
-				borderColor: ['rgba(198, 40, 40, .7)', ],
+		if (input2) {
+			console.log(input2);
+			var data_table = normalizeData(input2);
+			console.log(data_table);
+
+			var dataset_2 = {
+				label: nameCanvas2,
+				data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
+				backgroundColor: ['rgba(139, 69, 19, .5)', ],
+				borderColor: ['rgba(139, 69, 19, .9)', ],
 				borderWidth: 2
-			};
-
-			if (input2) {
-				console.log(input2);
-				var data_table = normalizeData(input2);
-				console.log(data_table);
-
-				var dataset_2 = {
-					label: nameCanvas2,
-					data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
-					backgroundColor: ['rgba(139, 69, 19, .5)', ],
-					borderColor: ['rgba(139, 69, 19, .9)', ],
-					borderWidth: 2
-				}
-				datasets = [dataset_1, dataset_2];
-			} else {
-				datasets = [dataset_1];
 			}
-
-			// Generate chart
-			// return new Chart(document.getElementById(idCanvas).getContext('2d'), {
-			// 	type: typeChar,
-			// 	data: {
-			// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-			// 		datasets: datasets
-			// 	},
-			// 	options: {
-			// 		responsive: true,
-			// 		scale: {
-			// 			ticks: {
-			// 				display: false,
-			// 				maxTicksLimit: 1
-			// 			}
-			// 		}
-			// 	}
-			// });
-
-			var config = {
-				type: typeChar,
-				data: {
-					labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-					datasets: datasets
-				},
-				options: {
-					responsive: true,
-					scale: {
-						ticks: {
-							display: false,
-							maxTicksLimit: 1
-						}
-					}
-				}
-			};
-			// $(function() {
-			var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
-			console.log(chart);
-			return chart;
-
-			//   });
+			datasets = [dataset_1, dataset_2];
+		} else {
+			datasets = [dataset_1];
 		}
 
 
+		var config = {
+			type: typeChar,
+			data: {
+				labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
+				datasets: datasets
+			},
+			options: {
+				responsive: true,
+				scale: {
+					ticks: {
+						display: false,
+						maxTicksLimit: 1
+					}
+				}
+			}
+		};
+		console.log(idCanvas);
+		console.log($(`#${idCanvas}`)[0]);
+
+
+		var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
+		console.log(chart);
+		return chart;
+	}
+
+	// Take pictures, update database, return result obtained on Azure Microsoft
+	function runExperiment() {
 		// Function to generate a sequence of slideshow and so on
 		// open on click!
 		function experiment() {
@@ -312,13 +296,376 @@ $(document).ready(function () {
 	}
 
 	// Fill carousel with Liu Bolin painting
-	function FillCarousel(){
+	function fillCarousel() {
+		addInsideHtml();
 
+		function addInsideHtml() {
+			var ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"];
+
+			// Set before looping inside!
+			var div_row = document.createElement("div");
+			div_row.classList.add("row");
+			var div_item = document.createElement("div");
+			div_item.classList.add("carousel-item", "active");
+			div_item.appendChild(div_row);
+			$("#container-bolin")[0].appendChild(div_item);
+
+			var count = 0;
+
+			for (var i in ids) {
+				id = ids[i];
+				// Add Modals
+				var modal = generateModal(id);
+				$("#modalsBulin")[0].appendChild(modal);
+				// Add Images
+				var res_img = addImages(id, count, div_row);
+				count = res_img[0];
+				div_row = res_img[1];
+
+				// //Fill charts into the modal
+				// $(`#modal-${id}`).on('shown.bs.modal', function () {
+				// 	fillChartsModal(id);
+				//  });
+			}
+
+			fillChartsModal(ids);
+
+			$('#carouselImages').carousel({
+				interval: 1500
+			});
+		}
+
+		function generateModal(id) {
+			var div_out_modal = document.createElement("div");
+			div_out_modal.classList.add("modal", "fade");
+			div_out_modal.setAttribute("id", "modal-" + id)
+			div_out_modal.setAttribute("tabindex", "-1")
+			div_out_modal.setAttribute("role", "dialog")
+			div_out_modal.setAttribute("aria-labelledby", "painting" + id)
+			div_out_modal.setAttribute("aria-hidden", "true")
+
+			var div_modal_dialog = document.createElement("div");
+			div_modal_dialog.classList.add("modal-dialog", "modal-lg");
+			div_modal_dialog.setAttribute("role", "document");
+
+			var div_modal_content = document.createElement("div");
+			div_modal_content.classList.add("modal-content");
+
+			var div_modal_header = document.createElement("div");
+			div_modal_header.classList.add("modal-header");
+
+			// Body Modal
+			var modal_title = document.createElement("h4");
+			modal_title.classList.add("modal-title", "w-100");
+			modal_title.setAttribute("id", "painting" + id);
+			modal_title.innerText = "Emotions analysis";
+
+			div_modal_header.appendChild(modal_title);
+
+			div_modal_content.appendChild(div_modal_header);
+
+			var div_modal_body = document.createElement("div");
+			div_modal_body.classList.add("modal-body");
+
+			var canvas = document.createElement("canvas");
+			canvas.setAttribute("id", "canvas-" + id);
+			div_modal_body.appendChild(canvas);
+
+			div_modal_content.appendChild(div_modal_body);
+
+			// Statistics
+			var statistics = document.createElement("div");
+			statistics.classList.add("row", "mg-20-top");
+
+			var statistics_left = document.createElement("div");
+			statistics_left.classList.add("col");
+
+			// var statistics_left_p_title = document.createElement("h5");
+			// statistics_left_p_title.classList.add("category");
+			// statistics_left_p_title.innerText = "Age";
+			// statistics_left.appendChild(statistics_left_p_title);
+
+
+			// var statistics_left_p_ad = document.createElement("p");
+			// statistics_left_p_ad.classList.add("no-margin");
+			// // TODO: update!
+			// statistics_left_p_ad.innerText = "Adult: Happiness"
+			// statistics_left.appendChild(statistics_left_p_ad);
+
+			// var statistics_left_p_children = document.createElement("p");
+			// statistics_left_p_children.classList.add("no-margin");
+			// // TODO: update!
+			// statistics_left_p_children.innerText = "Children: -"
+			// statistics_left.appendChild(statistics_left_p_children);
+
+			// var statistics_left_p_senior = document.createElement("p");
+			// statistics_left_p_senior.classList.add("no-margin");
+			// // TODO: update!
+			// statistics_left_p_senior.innerText = "Senior: -"
+			// statistics_left.appendChild(statistics_left_p_senior);
+
+			// var statistics_left_p_title2 = document.createElement("h5");
+			// statistics_left_p_title2.classList.add("category", "mg-8-top");
+			// statistics_left_p_title2.innerText = "Sex";
+			// statistics_left.appendChild(statistics_left_p_title2);
+
+			// var statistics_left_p_female = document.createElement("p");
+			// statistics_left_p_female.classList.add("no-margin");
+			// // TODO: update!
+			// statistics_left_p_female.innerText = "Female: Sadness"
+			// statistics_left.appendChild(statistics_left_p_female);
+
+			// var statistics_left_p_male = document.createElement("p");
+			// statistics_left_p_male.classList.add("no-margin");
+			// // TODO: update!
+			// statistics_left_p_male.innerText = "Male: Happy"
+			// statistics_left.appendChild(statistics_left_p_male);
+
+			var statistics_right = document.createElement("div");
+			statistics_right.classList.add("col");
+
+			var canvas_line = document.createElement("canvas");
+			canvas_line.setAttribute("id", "canvasline-" + id);
+			statistics_right.appendChild(canvas_line);
+
+			statistics.appendChild(statistics_left);
+			statistics.appendChild(statistics_right);
+
+			div_modal_body.appendChild(statistics);
+
+			var div_modal_footer = document.createElement("div");
+			div_modal_footer.classList.add("modal-footer");
+
+			var button_footer = document.createElement("button");
+			button_footer.classList.add("btn", "sunny-morning-gradient", "btn-sm");
+			button_footer.setAttribute("data-dismiss", "modal");
+			button_footer.innerText = "Close";
+
+			div_modal_footer.appendChild(button_footer);
+			div_modal_content.appendChild(div_modal_footer);
+
+			div_modal_dialog.appendChild(div_modal_content);
+			div_out_modal.appendChild(div_modal_dialog);
+			return div_out_modal;
+		}
+
+		function addImages(id, count, div_row) {
+			// Add dynamically all the images in carousel
+			var div = document.createElement("div");
+			div.classList.add("col", "work");
+
+			var a = document.createElement("a");
+			a.setAttribute("id", "a-" + id);
+			a.setAttribute("data-toggle", "modal");
+			a.setAttribute("data-target", "modal-" + id);
+			a.classList.add("work-box", "imageBolin");
+
+			a.addEventListener("click", function () {
+				$("#modal-" + id).modal('show');
+			});
+
+			var img = document.createElement("img");
+			img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
+
+			a.appendChild(img);
+
+			var div_inner = document.createElement("div");
+			div_inner.classList.add("overlay");
+
+			var div_inner2 = document.createElement("div");
+			div_inner2.classList.add("overlay-caption");
+
+			var p = document.createElement("p");
+			var span = document.createElement("span");
+			span.classList.add("icon", "icon-magnifying-glass");
+			p.appendChild(span);
+
+			div_inner2.appendChild(p);
+			div_inner.appendChild(div_inner2);
+
+			a.appendChild(div_inner);
+
+			div.appendChild(a);
+
+			if (count != 0 & count % 6 == 0) {
+				var div_row = document.createElement("div");
+				div_row.classList.add("row");
+
+				var div_item = document.createElement("div");
+				div_item.classList.add("carousel-item");
+
+				div_item.appendChild(div_row);
+
+				$("#container-bolin")[0].appendChild(div_item);
+			}
+			div_row.appendChild(div);
+			count = count + 1;
+			return [count, div_row];
+		}
+
+		function fillChartsModal(keys) {
+			if (keys.length > 0) {
+				var id = keys[0];
+				keys = keys.slice(1)
+
+					$.ajax({
+						url: '/experiment/painting?id=' + id,
+						type: 'GET',
+						success: function (result) {
+							var datas = {}
+
+							for (var r in result) {
+								datas[r] = normalizeData(result[r]);
+								datas[r]["name"] = result[r]["name"];
+							}
+
+							var datasMean = {
+								"name": null,
+								"anger": 0,
+								"contempt": 0,
+								"disgust": 0,
+								"fear": 0,
+								"happiness": 0,
+								"sadness": 0,
+								"surprise": 0
+							};
+
+							var emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
+							var t = 0;
+
+							for (var i in datas) { // average to avoid time
+								t++;
+								datasMean['name'] = datas[i]['name'];
+								for (var el in emotions) {
+									var emotion = emotions[el];
+									datasMean[emotion] = (((datasMean[emotion] * (t - 1)) / t) + datas[i][emotion] / t);
+								}
+							}
+
+							// Generate radar chart
+							var chartGenerated = fillChart('radar', `canvas-${id}`, datasMean['name'], datasMean);
+							console.log(chartGenerated);
+
+
+
+
+							// if (datas['1'] && datas['2'] && datas['3'] && datas['4']) {
+							// 	// Add code for chart line
+							// 	var ctxLine = document.getElementById(`canvasline-${e}`).getContext('2d');
+							// 	var myRadarChart = new Chart(ctxLine, {
+							// 		type: 'line',
+							// 		data: {
+							// 			labels: ["1s", "2s", "3s", "4s", "5s"],
+							// 			datasets: [{
+							// 					label: "Anger",
+							// 					data: [datas['1']['anger'], datas['2']['anger'], datas['3']['anger'], datas['4']['anger'], datas['5']['anger']],
+							// 					backgroundColor: [
+							// 						'rgba(244, 237, 212, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(244, 237, 212, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Fear",
+							// 					data: [datas['1']['fear'], datas['2']['fear'], datas['3']['fear'], datas['4']['fear'], datas['5']['fear']],
+							// 					backgroundColor: [
+							// 						'rgba(244, 223, 151, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(244, 223, 151, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Disgust",
+							// 					data: [datas['1']['disgust'], datas['2']['disgust'], datas['3']['disgust'], datas['4']['disgust'], datas['5']['disgust']],
+							// 					backgroundColor: [
+							// 						'rgba(236, 200, 106, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(236, 200, 106, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Contempt",
+							// 					data: [datas['1']['contempt'], datas['2']['contempt'], datas['3']['contempt'], datas['4']['contempt'], datas['5']['contempt']],
+							// 					backgroundColor: [
+							// 						'rgba(253, 160, 133, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(253, 160, 133, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Happiness",
+							// 					data: [datas['1']['happiness'], datas['2']['happiness'], datas['3']['happiness'], datas['4']['happiness'], datas['5']['happiness']],
+							// 					backgroundColor: [
+							// 						'rgba(208, 131, 109, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(208, 131, 109, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Sadness",
+							// 					data: [datas['1']['sadness'], datas['2']['sadness'], datas['3']['sadness'], datas['4']['sadness'], datas['5']['sadness']],
+							// 					backgroundColor: [
+							// 						'rgba(139, 88, 73, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(139, 88, 73, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				},
+							// 				{
+							// 					label: "Surprise",
+							// 					data: [datas['1']['surprise'], datas['2']['surprise'], datas['3']['surprise'], datas['4']['surprise'], datas['5']['surprise']],
+							// 					backgroundColor: [
+							// 						'rgba(69, 44, 37, .5)',
+							// 					],
+							// 					borderColor: [
+							// 						'rgba(69, 44, 37, .9)',
+							// 					],
+							// 					borderWidth: 1
+							// 				}
+							// 			]
+							// 		},
+							// 		options: {
+							// 			responsive: true
+							// 		}
+							// 	});
+							// }
+							fillChartsModal(keys);
+						},
+						error: function (error) { // error retrieve data of an image
+							console.log(error);
+						}
+					});
+				// });
+			} else return
+
+		}
 	}
 
-	// $('#carouselImages').carousel({
-	// 	interval: 1500
+
+
+	// // Set modal opens
+	// $(".imageBolin").each(async function() {
+	// 	// async not work!!
+	// 	var el = $(this)[0];
+	// 	var id = (el.id).split('-')[1];
+
+	// 	$(`#modal-${id}`).on('shown.bs.modal', function (e) {
+	// 		openModalChart(id);
+	// 	  });
 	// })
+	// }
+
 
 
 
@@ -478,199 +825,6 @@ $(document).ready(function () {
 	// }
 
 
-	// function fillCarousel() {
-	// 	var ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"]
-	// 	var count = 0;
-
-	// 	div_row = document.createElement("div");
-	// 	div_row.classList.add("row");
-
-	// 	div_item = document.createElement("div");
-	// 	div_item.classList.add("carousel-item", "active");
-
-	// 	div_item.appendChild(div_row);
-
-	// 	$("#container-bolin")[0].appendChild(div_item);
-
-	// 	for (i in ids) {
-	// 		id = ids[i]
-	// 		// Add Modals
-	// 		// Generate modal
-	// 		var div_out_modal = document.createElement("div");
-	// 		div_out_modal.classList.add("modal", "fade");
-	// 		div_out_modal.setAttribute("id", "modal-" + id)
-	// 		div_out_modal.setAttribute("tabindex", "-1")
-	// 		div_out_modal.setAttribute("role", "dialog")
-	// 		div_out_modal.setAttribute("aria-labelledby", "painting" + id)
-	// 		div_out_modal.setAttribute("aria-hidden", "true")
-
-	// 		var div_modal_dialog = document.createElement("div");
-	// 		div_modal_dialog.classList.add("modal-dialog", "modal-lg")
-	// 		div_modal_dialog.setAttribute("role", "document")
-
-	// 		var div_modal_content = document.createElement("div");
-	// 		div_modal_content.classList.add("modal-content")
-
-	// 		var div_modal_header = document.createElement("div");
-	// 		div_modal_header.classList.add("modal-header")
-
-	// 		var modal_title = document.createElement("h4");
-	// 		modal_title.classList.add("modal-title", "w-100")
-	// 		modal_title.setAttribute("id", "painting" + id)
-	// 		modal_title.innerText = "Emotions analysis";
-
-	// 		div_modal_header.appendChild(modal_title)
-
-	// 		div_modal_content.appendChild(div_modal_header)
-
-	// 		var div_modal_body = document.createElement("div");
-	// 		div_modal_body.classList.add("modal-body")
-
-	// 		var canvas = document.createElement("canvas");
-	// 		canvas.setAttribute("id", "canvas-" + id);
-	// 		div_modal_body.appendChild(canvas);
-
-	// 		div_modal_content.appendChild(div_modal_body);
-
-	// 		var statistics = document.createElement("div");
-	// 		statistics.classList.add("row", "mg-20-top");
-
-	// 		var statistics_left = document.createElement("div");
-	// 		statistics_left.classList.add("col");
-
-	// 		// var statistics_left_p_title = document.createElement("h5");
-	// 		// statistics_left_p_title.classList.add("category");
-	// 		// statistics_left_p_title.innerText = "Age";
-	// 		// statistics_left.appendChild(statistics_left_p_title);
-
-
-	// 		// var statistics_left_p_ad = document.createElement("p");
-	// 		// statistics_left_p_ad.classList.add("no-margin");
-	// 		// // TODO: update!
-	// 		// statistics_left_p_ad.innerText = "Adult: Happiness"
-	// 		// statistics_left.appendChild(statistics_left_p_ad);
-
-	// 		// var statistics_left_p_children = document.createElement("p");
-	// 		// statistics_left_p_children.classList.add("no-margin");
-	// 		// // TODO: update!
-	// 		// statistics_left_p_children.innerText = "Children: -"
-	// 		// statistics_left.appendChild(statistics_left_p_children);
-
-	// 		// var statistics_left_p_senior = document.createElement("p");
-	// 		// statistics_left_p_senior.classList.add("no-margin");
-	// 		// // TODO: update!
-	// 		// statistics_left_p_senior.innerText = "Senior: -"
-	// 		// statistics_left.appendChild(statistics_left_p_senior);
-
-	// 		// var statistics_left_p_title2 = document.createElement("h5");
-	// 		// statistics_left_p_title2.classList.add("category", "mg-8-top");
-	// 		// statistics_left_p_title2.innerText = "Sex";
-	// 		// statistics_left.appendChild(statistics_left_p_title2);
-
-	// 		// var statistics_left_p_female = document.createElement("p");
-	// 		// statistics_left_p_female.classList.add("no-margin");
-	// 		// // TODO: update!
-	// 		// statistics_left_p_female.innerText = "Female: Sadness"
-	// 		// statistics_left.appendChild(statistics_left_p_female);
-
-	// 		// var statistics_left_p_male = document.createElement("p");
-	// 		// statistics_left_p_male.classList.add("no-margin");
-	// 		// // TODO: update!
-	// 		// statistics_left_p_male.innerText = "Male: Happy"
-	// 		// statistics_left.appendChild(statistics_left_p_male);
-
-	// 		var statistics_right = document.createElement("div");
-	// 		statistics_right.classList.add("col");
-
-	// 		var canvas_line = document.createElement("canvas");
-	// 		canvas_line.setAttribute("id", "canvasline-" + id);
-	// 		statistics_right.appendChild(canvas_line);
-
-	// 		statistics.appendChild(statistics_left);
-	// 		statistics.appendChild(statistics_right);
-
-	// 		div_modal_body.appendChild(statistics);
-
-	// 		var div_modal_footer = document.createElement("div");
-	// 		div_modal_footer.classList.add("modal-footer")
-
-	// 		var button_footer = document.createElement("button");
-	// 		button_footer.classList.add("btn", "sunny-morning-gradient", "btn-sm")
-	// 		button_footer.setAttribute("data-dismiss", "modal")
-	// 		button_footer.innerText = "Close";
-
-	// 		div_modal_footer.appendChild(button_footer)
-	// 		div_modal_content.appendChild(div_modal_footer)
-
-	// 		div_modal_dialog.appendChild(div_modal_content)
-	// 		div_out_modal.appendChild(div_modal_dialog)
-
-	// 		$("#modalsBulin")[0].appendChild(div_out_modal)
-
-	// 		// Populate carousel
-	// 		// Add dynamically all the images in carousel
-	// 		var div = document.createElement("div");
-	// 		div.classList.add("col", "work");
-
-	// 		var a = document.createElement("a");
-	// 		a.setAttribute("id", "a-" + id);
-	// 		a.setAttribute("data-toggle", "modal");
-	// 		a.setAttribute("data-target", "modal-" + id);
-	// 		a.classList.add("work-box", "imageBolin");
-
-	// 		a.addEventListener("click", function () {
-	// 			$("#modal-" + id).modal('show');
-	// 		});
-
-	// 		var img = document.createElement("img");
-	// 		img.setAttribute("src", "/static/images/bolin/" + id + ".jpg");
-
-	// 		a.appendChild(img);
-
-	// 		var div_inner = document.createElement("div");
-	// 		div_inner.classList.add("overlay");
-
-	// 		var div_inner2 = document.createElement("div");
-	// 		div_inner2.classList.add("overlay-caption");
-
-	// 		var p = document.createElement("p");
-	// 		var span = document.createElement("span");
-	// 		span.classList.add("icon", "icon-magnifying-glass");
-	// 		p.appendChild(span);
-
-	// 		div_inner2.appendChild(p);
-	// 		div_inner.appendChild(div_inner2);
-
-	// 		a.appendChild(div_inner);
-
-	// 		div.appendChild(a);
-
-	// 		if (count != 0 & count % 6 == 0) {
-	// 			div_row = document.createElement("div");
-	// 			div_row.classList.add("row");
-
-	// 			div_item = document.createElement("div");
-	// 			div_item.classList.add("carousel-item");
-
-	// 			div_item.appendChild(div_row)
-
-	// 			$("#container-bolin")[0].appendChild(div_item);
-	// 		}
-	// 		div_row.appendChild(div);
-	// 		count = count + 1;
-	// 	}
-
-	// 	// // Set modal opens
-	// 	// $(".imageBolin").each(async function() {
-	// 	// 	// async not work!!
-	// 	// 	var el = $(this)[0];
-	// 	// 	var id = (el.id).split('-')[1];
-
-	// 	// 	$(`#modal-${id}`).on('shown.bs.modal', function (e) {
-	// 	// 		openModalChart(id);
-	// 	// 	  });
-	// 	// })
-	// }
 
 	// fillCarousel();
 
