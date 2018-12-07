@@ -170,8 +170,8 @@ def EmoDist(emotions, name):
     artifacts1 = artifacts[:23]
     artifacts2 = artifacts[23:]
 
-    map1 = scipy.misc.imread("./map/pixel_floor1.jpg")
-    map2 = scipy.misc.imread("./map/pixel_floor2.jpg")
+    map1 = scipy.misc.imread("./flaskr/map/pixel_floor1.jpg")
+    map2 = scipy.misc.imread("./flaskr/map/pixel_floor2.jpg")
     G1=nx.from_numpy_matrix(makeAdjacency(map1))
     G2=nx.from_numpy_matrix(makeAdjacency(map2))
     distances1 = [] #0 is the entrance

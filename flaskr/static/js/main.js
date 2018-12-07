@@ -432,6 +432,7 @@ $(document).ready(function () {
 					inner += "<div class='carousel-item active'>"
 					first = false
 				} else inner += "<div class='carousel-item'>"
+				// inner += "<img class='d-block w-100' src='/static/images/bolin/"
 				inner += "<img class='d-block w-100' src='/static/images/floor1/"
 				inner += value_random + ".jpg'>"
 
