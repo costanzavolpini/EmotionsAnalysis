@@ -171,7 +171,7 @@ $(document).ready(function () {
 					inner += "<div class='carousel-item active'>"
 					first = false
 				} else inner += "<div class='carousel-item'>"
-				inner += "<img class='d-block w-100' src='/static/images/bolin/"
+				inner += "<img class='d-block w-100' src='/static/images/floor1/"
 				inner += value_random + ".jpg'>"
 
 				inner += "</div>";
@@ -506,7 +506,7 @@ $(document).ready(function () {
 		function fillChartsModal(keys) {
 			if (keys.length > 0) {
 				var id = keys[0];
-				keys = keys.slice(1)
+				keys = keys.slice(1);
 
 					$.ajax({
 						url: '/experiment/painting?id=' + id,
@@ -545,6 +545,9 @@ $(document).ready(function () {
 							// Generate radar chart
 							var chartGenerated = fillChart('radar', `canvas-${id}`, datasMean['name'], datasMean);
 							console.log(chartGenerated);
+
+							console.log(datas);
+
 
 
 
