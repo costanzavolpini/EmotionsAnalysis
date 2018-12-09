@@ -87,20 +87,18 @@ $(document).ready(function () {
 			label: nameCanvas1,
 			data: [data['anger'], data['contempt'], data['disgust'], data['fear'], data['happiness'], data['sadness'], data['surprise']],
 			backgroundColor: ['rgba(254, 164, 126, .5)', ],
-			borderColor: ['rgba(198, 40, 40, .7)', ],
+			borderColor: ['rgba(254, 164, 126, .5)', ],
 			borderWidth: 2
 		};
 
 		if (input2) {
-			console.log(input2);
 			var data_table = normalizeData(input2);
-			console.log(data_table);
 
 			var dataset_2 = {
 				label: nameCanvas2,
 				data: [data_table['anger'], data_table['contempt'], data_table['disgust'], data_table['fear'], data_table['happiness'], data_table['sadness'], data_table['surprise']],
 				backgroundColor: ['rgba(139, 69, 19, .5)', ],
-				borderColor: ['rgba(139, 69, 19, .9)', ],
+				borderColor: ['rgba(139, 69, 19, .5)', ],
 				borderWidth: 2
 			}
 			datasets = [dataset_1, dataset_2];
@@ -125,106 +123,13 @@ $(document).ready(function () {
 				}
 			}
 		};
-		console.log(idCanvas);
-		console.log($(`#${idCanvas}`)[0]);
-
+		console.log($(`#${idCanvas}`));
 
 		var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
 		console.log(chart);
 		return chart;
 	}
 
-	// if (datas['1'] && datas['2'] && datas['3'] && datas['4']) {
-	// 	// Add code for chart line
-	// 	var ctxLine = document.getElementById(`canvasline-${e}`).getContext('2d');
-	// 	var myRadarChart = new Chart(ctxLine, {
-	// 		type: 'line',
-	// 		data: {
-	// 			labels: ["1s", "2s", "3s", "4s", "5s"],
-	// 			datasets: [{
-	// 					label: "Anger",
-	// 					data: [datas['1']['anger'], datas['2']['anger'], datas['3']['anger'], datas['4']['anger'], datas['5']['anger']],
-	// 					backgroundColor: [
-	// 						'rgba(244, 237, 212, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(244, 237, 212, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Fear",
-	// 					data: [datas['1']['fear'], datas['2']['fear'], datas['3']['fear'], datas['4']['fear'], datas['5']['fear']],
-	// 					backgroundColor: [
-	// 						'rgba(244, 223, 151, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(244, 223, 151, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Disgust",
-	// 					data: [datas['1']['disgust'], datas['2']['disgust'], datas['3']['disgust'], datas['4']['disgust'], datas['5']['disgust']],
-	// 					backgroundColor: [
-	// 						'rgba(236, 200, 106, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(236, 200, 106, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Contempt",
-	// 					data: [datas['1']['contempt'], datas['2']['contempt'], datas['3']['contempt'], datas['4']['contempt'], datas['5']['contempt']],
-	// 					backgroundColor: [
-	// 						'rgba(253, 160, 133, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(253, 160, 133, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Happiness",
-	// 					data: [datas['1']['happiness'], datas['2']['happiness'], datas['3']['happiness'], datas['4']['happiness'], datas['5']['happiness']],
-	// 					backgroundColor: [
-	// 						'rgba(208, 131, 109, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(208, 131, 109, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Sadness",
-	// 					data: [datas['1']['sadness'], datas['2']['sadness'], datas['3']['sadness'], datas['4']['sadness'], datas['5']['sadness']],
-	// 					backgroundColor: [
-	// 						'rgba(139, 88, 73, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(139, 88, 73, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				},
-	// 				{
-	// 					label: "Surprise",
-	// 					data: [datas['1']['surprise'], datas['2']['surprise'], datas['3']['surprise'], datas['4']['surprise'], datas['5']['surprise']],
-	// 					backgroundColor: [
-	// 						'rgba(69, 44, 37, .5)',
-	// 					],
-	// 					borderColor: [
-	// 						'rgba(69, 44, 37, .9)',
-	// 					],
-	// 					borderWidth: 1
-	// 				}
-	// 			]
-	// 		},
-	// 		options: {
-	// 			responsive: true
-	// 		}
-	// 	});
-	// }
 
 	// fill a chart
 	function fillChartTime(typeChar, idCanvas, input1) {
@@ -293,7 +198,7 @@ $(document).ready(function () {
 					'rgba(244, 237, 212, .5)',
 				],
 				borderColor: [
-					'rgba(244, 237, 212, .9)',
+					'rgba(244, 237, 212, .5)',
 				],
 				borderWidth: 1
 			},
@@ -305,7 +210,7 @@ $(document).ready(function () {
 					'rgba(244, 223, 151, .5)',
 				],
 				borderColor: [
-					'rgba(244, 223, 151, .9)',
+					'rgba(244, 223, 151, .5)',
 				],
 				borderWidth: 1
 			},
@@ -317,7 +222,7 @@ $(document).ready(function () {
 					'rgba(236, 200, 106, .5)',
 				],
 				borderColor: [
-					'rgba(236, 200, 106, .9)',
+					'rgba(236, 200, 106, .5)',
 				],
 				borderWidth: 1
 			},
@@ -329,7 +234,7 @@ $(document).ready(function () {
 					'rgba(253, 160, 133, .5)',
 				],
 				borderColor: [
-					'rgba(253, 160, 133, .9)',
+					'rgba(253, 160, 133, .5)',
 				],
 				borderWidth: 1
 			},
@@ -342,7 +247,7 @@ $(document).ready(function () {
 					'rgba(208, 131, 109, .5)',
 				],
 				borderColor: [
-					'rgba(208, 131, 109, .9)',
+					'rgba(208, 131, 109, .5)',
 				],
 				borderWidth: 1
 			},
@@ -354,7 +259,7 @@ $(document).ready(function () {
 					'rgba(139, 88, 73, .5)',
 				],
 				borderColor: [
-					'rgba(139, 88, 73, .9)',
+					'rgba(139, 88, 73, .5)',
 				],
 				borderWidth: 1
 			},
@@ -366,7 +271,7 @@ $(document).ready(function () {
 					'rgba(69, 44, 37, .5)',
 				],
 				borderColor: [
-					'rgba(69, 44, 37, .9)',
+					'rgba(69, 44, 37, .5)',
 				],
 				borderWidth: 1
 			}
@@ -432,7 +337,6 @@ $(document).ready(function () {
 					inner += "<div class='carousel-item active'>"
 					first = false
 				} else inner += "<div class='carousel-item'>"
-				// inner += "<img class='d-block w-100' src='/static/images/bolin/"
 				inner += "<img class='d-block w-100' src='/static/images/floor1/"
 				inner += value_random + ".jpg'>"
 
@@ -562,7 +466,7 @@ $(document).ready(function () {
 		addInsideHtml();
 
 		function addInsideHtml() {
-			var ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"];
+			var ids = ["101", "102", "103", "1122", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"];
 
 			// Set before looping inside!
 			var div_row = document.createElement("div");
@@ -583,11 +487,6 @@ $(document).ready(function () {
 				var res_img = addImages(id, count, div_row);
 				count = res_img[0];
 				div_row = res_img[1];
-
-				// //Fill charts into the modal
-				// $(`#modal-${id}`).on('shown.bs.modal', function () {
-				// 	fillChartsModal(id);
-				//  });
 			}
 
 			fillChartsModal(ids);
@@ -769,9 +668,15 @@ $(document).ready(function () {
 			if (keys.length > 0) {
 				var id = keys[0];
 				keys = keys.slice(1);
+				var idPic = null;
+
+				if(id == "1122")
+					idPic = "112";
+				else idPic = id;
+
 
 				$.ajax({
-					url: '/experiment/painting?id=' + id,
+					url: '/experiment/painting?id=' + idPic,
 					type: 'GET',
 					success: function (result) {
 						var datas = {}
@@ -806,104 +711,9 @@ $(document).ready(function () {
 
 						// Generate radar chart
 						var chartGenerated = fillChart('radar', `canvas-${id}`, datasMean['name'], datasMean);
-						console.log(chartGenerated);
-
-						console.log(datas);
 
 						var chartTimeGenerated = fillChartTime('line', `canvasline-${id}`, datas);
 
-
-						// if (datas['1'] && datas['2'] && datas['3'] && datas['4']) {
-						// 	// Add code for chart line
-						// 	var ctxLine = document.getElementById(`canvasline-${e}`).getContext('2d');
-						// 	var myRadarChart = new Chart(ctxLine, {
-						// 		type: 'line',
-						// 		data: {
-						// 			labels: ["1s", "2s", "3s", "4s", "5s"],
-						// 			datasets: [{
-						// 					label: "Anger",
-						// 					data: [datas['1']['anger'], datas['2']['anger'], datas['3']['anger'], datas['4']['anger'], datas['5']['anger']],
-						// 					backgroundColor: [
-						// 						'rgba(244, 237, 212, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(244, 237, 212, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Fear",
-						// 					data: [datas['1']['fear'], datas['2']['fear'], datas['3']['fear'], datas['4']['fear'], datas['5']['fear']],
-						// 					backgroundColor: [
-						// 						'rgba(244, 223, 151, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(244, 223, 151, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Disgust",
-						// 					data: [datas['1']['disgust'], datas['2']['disgust'], datas['3']['disgust'], datas['4']['disgust'], datas['5']['disgust']],
-						// 					backgroundColor: [
-						// 						'rgba(236, 200, 106, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(236, 200, 106, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Contempt",
-						// 					data: [datas['1']['contempt'], datas['2']['contempt'], datas['3']['contempt'], datas['4']['contempt'], datas['5']['contempt']],
-						// 					backgroundColor: [
-						// 						'rgba(253, 160, 133, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(253, 160, 133, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Happiness",
-						// 					data: [datas['1']['happiness'], datas['2']['happiness'], datas['3']['happiness'], datas['4']['happiness'], datas['5']['happiness']],
-						// 					backgroundColor: [
-						// 						'rgba(208, 131, 109, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(208, 131, 109, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Sadness",
-						// 					data: [datas['1']['sadness'], datas['2']['sadness'], datas['3']['sadness'], datas['4']['sadness'], datas['5']['sadness']],
-						// 					backgroundColor: [
-						// 						'rgba(139, 88, 73, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(139, 88, 73, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				},
-						// 				{
-						// 					label: "Surprise",
-						// 					data: [datas['1']['surprise'], datas['2']['surprise'], datas['3']['surprise'], datas['4']['surprise'], datas['5']['surprise']],
-						// 					backgroundColor: [
-						// 						'rgba(69, 44, 37, .5)',
-						// 					],
-						// 					borderColor: [
-						// 						'rgba(69, 44, 37, .9)',
-						// 					],
-						// 					borderWidth: 1
-						// 				}
-						// 			]
-						// 		},
-						// 		options: {
-						// 			responsive: true
-						// 		}
-						// 	});
-						// }
 						fillChartsModal(keys);
 					},
 					error: function (error) { // error retrieve data of an image

@@ -21,7 +21,8 @@ bp = Blueprint('experiment', __name__, url_prefix='/experiment')
 
 # Setup azure
 # Replace <Subscription Key> with your valid subscription key.
-subscription_key = "1e94ebc81f34468a9e9bea9bf04052cb"
+subscription_key = "1906a065079e4402b155f4256ed451b3"
+
 assert subscription_key
 
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"

@@ -9,3 +9,5 @@ flaskr/static/experiments/*
 
 
 flaskr/experiment\.pyc
+
+venv/*
