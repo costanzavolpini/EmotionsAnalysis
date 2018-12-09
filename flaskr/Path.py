@@ -107,73 +107,74 @@ def copyPath(source,target,scale, name):
             if bPath[i][j][0] <= 240 or bPath[i][j][1] < 240 or bPath[i][j][2] <= 240:
                 mapResize[i+int(diff1/2)][j+int(diff2/2)] = bPath[i][j]
     # Image.fromarray(mapResize).show()
-    Image.fromarray(mapResize).save("./static/images/pathGenerated"+ name +".png")
+    Image.fromarray(mapResize).save("./flaskr/static/images/pathGenerated"+ name +".png")
 
 def path1(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/prospettometrico.jpg","./map/prospettometricoScale.jpg", name)
+    copyPath("./flaskr/sexyPath.jpg","./flaskr/map/prospettometrico.jpg","./flaskr/map/prospettometricoScale.jpg", name)
 
 def path2(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./sexyPath.jpg","./map/Elysee quello vero2-1.jpg","./map/prospettometricoScale.jpg", name)
+    copyPath("./flaskr/sexyPath.jpg","./flaskr/map/Elysee quello vero2-1.jpg","./flaskr/map/prospettometricoScale.jpg", name)
 
-def randomEmo(seed=None):
-    random.seed(seed)
-    return [random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random()]
+#def randomEmo(seed=None):
+#    random.seed(seed)
+#    return [random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random()]
 
 #Create distance and emotion arrays for each floor
 
-def EmoDist(emotions, name):
+def EmoDist(emotions, name, time=24):
     emotions = dict({'disgust':emotions[2], 'fear':emotions[1], 'surprise':emotions[6], 'contempt':emotions[3], 'anger':emotions[0], 'neutral':0.0, 'sadness':emotions[5], 'happiness':emotions[4]})
     emotions = [emotions['disgust'],emotions['fear'],emotions['surprise'],emotions['contempt'],emotions['anger'],emotions['neutral'],emotions['sadness'],emotions['happiness']]
 
     artifacts = []
-    artifacts.append(((35,2),randomEmo())) #pipes
-    artifacts.append(((31,2),randomEmo()))#Provisional wall
-    artifacts.append(((17,2),randomEmo())) #The laid-off workers
-    artifacts.append(((10,2),randomEmo())) #Open field
-    artifacts.append(((10,6),randomEmo())) #Unify the though to promote education
-    artifacts.append(((10,9),randomEmo())) #Voter registration is in accordance with the law
-    artifacts.append(((3,19),randomEmo())) #Chinese fan 3
-    artifacts.append(((1,21),randomEmo())) #8 Nine-dragon screen
-    artifacts.append(((13,10),randomEmo())) #Info port
-    artifacts.append(((10,28),randomEmo())) #Monastery
-    artifacts.append(((3,24),randomEmo())) #Chinese fan 2
-    artifacts.append(((12,28),randomEmo())) #United struggling
-    artifacts.append(((16,28),randomEmo())) #New culture needs more
-    artifacts.append(((20,28),randomEmo())) #Suoja Village 2
-    artifacts.append(((10,18),randomEmo())) #Learn by figure
-    artifacts.append(((12,18),randomEmo())) #Head portrait (Mao)
-    artifacts.append(((15,18),randomEmo())) #In front of the party flag
-    artifacts.append(((23,27),randomEmo())) #Policeman and civilian 2
-    artifacts.append(((23,13),randomEmo())) #The inheritance
-    artifacts.append(((23,10),randomEmo())) #Info wall
-    artifacts.append(((31,7),randomEmo())) #Road block
-    artifacts.append(((35,7),randomEmo())) #Forklift
-    artifacts.append(((37,4),randomEmo())) #Creeping forward
-    artifacts.append(((23,8),randomEmo())) #Temple of heaven
-    artifacts.append(((17,8),randomEmo())) #Birds nest
-    artifacts.append(((9,7),randomEmo())) #Green food
-    artifacts.append(((4,15),randomEmo())) #Supermarket 3
-    artifacts.append(((2,20),randomEmo())) #Your world
-    artifacts.append(((4,25),randomEmo())) #Mobile phones
-    artifacts.append(((9,33),randomEmo())) #Panda
-    artifacts.append(((15,26),randomEmo())) #Screen in rest
-    artifacts.append(((17,33),randomEmo())) #Into the woods
-    artifacts.append(((20,29),randomEmo())) #Cancer village
-    artifacts.append(((23,33),randomEmo())) #The great wall
-    artifacts.append(((15,16),randomEmo())) #Water crisis
-    artifacts.append(((30,26),randomEmo())) #Cooperate with rero
-    artifacts.append(((20,12),randomEmo())) #Forest 2
+    artifacts.append(((35,2),[0.003114284729630245, 0.007223662704549059, 0.0016858212355301396, 0.00016405983059756136, 0.2743962541631626, 0.00566353309158946, 0.03422367038104477, 0.0004200016215656562])) #pipes
+    artifacts.append(((31,2),[0.00012897703697416134, 0.00510296691643047, 0.0001199773460572663, 2.488433069414404e-05, 0.09206292427807605, 0.010007219933790284, 0.009125791089037877, 0.00028789832033016954]))#Provisional wall
+    artifacts.append(((17,2),[0.00011400650485918195, 0.003035879342086566, 8.692761392059312e-05, 9.022815073132042e-06, 0.09056130400160069, 0.010010791351790184, 0.013181011775144266, 5.89965458788129e-05])) #The laid-off workers
+    artifacts.append(((10,2),[0.00039494094722043125, 0.003813840049857659, 0.0005353528584087512, 6.562956063455151e-05, 0.09299896735759215, 0.008872250653976631, 0.10080733634458425, 0.0005493216952992742])) #Open field
+    artifacts.append(((10,6),[0.0001332170712530942, 0.003959671054980486, 0.00016437878534052142, 2.574726109818645e-06, 0.16090121120430992, 0.008805519547510911, 0.01561226818000705, 7.331005292956846e-05])) #Unify the though to promote education
+    artifacts.append(((10,9),[0.0013366384340327475, 0.003374762483573287, 0.008376778042208226, 1.0467678015131577e-05, 0.16016991848639942, 0.008717597590691004, 0.01706949556713421, 0.0001234468371924055])) #Voter registration is in accordance with the law
+    artifacts.append(((3,19),[0.0002277248312173414, 0.004887179194999689, 0.0004230683269912659, 3.3307094809658264e-05, 0.03156273431147314, 0.01041118188314787, 0.04205449033460012, 0.000401154633757011])) #Chinese fan 3
+    artifacts.append(((1,21),[0.00012995640441848186, 0.004928511853432146, 9.965140635357493e-05, 1.0543429321124377e-05, 0.08761648411265743, 0.009885145525646689, 0.027314477746480152, 0.0001237212356326476])) #8 Nine-dragon screen
+    artifacts.append(((13,10),[0.0007904398415070276, 0.003785395871205486, 0.00160962325065507, 0.0001271850485309911, 0.0011808044530601993, 0.010778500226071843, 0.03609771580177341, 0.0009148706090377585])) #Info port
+    artifacts.append(((10,28),[0.00026534782076271423, 0.0013783571892367434, 0.0002601443096180834, 2.8221332934760385e-05, 0.16069696301826938, 0.008823004794171821, 0.016101728670543304, 0.0005000485138653595])) #Monastery
+    artifacts.append(((3,24),[0.0005254931411881041, 0.01576551639409468, 0.0008891656677224623, 4.0429269364383834e-05, 0.16502380698728875, 0.00871395761904818, 0.003476757782587364, 0.0003860042282151309])) #Chinese fan 2
+    artifacts.append(((12,28),[8.837925915108395e-05, 0.000900672369924867, 6.74465484718821e-05, 0.0006394225845892637, 0.24313385114499908, 0.004814919386131511, 0.001615449507284051, 0.1591745379246612])) #United struggling
+    artifacts.append(((16,28),[0.0002187790459378726, 0.00404052099303527, 0.00030168164727408826, 4.335174277635266e-05, 0.011253747762454537, 0.010766070753276031, 0.030310161389324096, 0.0002658887278761197])) #New culture needs more
+    artifacts.append(((20,28),[0.0006294003921530854, 0.008177123750881601, 0.0008566795291065945, 6.011103476972694e-05, 0.03175050332282471, 0.010209678314768609, 0.05558529961182932, 0.00028082723062582387])) #Suoja Village 2
+    artifacts.append(((10,18),[0.00032339634216078407, 0.0022688156410241803, 8.66772531149977e-05, 0.000542520471947868, 0.20088917874250806, 0.00808716120577495, 0.002568942922216969, 0.0013699506031804988])) #Learn by figure
+    artifacts.append(((12,18),[0.0010365218331618276, 0.0061547306796465385, 0.0019479926636554509, 5.887823711650977e-05, 0.0008551434399643391, 0.010026733980972253, 0.0937435020849862, 0.0003280119669134551])) #Head portrait (Mao)
+    artifacts.append(((15,18),[0.0007176544359391438, 0.010265866230531193, 0.00039887872704194057, 7.904237803533662e-05, 0.06763117669813654, 0.01027191508168707, 0.009358630764690058, 0.0006994274278279679])) #In front of the party flag
+    artifacts.append(((23,27),[0.0006128306017573622, 0.0049729455406594, 0.00035252249984139405, 1.251048794091145e-05, 0.24824385938852808, 0.006812493420220656, 0.006812684272462559, 9.84321382869462e-05])) #Policeman and civilian 2
+    artifacts.append(((23,13),[0.0007990148971046627, 0.043609457726377594, 0.07696327326441121, 0.00020885875951047345, 0.2788827443243378, 0.003706377476135806, 0.07872671799634662, 0.0001893254675692762])) #The inheritance
+    artifacts.append(((23,10),[0.0006674739781227262, 0.005272919163264571, 0.0007403476083577221, 3.452483035033877e-05, 0.051051232387221875, 0.010491531618969175, 0.013011979469745702, 0.0002672166475115809])) #Info wall
+    artifacts.append(((31,7),[0.00018897209835385846, 0.00266282992426137, 0.0005370890742168096, 2.3945594310562733e-05, 0.14451987752915066, 0.007939292214836335, 0.10826755898345426, 0.0004954204363834188])) #Road block
+    artifacts.append(((35,7),[0.0011162853296353002, 0.050581803109568425, 0.003069006423308702, 0.00013174733928791199, 0.11446499955656253, 0.008999358768122563, 0.008880214379924393, 0.014535570492488973])) #Forklift
+    artifacts.append(((37,4),[0.0013344633928108625, 0.007911085565737136, 0.0009128258544814364, 4.041449371701087e-05, 0.21084661674690958, 0.007530042407755634, 0.02818896177404244, 0.0001416449899177982])) #Creeping forward
+    artifacts.append(((23,8),[0.04187541986335259, 0.023252405962820414, 0.11717118043846948, 1.2842411336686253e-05, 0.1588496652609483, 0.006846345649447813, 0.0039012485368033426, 0.00021692283735472729])) #Temple of heaven
+    artifacts.append(((17,8),[0.07065846643728874, 0.01267089529392658, 0.0010670832619953444, 5.8010688873058316e-05, 0.0031724010752331613, 0.00969145206430973, 0.02638650636149576, 0.03098898308571982])) #Birds nest
+    artifacts.append(((9,7),[0.021003076108598973, 0.012721854124695887, 0.027468231819558552, 0.0059612575469558116, 0.016715095389085968, 0.009609302814209022, 0.052367450441550376, 0.02221615382357876])) #Green food
+    artifacts.append(((4,15),[0.0003547102375113603, 0.021051207902707873, 0.0005628519087429023, 0.0005505467843534943, 0.046729357045156024, 0.009898279334781697, 0.005715799309244038, 0.052116674078804825])) #Supermarket 3
+    artifacts.append(((2,20),[9.466688392324107e-05, 0.0031073926867845048, 0.00036059071959343225, 8.068081127336966e-05, 0.00802825176612624, 0.01066878160438496, 0.04238897109308215, 0.0006502214984220622])) #Your world
+    artifacts.append(((4,25),[0.0012512697974304302, 0.00688010188271811, 0.002233903669253172, 0.00013161288294019763, 0.2512529168310824, 0.006419514747471504, 0.031102161594006954, 0.0006411937178419419])) #Mobile phones
+    artifacts.append(((9,33),[0.00021688705917726958, 0.00408569629493654, 0.00018991855497670675, 8.480116619820605e-06, 0.2255829563099503, 0.007493966246511477, 0.0015160742421529956, 0.0001084119553886432])) #Panda
+    artifacts.append(((15,26),[0.0010181255910470225, 0.010858235557177591, 0.0013202163279714269, 0.00042629463947695725, 0.23443379145302512, 0.007094055827494767, 0.004719139602344632, 0.004699774458188805])) #Screen in rest
+    artifacts.append(((17,33),[0.00015808596563845632, 0.02006842025171744, 9.86279701872203e-05, 1.5109175949306784e-06, 0.07906909736344496, 0.010092717030325759, 0.003651107641862784, 3.819321794955264e-05])) #Into the woods
+    artifacts.append(((20,29),[0.00037158388400679006, 0.007296854855327585, 0.00017320210435313666, 5.538060593921612e-06, 0.19147703496437057, 0.008277446372738568, 0.0014968203279242004, 7.922664221193755e-05])) #Cancer village
+    artifacts.append(((23,33),[0.007364901319878112, 0.004889895728076491, 0.010447716072431088, 0.001233874898477945, 0.0723380491513972, 0.009487803596780977, 0.052268692287376024, 0.01395572502815311])) #The great wall
+    artifacts.append(((15,16),[0.00011589086459607323, 0.0012106328060325225, 0.0004498447591928208, 8.561787946468424e-06, 0.24865988342134923, 0.006902473200818978, 0.0006024878165213847, 0.00013281043960142126])) #Water crisis
+    artifacts.append(((30,26),[0.020669587430652083, 0.006627560860320249, 0.006430877661852104, 8.987867818554116e-06, 0.022662838830229827, 0.010548476890667641, 0.012258295055558548, 0.0003391770258139032])) #Cooperate with rero
+    artifacts.append(((20,12),[0.00037744630891234056, 0.017144744781651518, 0.00039012041433358625, 0.00012659930795340477, 0.16457632565180444, 0.008674815582133698, 0.006449437883311316, 0.00140610500335182])) #Forest 2
     artifacts1 = artifacts[:23]
     artifacts2 = artifacts[23:]
+
 
     map1 = scipy.misc.imread("./flaskr/map/pixel_floor1.jpg")
     map2 = scipy.misc.imread("./flaskr/map/pixel_floor2.jpg")
     G1=nx.from_numpy_matrix(makeAdjacency(map1))
-    G2=nx.from_numpy_matrix(makeAdjacency(map2))
+    #G2=nx.from_numpy_matrix(makeAdjacency(map2))
     distances1 = [] #0 is the entrance
     distances2 = [] #1 first artifact
     entrance1 = (25,21)
@@ -208,8 +209,8 @@ def EmoDist(emotions, name):
         emo_score1.append(np.dot(np.array(emotions),np.array(i[1])))
 
     emo_score2 = []
-    for i in artifacts2:
-        emo_score2.append(np.dot(np.array(emotions),np.array(i[1])))
+    #for i in artifacts2:
+    #    emo_score2.append(np.dot(np.array(emotions),np.array(i[1])))
 
 
     def findNextHop(distance, emo_score, current, visited):
@@ -222,7 +223,7 @@ def EmoDist(emotions, name):
         return final_indices[i]
 
     final_indices1 = []
-    max_hops = 12
+    max_hops = min(int(np.ceil(time/2.0)),23)
 
     current=-1
     for i in range(max_hops):
