@@ -20,7 +20,6 @@ from io import BytesIO
 bp = Blueprint('experiment', __name__, url_prefix='/experiment')
 
 # Setup azure
-# Replace <Subscription Key> with your valid subscription key.
 subscription_key = "1e94ebc81f34468a9e9bea9bf04052cb"
 assert subscription_key
 
