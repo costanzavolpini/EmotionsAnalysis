@@ -7,3 +7,5 @@ __pycache__/
 
 flaskr/static/experiments/*
 
+
+flaskr/experiment\.pyc
