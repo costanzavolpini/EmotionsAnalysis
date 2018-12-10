@@ -1034,14 +1034,6 @@ h5.text-uppercase.font-weight-bold {
 	padding: 0px;
 }
 
-#experiment {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0 auto;
-	max-width: 50%;
-}
-
 .card .card-body .card-text {
 	margin-bottom: 30px;
 }
@@ -1068,19 +1060,20 @@ h5.text-uppercase.font-weight-bold {
 	filter: blur(2px);
 }
 
+
 #experiment {
+	display: flex;
 	position: absolute;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	max-width: 50%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-	/* background-color: #555;
-	color: white; */
-	/* font-size: 16px; */
-	/* padding: 12px 24px; */
 	border: none;
 	cursor: pointer;
-	border-radius: 5px;
 }
 
 #experiment-container {
@@ -1146,4 +1139,10 @@ h5.text-uppercase.font-weight-bold {
 
 .md-form input[type=text]:focus:not([readonly])+label{
 	color: #fda085;
+}
+
+#generatePath {
+	border: none;
+	cursor: pointer;
+	background-color: #fda085;
 }
