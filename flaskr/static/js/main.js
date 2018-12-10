@@ -123,7 +123,6 @@ $(document).ready(function () {
 				}
 			}
 		};
-		console.log($(`#${idCanvas}`));
 
 		var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
 		console.log(chart);
@@ -723,8 +722,38 @@ $(document).ready(function () {
 				// });
 			} else return
 
-		}
+		};
 	}
+
+	// Function made just to realize data visualization for the final presentation
+	function showResultPoster(){
+		function showResultPerson(person){
+			console.log("ehhh");
+
+			$.ajax({
+				url: '/final/person?p=' + person,
+				type: 'GET',
+				success: function (result) {
+					console.log("QUESTO");
+
+					console.log(result)
+					alert(result)
+				},
+				error: function (error) { // error retrieve data of an image
+					console.log(error);
+				}
+			});
+
+		}
+
+		showResultPerson(52); //comment or decomment
+
+		function showRadarChartAll(){
+
+		}
+
+	}
+	showResultPoster();
 
 
 

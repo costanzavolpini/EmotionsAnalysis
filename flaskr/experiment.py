@@ -102,7 +102,6 @@ def get_camera():
 def getPainting():
     id = request.args.get('id')
     datas = db.getEmotionByPaiting(id)
-    print(datas)
     ds = {}
     emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
     for d in datas:
@@ -154,10 +153,21 @@ def getTable():
 
     return jsonify(table)
 
+
+@bp.route('/tableJson', methods=['GET'])
+def getTableJson():
+    """Return a json containing all the rows of the table (database)."""
+    table = {}
+    ts = db.query_db("select * from experience", one=False)
+    i = 0
+    for t in ts:
+        id = t[0]
+        table[i] = {"id": t[0], "person": t[2], "time": t[2], "name": t[3], "anger": t[4], "contempt": t[5], "disgust": t[6], "fear": t[7], "happiness": t[8], "neutral": t[9], "sadness": t[10], "surprise": t[11]}
+        i = i+1
+    return jsonify(table)
+
 # TODO:
 # fix bugs
-# put high quality photo for experiment
-# return cluster as result with overlap global results
-# put photos already saved (upload it!)
+# put high quality photo for experiment -- same size photo of the experiment
 # add waiting gif!
 # server?

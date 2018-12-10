@@ -5,6 +5,7 @@ import database as db
 import experiment
 import homepage
 import pathgenerator
+import final
 
 # Initialize database
 # flask init-db
@@ -46,7 +47,7 @@ def create_app(test_config=None):
     app.register_blueprint(pathgenerator.bp)
     app.register_blueprint(experiment.bp)
     app.register_blueprint(pathgenerator.bp)
-
+    app.register_blueprint(final.bp)
 
     # # a simple page that says hello
     # @app.route('/')
