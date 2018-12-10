@@ -28,7 +28,6 @@ emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/fac
 
 @bp.route('/person', methods=['GET'])
 def get_person_results():
-    print("EHIEHI")
     """Function to get all the data related to a person. Return a json {time: {<all the data untouched>}, average: {<all the data averaged for each painting>}}
     Example of use: http://localhost:5000/final/person?p=<id of the person>"""
     person = request.args.get('p')
@@ -37,15 +36,18 @@ def get_person_results():
 
     # add results without averaging and touching anything
     for p in paintings:
-        identifier = str(p[0]) + "-" + str(p[2])
-        results['time'][identifier] = {'id': p[0], 'person': p[1], 'time': p[2], 'name': p[3], 'anger': p[4], 'contempt': p[5], 'disgust': p[6], 'fear': p[7], 'happiness': p[8], 'neutral': p[9], 'sadness': p[10], 'surprise': p[11]}
+        id = p[0]
+        if id not in results['time']:
+            results['time'][id] = {'1': {}, '2': {}, '3': {}, '4': {}}
+        time = p[2]
+        results['time'][id][time] = {'person': p[1], 'name': p[3], 'anger': p[4], 'contempt': p[5], 'disgust': p[6], 'fear': p[7], 'happiness': p[8], 'neutral': p[9], 'sadness': p[10], 'surprise': p[11]}
 
     emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
     # add results averaging all
     for paint in paintings:
         pain_id = paint[0]
 
-        if pain_id not in paintings:
+        if pain_id not in results['average']:
             results['average'][pain_id] = {"person": paint[1], "time": 0, "name": paint[3], "anger": 0, "contempt": 0, "disgust": 0, "fear": 0, "happiness": 0, "neutral": 0, "sadness": 0, "surprise": 0}
 
         results['average'][pain_id]['time'] += 1
