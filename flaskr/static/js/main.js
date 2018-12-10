@@ -733,31 +733,31 @@ $(document).ready(function () {
 				type: 'GET',
 				success: function (result) {
 
-						console.log("QUESTO");
-						console.log(document.body.innerHTML);
 						document.body.innerHTML = "";
 						var divMain = document.createElement("div");
 						document.body.appendChild(divMain);
 
 						for(var id in result['time']){
 							var paint = result['time'][id];
-							for(var i=0; i <= 4; i++){
+							for(var i=1; i <= 4; i++){
+
 								if(paint[i] == {}){ //put average in case it is empty
 									paint[i] = result['average'][id]
 								}
 							}
 							var div = document.createElement("div");
 							div.classList.add("col");
+							var h5 = document.createElement("h5");
+
+							h5.innerHTML = `${paint[1]['name']}`;
 							var canvas = document.createElement("canvas");
 							var idCanvas = `${id}-time`;
 							canvas.setAttribute("id", idCanvas);
+							div.appendChild(h5);
 							div.appendChild(canvas);
 							divMain.appendChild(div);
 
-							console.log(divMain)
-
 							fillChartTime('line', idCanvas, paint)
-
 						}
 
 				},
