@@ -37,8 +37,6 @@ $(document).ready(function () {
 	}
 
 	// Generate path
-	// TODO: Skander: Why cannot find pixel_floor1 img?
-	// Error received: No such file or directory: './map/pixel_floor1.jpg'
 	function generatePath() {
 		$('#generatePath').click(function (e) {
 			var d = new Date / 1E3 | 0;
@@ -725,7 +723,7 @@ $(document).ready(function () {
 		};
 	}
 
-	// Function made just to realize data visualization for the final presentation
+	// Function made just to realize data visualization for the final presentation. (Comment or decomment the function inside to use it!)
 	function showResultPoster(){
 		function showResultPerson(person){
 			$.ajax({
@@ -767,7 +765,7 @@ $(document).ready(function () {
 			});
 		}
 
-		// showResultPerson(52); //comment or decomment
+		// showResultPerson(52); //comment or decomment (52 is just an example)
 
 		function showRadarChartAll(){
 			$.ajax({
@@ -804,78 +802,8 @@ $(document).ready(function () {
 			});
 
 		}
-		showRadarChartAll(); //comment or decomment
+		// showRadarChartAll(); //comment or decomment
 
 	}
 	showResultPoster();
-
-
-
-	// //usage:
-	// // readTextFile("/static/js/database.json", function (text) {
-	// // 	// ids = ["101", "102", "112", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123"]
-
-
-	// // 	$(jQuery.parseJSON(JSON.stringify(data))).each(function () {
-	// // 		var id = this.id;
-	// // 		var result_arr = this.res;
-	// // 		var name = this.name;
-
-	// // 		var temp_for_later_res;
-
-
-
-	// // 		// // TODO: detect if we are in url /diagrams
-	// // 		// var div = document.createElement("div");
-	// // 		// div.classList.add("col");
-
-	// // 		// var canvas = document.createElement("canvas");
-	// // 		// canvas.setAttribute("id", id);
-
-	// // 		// div.appendChild(canvas);
-
-	// // 		// $("#diagrams")[0].appendChild(div);
-
-	// // 		// Add code for chart
-	// // 		// var ctxR = document.getElementById(id).getContext('2d');
-	// // 		// var myRadarChart = new Chart(ctxR, {
-	// // 		// 	type: 'radar',
-	// // 		// 	data: {
-	// // 		// 		// anger, contempt, disgust, fear, happiness, neutral, sadness, surprise
-	// // 		// 		// invert fear and contempt
-	// // 		// 		// fear 3 contempt 1
-	// // 		// 		labels: ["Anger", "Fear", "Disgust", "Contempt", "Happiness", "Sadness", "Surprise"],
-	// // 		// 		datasets: [{
-	// // 		// 			label: name,
-	// // 		// 			data: res,
-	// // 		// 			backgroundColor: [
-	// // 		// 				'rgba(244, 240, 242, .9)',
-	// // 		// 			],
-	// // 		// 			borderColor: [
-	// // 		// 				'rgba(213, 208, 206, .7)',
-	// // 		// 			],
-	// // 		// 			pointBackgroundColor: [
-	// // 		// 				'rgba(244, 240, 242, .9)',
-	// // 		// 			],
-	// // 		// 			pointBorderColor: [
-	// // 		// 				'rgba(213, 208, 206, .7)',
-	// // 		// 			],
-	// // 		// 			borderWidth: 1
-	// // 		// 		}]
-	// // 		// 	},
-	// // 		// 	options: {
-	// // 		// 		responsive: true,
-	// // 		// 		scale: {
-	// // 		// 			ticks: {
-	// // 		// 				display: false,
-	// // 		// 				maxTicksLimit: 1
-	// // 		// 			}
-	// // 		// 		}
-	// // 		// 	}
-	// // 		// });
-
-
-	// // 	});
-
-	// // });
 });
