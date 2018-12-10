@@ -166,30 +166,18 @@ $(document).ready(function () {
 				'happiness': null,
 				'sadness': null,
 				'surprise': null
-			},
-			// '5': {
-			// 	'anger': null,
-			// 	'contempt': null,
-			// 	'disgust': null,
-			// 	'fear': null,
-			// 	'happiness': null,
-			// 	'sadness': null,
-			// 	'surprise': null
-			// }
+			}
 		};
 
 		for (var t in input1) {
 			data[t] = normalizeData(input1[t]);
 		}
 
-		console.log(data);
-		// var labels = ["1s", "2s", "3s", "4s", "5s"];
 		var labels = ["1s", "2s", "3s", "4s"];
 
 
 		var datasets = [{
 				label: "Anger",
-				// data: [data['1']['anger'], data['2']['anger'], data['3']['anger'], data['4']['anger'], data['5']['anger']],
 				data: [data['1']['anger'], data['2']['anger'], data['3']['anger'], data['4']['anger']],
 				backgroundColor: [
 					'rgba(244, 237, 212, .5)',
@@ -201,7 +189,6 @@ $(document).ready(function () {
 			},
 			{
 				label: "Fear",
-				// data: [data['1']['fear'], data['2']['fear'], data['3']['fear'], data['4']['fear'], data['5']['fear']],
 				data: [data['1']['fear'], data['2']['fear'], data['3']['fear'], data['4']['fear']],
 				backgroundColor: [
 					'rgba(244, 223, 151, .5)',
@@ -213,7 +200,6 @@ $(document).ready(function () {
 			},
 			{
 				label: "Disgust",
-				// data: [data['1']['disgust'], data['2']['disgust'], data['3']['disgust'], data['4']['disgust'], data['5']['disgust']],
 				data: [data['1']['disgust'], data['2']['disgust'], data['3']['disgust'], data['4']['disgust']],
 				backgroundColor: [
 					'rgba(236, 200, 106, .5)',
@@ -225,7 +211,6 @@ $(document).ready(function () {
 			},
 			{
 				label: "Contempt",
-				// data: [data['1']['contempt'], data['2']['contempt'], data['3']['contempt'], data['4']['contempt'], data['5']['contempt']],
 				data: [data['1']['contempt'], data['2']['contempt'], data['3']['contempt'], data['4']['contempt']],
 				backgroundColor: [
 					'rgba(253, 160, 133, .5)',
@@ -238,7 +223,6 @@ $(document).ready(function () {
 			{
 				label: "Happiness",
 				data: [data['1']['happiness'], data['2']['happiness'], data['3']['happiness'], data['4']['happiness']],
-				// data: [data['1']['happiness'], data['2']['happiness'], data['3']['happiness'], data['4']['happiness'], data['5']['happiness']],
 
 				backgroundColor: [
 					'rgba(208, 131, 109, .5)',
@@ -250,7 +234,6 @@ $(document).ready(function () {
 			},
 			{
 				label: "Sadness",
-				// data: [data['1']['sadness'], data['2']['sadness'], data['3']['sadness'], data['4']['sadness'], data['5']['sadness']],
 				data: [data['1']['sadness'], data['2']['sadness'], data['3']['sadness'], data['4']['sadness']],
 				backgroundColor: [
 					'rgba(139, 88, 73, .5)',
@@ -262,7 +245,6 @@ $(document).ready(function () {
 			},
 			{
 				label: "Surprise",
-				// data: [data['1']['surprise'], data['2']['surprise'], data['3']['surprise'], data['4']['surprise'], data['5']['surprise']],
 				data: [data['1']['surprise'], data['2']['surprise'], data['3']['surprise'], data['4']['surprise']],
 				backgroundColor: [
 					'rgba(69, 44, 37, .5)',
@@ -283,17 +265,10 @@ $(document).ready(function () {
 			},
 			options: {
 				responsive: true,
-				// scale: {
-				// 	ticks: {
-				// 		display: false,
-				// 		maxTicksLimit: 1
-				// 	}
-				// }
 			}
 		};
 
 		var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
-		// console.log(chart);
 		return chart;
 	}
 
@@ -452,7 +427,7 @@ $(document).ready(function () {
 		for (var i in input) {
 			if (emotions.includes(i)) {
 				var normalized = (input[i] - min) / (max - min)
-				data[i] = Math.log(normalized + 1)
+				data[i] = (Math.log(normalized + 1)).toFixed(3)
 			}
 		}
 		return data;
