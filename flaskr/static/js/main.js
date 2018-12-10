@@ -50,6 +50,14 @@ $(document).ready(function () {
 			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
 			console.log(path);
 
+
+			var duration = $("#durationVisit")[0].value;
+			if(duration){
+				duration = Math.round(parseFloat(duration.replace( /[^\d\.]*/g, ''))); // get number
+			} else {
+				duration = 24;
+			}
+
 			var data_emotions_path = {
 				"anger": $("#anger").val() / 100.0,
 				"fear": $("#fear").val() / 100.0,
@@ -58,23 +66,21 @@ $(document).ready(function () {
 				"happiness": $("#happiness").val() / 100.0,
 				"sadness": $("#sadness").val() / 100.0,
 				"surprise": $("#surprise").val() / 100.0,
-				"date": "" + d
+				"date": "" + d,
+				"duration": duration
 			}
-
-			console.log(JSON.stringify(data_emotions_path));
 
 			$("#imagePath")[0].innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
 			e.preventDefault();
 			$.ajax({
 				url: '/pathgenerator',
-				dataType: "json",
-				contentType: "application/json;charset=utf-8",
+				dataType: "text",
+				contentType: "application/json",
 				data: JSON.stringify(data_emotions_path),
 				type: 'POST',
 				success: function (response) {
-					console.log(response);
 					// Should receive the new path image
-					// $("#imagePath")[0].innerHTML = `<img src="${path}" id="pathGenerated" alt="Path of museum" style="width: 60%;">`
+					$("#imagePath")[0].innerHTML = `<img src="${path}" id="pathGenerated" alt="Path of museum" style="width: 60%;">`
 				},
 				error: function (error) {
 					console.log(error);
@@ -130,7 +136,6 @@ $(document).ready(function () {
 		};
 
 		var chart = new Chart($(`#${idCanvas}`)[0].getContext('2d'), config);
-		console.log(chart);
 		return chart;
 	}
 

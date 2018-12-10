@@ -1137,3 +1137,13 @@ h5.text-uppercase.font-weight-bold {
   .navbar-dark .navbar-nav .nav-link {
     color: rgba(255,255,255,1.0);
 }
+
+.md-form input[type=text]:focus:not([readonly]){
+	box-shadow: 0 1px 0 0 #fda085;
+	border-bottom: 1px solid #fda085
+}
+
+
+.md-form input[type=text]:focus:not([readonly])+label{
+	color: #fda085;
+}

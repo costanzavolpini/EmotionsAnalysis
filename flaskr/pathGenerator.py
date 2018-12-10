@@ -8,7 +8,7 @@ from Path import EmoDist
 
 bp = Blueprint('pathgenerator', __name__, url_prefix='/pathgenerator')
 
-@bp.route('/', methods=['POST'], strict_slashes=False)
+@bp.route('/', methods=['GET', 'POST'], strict_slashes=False)
 # Function to get the value of the emotions in order to generate the path
 def get_emotions_path():
     print(request.get_json())
@@ -17,7 +17,7 @@ def get_emotions_path():
             mydata = request.json
             # return the new image of the path
             try:
-                pt.EmoDist([mydata["anger"], mydata["fear"], mydata["disgust"], mydata["contempt"], mydata["happiness"], mydata["sadness"], mydata["surprise"]], mydata["date"])
+                pt.EmoDist([mydata["anger"], mydata["fear"], mydata["disgust"], mydata["contempt"], mydata["happiness"], mydata["sadness"], mydata["surprise"]], mydata["date"], mydata["duration"])
                 return "Generated Path"
             except Exception as e:
                 print(str(e))
