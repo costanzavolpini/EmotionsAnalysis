@@ -17,7 +17,7 @@ $(document).ready(function () {
 			}
 		});
 
-		$('.nav-link').click(function(){
+		$('.nav-btn').click(function(){
 			var divId = $(this).attr('href');
 			 $('html, body').animate({
 			  scrollTop: $(divId).offset().top - 100
@@ -331,7 +331,7 @@ $(document).ready(function () {
 			$("#slideShowExperiment")[0].innerHTML = inner;
 
 			$("#slideShowExperiment").carousel({
-				interval: 7.5 * 1000,
+				interval: 7500,
 				pause: false,
 				keyboard: false,
 				wrap: false,
@@ -366,8 +366,9 @@ $(document).ready(function () {
 								() => {
 									$('#bodyLoading').innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
 								},
-								173000 //172.5 seconds
+								172500 //172.5 seconds
 							);
+							$('#slideShowExperiment').carousel(0);
 
 							$.ajax({
 								url: '/experiment?sequence=' + sequenceurl,
