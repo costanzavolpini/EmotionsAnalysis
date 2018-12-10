@@ -728,16 +728,38 @@ $(document).ready(function () {
 	// Function made just to realize data visualization for the final presentation
 	function showResultPoster(){
 		function showResultPerson(person){
-			console.log("ehhh");
-
 			$.ajax({
 				url: '/final/person?p=' + person,
 				type: 'GET',
 				success: function (result) {
-					console.log("QUESTO");
 
-					console.log(result)
-					alert(result)
+						console.log("QUESTO");
+						console.log(document.body.innerHTML);
+						document.body.innerHTML = "";
+						var divMain = document.createElement("div");
+						document.body.appendChild(divMain);
+
+						for(var id in result['time']){
+							var paint = result['time'][id];
+							for(var i=0; i <= 4; i++){
+								if(paint[i] == {}){ //put average in case it is empty
+									paint[i] = result['average'][id]
+								}
+							}
+							var div = document.createElement("div");
+							div.classList.add("col");
+							var canvas = document.createElement("canvas");
+							var idCanvas = `${id}-time`;
+							canvas.setAttribute("id", idCanvas);
+							div.appendChild(canvas);
+							divMain.appendChild(div);
+
+							console.log(divMain)
+
+							fillChartTime('line', idCanvas, paint)
+
+						}
+
 				},
 				error: function (error) { // error retrieve data of an image
 					console.log(error);
