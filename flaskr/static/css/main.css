@@ -1133,3 +1133,7 @@ h5.text-uppercase.font-weight-bold {
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 10px;
   }
+
+  .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,1.0);
+}

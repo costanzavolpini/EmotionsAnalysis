@@ -16,6 +16,13 @@ $(document).ready(function () {
 				$('#header').removeClass('fixed');
 			}
 		});
+
+		$('.nav-link').click(function(){
+			var divId = $(this).attr('href');
+			 $('html, body').animate({
+			  scrollTop: $(divId).offset().top - 100
+			}, 100);
+		  });
 	}
 
 	// Slider emotions
