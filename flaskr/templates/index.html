@@ -26,6 +26,24 @@
   <link href="http://it.allfont.net/allfont.css?fonts=garamond-bold" rel="stylesheet" type="text/css" />
   <link href="http://it.allfont.net/allfont.css?fonts=garamond-black" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-57x57.png') }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-60x60.png') }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-72x72.png') }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-76x76.png') }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-114x114.png') }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-120x120.png') }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-144x144.png') }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-152x152.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon.ico/apple-icon-180x180.png') }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/favicon.ico/android-icon-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon.ico/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon.ico/favicon-96x96.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon.ico/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='images/favicon.ico/manifest.json') }}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{{ url_for('static', filename='images/favicon.ico/ms-icon-144x144.png') }}">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
@@ -248,10 +266,11 @@
         </div>
         <!-- <div class="col-md-8 col-md-offset-2 text-center"> -->
         <div class="col-md-7 text-center">
-            <!-- <div class="loader medium"></div> -->
-            <div id="imagePath">
-                <img src="{{ url_for('static', filename='images/path.jpg') }}" id="pathGenerated" alt="Path of museum" style="width: 60%;">
-            </div>
+          <!-- <div class="loader medium"></div> -->
+          <div id="imagePath">
+            <img src="{{ url_for('static', filename='images/path.jpg') }}" id="pathGenerated" alt="Path of museum"
+              style="width: 60%;">
+          </div>
         </div>
         <div class="col-md-3 text-center">
           <h5 style="margin-bottom: 30px;">Emotions selector:</h5>
@@ -344,11 +363,11 @@
 
           <div class="row">
             <div class="col">
-          <div class="md-form">
-              <input type="text" id="durationVisit" class="form-control">
-              <label for="durationVisit">Ideal duration of the visit (in minutes)</label>
+              <div class="md-form">
+                <input type="text" id="durationVisit" class="form-control">
+                <label for="durationVisit">Ideal duration of the visit (in minutes)</label>
+              </div>
             </div>
-          </div>
           </div>
 
           <a href="#" class="btn sunny-morning-gradient btn-large" id="generatePath">Generate</a>
@@ -465,14 +484,14 @@
   </div>
 
   <!-- Modal Video shows -->
-  <div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="modalexperiment" aria-hidden="true">
     <!-- Change class .modal-sm to change the size of the modal -->
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress!</h4>
+          <h4 class="modal-title w-100" id="modalexperiment">Experiment in progress!</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="bodyLoading">
           <div id="slideShowExperiment" class="carousel slide" data-ride="carousel">
           </div>
         </div>
@@ -480,12 +499,12 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modalResultExperiment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  <div class="modal fade" id="modalResultExperiment" tabindex="-1" role="dialog" aria-labelledby="modalres"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">Experiment in progress!</h4>
+          <h4 class="modal-title w-100" id="modalres">Experiment results</h4>
           <button type="button" id="closeVideo" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -508,10 +527,10 @@
         </div>
         <div class="modal-body">
           <ul>
-            <li><a href="http://www.designstub.com/"style="color:#fea47e;">Flosix Inc. Designstub</a></li>
-            <li><a href="https://mdbootstrap.com"style="color:#fea47e;">MDBootstrap</a></li>
-            <li><a href="https://getbootstrap.com/"style="color:#fea47e;">Bootstrap</a></li>
-            <li><a href="https://fontawesome.com/"style="color:#fea47e;">Fontawesome</a></li>
+            <li><a href="http://www.designstub.com/" style="color:#fea47e;">Flosix Inc. Designstub</a></li>
+            <li><a href="https://mdbootstrap.com" style="color:#fea47e;">MDBootstrap</a></li>
+            <li><a href="https://getbootstrap.com/" style="color:#fea47e;">Bootstrap</a></li>
+            <li><a href="https://fontawesome.com/" style="color:#fea47e;">Fontawesome</a></li>
           </ul>
         </div>
       </div>

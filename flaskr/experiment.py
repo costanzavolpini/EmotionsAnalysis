@@ -42,8 +42,8 @@ def get_camera():
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("flaskr/static/experiments/" + dirname)
 
-    # timer = 172.5
-    timer = 7.5
+    timer = 172.5
+    # timer = 7.5
     i = -1
     c = 0
 
@@ -56,7 +56,6 @@ def get_camera():
             i = i + 1
             c = 0
         c = c + 1
-        # filename = '%s/%s-%d.jpg' % (dirname,sequence[i], c)
         filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
         cv2.imwrite(filename, frame)
         time.sleep(1.5)
@@ -68,6 +67,8 @@ def get_camera():
     del camera
 
     person = int(db.findIdPerson()) + 1
+
+    print(sequence)
 
     for el in sequence:
         f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")

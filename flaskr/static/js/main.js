@@ -321,7 +321,7 @@ $(document).ready(function () {
 					inner += "<div class='carousel-item active'>"
 					first = false
 				} else inner += "<div class='carousel-item'>"
-				inner += "<img class='d-block w-100' src='/static/images/floor1/"
+				inner += "<img class='d-block h-100' style='margin-left: auto; margin-right: auto; height:150%; width:auto;' src='/static/images/floor1/"
 				inner += value_random + ".jpg'>"
 
 				inner += "</div>";
@@ -331,7 +331,7 @@ $(document).ready(function () {
 			$("#slideShowExperiment")[0].innerHTML = inner;
 
 			$("#slideShowExperiment").carousel({
-				interval: 5,
+				interval: 7.5 * 1000,
 				pause: false,
 				keyboard: false,
 				wrap: false,
@@ -352,7 +352,7 @@ $(document).ready(function () {
 				success: function (table) {
 					$('#modalVideo').modal({
 						'show': true,
-						backdrop: 'static' //TODO: serve?
+						backdrop: 'static' //avoid possibility to closs a modal
 					});
 					navigator.permissions.query({
 							name: 'camera'
@@ -361,6 +361,13 @@ $(document).ready(function () {
 							var sequence = experiment();
 							//Generate path to pass in the get
 							var sequenceurl = sequence.join("-");
+
+							setTimeout(
+								() => {
+									$('#bodyLoading').innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
+								},
+								173000 //172.5 seconds
+							);
 
 							$.ajax({
 								url: '/experiment?sequence=' + sequenceurl,
@@ -372,8 +379,8 @@ $(document).ready(function () {
 										success: function (resultsPainting) {
 											$('#modalVideo').modal('hide');
 											$('#modalResultExperiment').modal('show');
-
 											var container = document.getElementById("resultExperiment");
+
 
 											// Fill Modal with charts obtained during the experiment
 											for (var k in resultsPainting) {
@@ -393,6 +400,10 @@ $(document).ready(function () {
 												var idCanvas = `${resultPerson['person'] + "-" + k}`
 												fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
 											}
+
+											$('#modalResultExperiment').modal('hide');
+											$('#modalResultExperiment').modal('show');
+											$('#modalResultExperiment').data('bs.modal').handleUpdate()
 										},
 										error: function (error) { // error for retrieve the emotion of a person
 											console.log(error);
