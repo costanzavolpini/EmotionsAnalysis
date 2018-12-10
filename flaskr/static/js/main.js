@@ -765,14 +765,46 @@ $(document).ready(function () {
 					console.log(error);
 				}
 			});
-
 		}
 
-		showResultPerson(52); //comment or decomment
+		// showResultPerson(52); //comment or decomment
 
 		function showRadarChartAll(){
+			$.ajax({
+				url: '/experiment/table',
+				type: 'GET',
+				success: function (results) {
+					document.body.innerHTML = "";
+					var divMain = document.createElement("div");
+					document.body.appendChild(divMain);
+
+
+					for(var i in results){
+						paint = results[i];
+						var div = document.createElement("div");
+							div.classList.add("col");
+							var h5 = document.createElement("h5");
+
+							h5.innerHTML = `${paint['name']}`;
+							var canvas = document.createElement("canvas");
+							var idCanvas = `${i}-final`;
+							canvas.setAttribute("id", idCanvas);
+							div.appendChild(h5);
+							div.appendChild(canvas);
+							divMain.appendChild(div);
+
+						fillChart('radar', idCanvas, `${paint['name']}`, paint, null, null)
+					}
+
+
+				},
+				error: function (error) { //error for /experiment/table
+					console.log(error);
+				}
+			});
 
 		}
+		showRadarChartAll(); //comment or decomment
 
 	}
 	showResultPoster();
