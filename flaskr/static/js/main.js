@@ -373,9 +373,7 @@ $(document).ready(function () {
 											console.log(idPerson);
 
 											// put loader
-											// $('#slideShowExperiment').on('slid.bs.carousel', function () {
 											var total = $('#slideShowExperiment div.carousel-item').length;
-											// var currentIndex = $('#slideShowExperiment div.carousel-item.active').index();
 
 											function getPhoto(dirname, idPerson, id) {
 												console.log(sequence[id]);
@@ -385,15 +383,12 @@ $(document).ready(function () {
 													url: `/experiment?sequence=${dirname}&person=${idPerson}&id=${sequence[id]}`,
 													type: 'GET',
 													success: function (res) {
-														console.log(res);
-
-														//TODO: da qua!
 														var next = id + 1;
 														if (next < total) {
 															getPhoto(dirname, idPerson, next);
 														} else {
-															$("#modalexperiment")[0].innerText = "Loading data..."
-															$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
+															// $("#modalexperiment")[0].innerText = "Loading data..."
+															// $('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
 															$.ajax({
 																url: '/experiment/emotion?person=' + idPerson,
 																type: 'GET',
@@ -440,54 +435,6 @@ $(document).ready(function () {
 											}
 
 											getPhoto(dirname, idPerson, 0);
-
-											// $.ajax({
-											// 	url: '/experiment?sequence=' + sequenceurl + d.getTime() + "&person=" + idPerson + "&id=" + sequence[0],
-											// 	type: 'GET',
-											// 	success: function (person) {
-											// 		$.ajax({
-											// 			url: '/experiment/emotion?person=' + person,
-											// 			type: 'GET',
-											// 			success: function (resultsPainting) {
-											// 				$('#modalVideo').modal('hide');
-											// 				$('#modalResultExperiment').modal('show');
-											// 				var container = document.getElementById("resultExperiment");
-
-
-											// 				// Fill Modal with charts obtained during the experiment
-											// 				for (var k in resultsPainting) {
-											// 					var resultPerson = resultsPainting[k];
-											// 					var resultPeople = table[k];
-											// 					var s = null;
-
-											// 					var div = document.createElement("div");
-											// 					var h5 = document.createElement("h5");
-											// 					h5.innerHTML = `${resultPerson['name']}`
-											// 					var canvas = document.createElement("canvas");
-											// 					canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
-											// 					div.appendChild(h5);
-											// 					div.appendChild(canvas);
-											// 					container.appendChild(div);
-
-											// 					var idCanvas = `${resultPerson['person'] + "-" + k}`
-											// 					fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
-											// 				}
-
-											// 				$('#modalResultExperiment').modal('hide');
-											// 				$('#modalResultExperiment').modal('show');
-											// 				$('#modalResultExperiment').data('bs.modal').handleUpdate()
-											// 			},
-											// 			error: function (error) { // error for retrieve the emotion of a person
-											// 				console.log(error);
-											// 			}
-											// 		})
-
-											// first = false;
-											// if (!first && currentIndex == 0) {
-											// 	$("#modalexperiment")[0].innerText = "Loading data..."
-											// 	$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
-											// }
-											// });
 										},
 										error: function (error) { // error for send sequence and do the experiment
 											console.log(error);
