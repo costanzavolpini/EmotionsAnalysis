@@ -29,79 +29,143 @@ assert subscription_key
 
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
 
+@bp.route('/person', methods=['GET'])
+def get_person():
+    return str(int(db.findIdPerson()) + 1)
+
+@bp.route('/folder', methods=['GET'])
+def make_dir():
+    dirname = request.args.get('dirname')
+    os.mkdir("flaskr/static/experiments/" + dirname)
+    return ("Generated folder %s" % dirname)
 
 @bp.route('/', methods=['GET'])
-def get_camera():
-    sequence = request.args.get('sequence').split("-")
-    print(sequence)
-
-    # 23 elements * 1.5 * 4 = 138seconds
-
-    # res = l - i
+def get_photo():
+    dirname = request.args.get('sequence')
+    id = request.args.get('id')
+    person = request.args.get('person')
     camera = cv2.VideoCapture(0)
     time.sleep(0.1)
 
-    dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
-    os.mkdir("flaskr/static/experiments/" + dirname)
-
     curr_photo = 0
-    i = -1
-    c = 0
 
     start_time = time.time()
-    r_time = start_time
-    while i < len(sequence):
+    while curr_photo < 5:
         if (time.time() - start_time)//1.5 >= curr_photo:
             # Capture frame-by-frame
             ret, frame = camera.read()
             curr_photo += 1
-            filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(curr_photo))
+            filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, str(id), str(curr_photo))
             cv2.imwrite(filename, frame)
-        if curr_photo == 4:
-            i += 1
-            curr_photo = 0
-            start_time = time.time()
 
     cv2.destroyAllWindows()
-    print("end")
-    print(time.time() - r_time)
 
     # When everything done, release the capture
     del camera
 
-    person = int(db.findIdPerson()) + 1
+    f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
+    for index in range(1, 5):
+        print("analysing photo %s-%s" % (id, str(index)))
+        try:
+            name_frame = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, id, str(index))
+            # send to microsoft azure
+            image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
+            image_data = open(image_url, "rb").read()
 
-    print(sequence)
-
-    for el in sequence:
-        f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
-        for index in range(1, 5):
-            print("analysing photo %s-%s" % (el, str(index)))
+            header = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': subscription_key}
+            params = {
+                'returnFaceId': 'true',
+                'returnFaceLandmarks': 'false',
+                'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+            }
+            response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
+            analysis = response.json()
             try:
-                name_frame = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
-                # send to microsoft azure
-                image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
-                image_data = open(image_url, "rb").read()
+                emotions_found = analysis[0]['faceAttributes']['emotion']
+                db.insertEmotion(emotions_found, person, id, index)
+            except:
+                f.write("No emotion found in photo: %s-%s.jpg\r\n" % (id, str(index)))
 
-                header = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': subscription_key}
-                params = {
-                    'returnFaceId': 'true',
-                    'returnFaceLandmarks': 'false',
-                    'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
-                }
-                response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
-                analysis = response.json()
-                try:
-                    emotions_found = analysis[0]['faceAttributes']['emotion']
-                    db.insertEmotion(emotions_found, person, el, index)
-                except:
-                    f.write("No emotion found in photo: %s-%s.jpg\r\n" % (el, str(index)))
+        except Exception as e:
+	        f.write("No photo found (%s-%s.jpg)\r\n" % (id, str(index)))
+    f.close()
 
-            except Exception as e:
-	            f.write("No photo found (%s-%s.jpg)\r\n" % (el, str(index)))
-        f.close()
+    return str(id)
 
-    return str(person)
+
+
+# @bp.route('/', methods=['GET'])
+# def get_camera():
+#     sequence = request.args.get('sequence').split("-")
+#     print(sequence)
+
+#     # 23 elements * 1.5 * 4 = 138seconds
+
+#     # res = l - i
+#     camera = cv2.VideoCapture(0)
+#     time.sleep(0.1)
+
+#     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
+#     os.mkdir("flaskr/static/experiments/" + dirname)
+
+#     curr_photo = 0
+#     i = -1
+#     c = 0
+
+#     start_time = time.time()
+#     r_time = start_time
+#     while i < len(sequence):
+#         if (time.time() - start_time)//1.5 >= curr_photo:
+#             # Capture frame-by-frame
+#             ret, frame = camera.read()
+#             curr_photo += 1
+#             filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(curr_photo))
+#             cv2.imwrite(filename, frame)
+#         if curr_photo == 4:
+#             i += 1
+#             curr_photo = 0
+#             start_time = time.time()
+
+#     cv2.destroyAllWindows()
+#     print("end")
+#     print(time.time() - r_time)
+
+#     # When everything done, release the capture
+#     del camera
+
+#     person = int(db.findIdPerson()) + 1
+
+#     print(sequence)
+
+#     for el in sequence:
+#         f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
+#         for index in range(1, 5):
+#             print("analysing photo %s-%s" % (el, str(index)))
+#             try:
+#                 name_frame = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
+#                 # send to microsoft azure
+#                 image_url = "./" + name_frame #image_url to the URL of an image that you want to analyze
+#                 image_data = open(image_url, "rb").read()
+
+#                 header = {'Content-Type': 'application/octet-stream', 'Ocp-Apim-Subscription-Key': subscription_key}
+#                 params = {
+#                     'returnFaceId': 'true',
+#                     'returnFaceLandmarks': 'false',
+#                     'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+#                 }
+#                 response = requests.post(emotion_recognition_url, headers=header, data=image_data, params=params)
+#                 analysis = response.json()
+#                 try:
+#                     emotions_found = analysis[0]['faceAttributes']['emotion']
+#                     db.insertEmotion(emotions_found, person, el, index)
+#                 except:
+#                     f.write("No emotion found in photo: %s-%s.jpg\r\n" % (el, str(index)))
+
+#             except Exception as e:
+# 	            f.write("No photo found (%s-%s.jpg)\r\n" % (el, str(index)))
+#         f.close()
+
+#     return str(person)
 
 @bp.route('/painting', methods=['GET'])
 def getPainting():

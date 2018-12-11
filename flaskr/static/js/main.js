@@ -17,12 +17,12 @@ $(document).ready(function () {
 			}
 		});
 
-		$('.nav-btn').click(function(){
+		$('.nav-btn').click(function () {
 			var divId = $(this).attr('href');
-			 $('html, body').animate({
-			  scrollTop: $(divId).offset().top - 100
+			$('html, body').animate({
+				scrollTop: $(divId).offset().top - 100
 			}, 100);
-		  });
+		});
 	}
 
 	// Slider emotions
@@ -52,8 +52,8 @@ $(document).ready(function () {
 
 
 			var duration = $("#durationVisit")[0].value;
-			if(duration){
-				duration = Math.round(parseFloat(duration.replace( /[^\d\.]*/g, ''))); // get number
+			if (duration) {
+				duration = Math.round(parseFloat(duration.replace(/[^\d\.]*/g, ''))); // get number
 			} else {
 				duration = 24;
 			}
@@ -331,20 +331,10 @@ $(document).ready(function () {
 			$("#slideShowExperiment")[0].innerHTML = inner;
 
 			$("#slideShowExperiment").carousel({
-				pause: false,
-				keyboard: false,
-				wrap: false,
-				ride: 'carousel'
+				pause: true,
+				interval: false,
+				keyboard: false
 			})
-
-			$('#slideShowExperiment').hover(function () {
-				$("#slideShowExperiment").carousel('cycle');
-			});
-
-			$('#slideShowExperiment').carousel(0);
-			var d = new Date();
-			console.log("start", d.getTime());
-
 
 			return sequence;
 		}
@@ -367,75 +357,150 @@ $(document).ready(function () {
 							var sequenceurl = sequence.join("-");
 
 							var first = true;
-
-							// put loader
-							$('#slideShowExperiment').on('slid.bs.carousel', function () {
-								var total= $('#slideShowExperiment div.carousel-item').length;
-								var currentIndex = $('#slideShowExperiment div.carousel-item.active').index();
-								console.log($('#slideShowExperiment div.carousel-item.active')[0].outerHTML);
-								var d = new Date();
-								console.log(currentIndex, "index ",  d.getTime());
-
-								first = false;
-								if(!first && currentIndex==0){
-									var d = new Date();
-									console.log("end", d.getTime());
-									console.log($("#modalexperiment"));
-									$("#modalexperiment")[0].innerText = "Loading data..."
-									$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
-								}
-							  });
-
-
+							var d = new Date();
+							var dirname = sequenceurl + d.getTime();
 
 							$.ajax({
-								url: '/experiment?sequence=' + sequenceurl,
+								url: `/experiment/folder?dirname=${dirname}`,
 								type: 'GET',
-								success: function (person) {
+								success: function (succRes) {
+									console.log(succRes);
+
 									$.ajax({
-										url: '/experiment/emotion?person=' + person,
+										url: '/experiment/person',
 										type: 'GET',
-										success: function (resultsPainting) {
-											$('#modalVideo').modal('hide');
-											$('#modalResultExperiment').modal('show');
-											var container = document.getElementById("resultExperiment");
+										success: function (idPerson) {
+											console.log(idPerson);
 
+											// put loader
+											// $('#slideShowExperiment').on('slid.bs.carousel', function () {
+											var total = $('#slideShowExperiment div.carousel-item').length;
+											// var currentIndex = $('#slideShowExperiment div.carousel-item.active').index();
 
-											// Fill Modal with charts obtained during the experiment
-											for (var k in resultsPainting) {
-												var resultPerson = resultsPainting[k];
-												var resultPeople = table[k];
-												var s = null;
+											function getPhoto(dirname, idPerson, id) {
+												console.log(sequence[id]);
+												console.log(sequence[id]);
+												$('#slideShowExperiment').carousel(id);
+												$.ajax({
+													url: `/experiment?sequence=${dirname}&person=${idPerson}&id=${sequence[id]}`,
+													type: 'GET',
+													success: function (res) {
+														console.log(res);
 
-												var div = document.createElement("div");
-												var h5 = document.createElement("h5");
-												h5.innerHTML = `${resultPerson['name']}`
-												var canvas = document.createElement("canvas");
-												canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
-												div.appendChild(h5);
-												div.appendChild(canvas);
-												container.appendChild(div);
+														//TODO: da qua!
+														var next = id + 1;
+														if (next < total) {
+															getPhoto(dirname, idPerson, next);
+														} else {
+															$("#modalexperiment")[0].innerText = "Loading data..."
+															$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
+															$.ajax({
+																url: '/experiment/emotion?person=' + idPerson,
+																type: 'GET',
+																success: function (resultsPainting) {
+																	$('#modalVideo').modal('hide');
+																	$('#modalResultExperiment').modal('show');
+																	var container = document.getElementById("resultExperiment");
 
-												var idCanvas = `${resultPerson['person'] + "-" + k}`
-												fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+																	// Fill Modal with charts obtained during the experiment
+																	for (var k in resultsPainting) {
+																		var resultPerson = resultsPainting[k];
+																		var resultPeople = table[k];
+																		var s = null;
+
+																		var div = document.createElement("div");
+																		var h5 = document.createElement("h5");
+																		h5.innerHTML = `${resultPerson['name']}`
+																		var canvas = document.createElement("canvas");
+																		canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
+																		div.appendChild(h5);
+																		div.appendChild(canvas);
+																		container.appendChild(div);
+
+																		var idCanvas = `${resultPerson['person'] + "-" + k}`
+																		fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+																	}
+
+																	$('#modalResultExperiment').modal('hide');
+																	$('#modalResultExperiment').modal('show');
+																	$('#modalResultExperiment').data('bs.modal').handleUpdate()
+																},
+																error: function (error) { // error for retrieve the emotion of a person
+																	console.log(error);
+																}
+															})
+														}
+
+													},
+													error: function (error) {
+														console.log(error);
+													}
+												});
+
 											}
 
-											$('#modalResultExperiment').modal('hide');
-											$('#modalResultExperiment').modal('show');
-											$('#modalResultExperiment').data('bs.modal').handleUpdate()
+											getPhoto(dirname, idPerson, 0);
+
+											// $.ajax({
+											// 	url: '/experiment?sequence=' + sequenceurl + d.getTime() + "&person=" + idPerson + "&id=" + sequence[0],
+											// 	type: 'GET',
+											// 	success: function (person) {
+											// 		$.ajax({
+											// 			url: '/experiment/emotion?person=' + person,
+											// 			type: 'GET',
+											// 			success: function (resultsPainting) {
+											// 				$('#modalVideo').modal('hide');
+											// 				$('#modalResultExperiment').modal('show');
+											// 				var container = document.getElementById("resultExperiment");
+
+
+											// 				// Fill Modal with charts obtained during the experiment
+											// 				for (var k in resultsPainting) {
+											// 					var resultPerson = resultsPainting[k];
+											// 					var resultPeople = table[k];
+											// 					var s = null;
+
+											// 					var div = document.createElement("div");
+											// 					var h5 = document.createElement("h5");
+											// 					h5.innerHTML = `${resultPerson['name']}`
+											// 					var canvas = document.createElement("canvas");
+											// 					canvas.setAttribute("id", `${resultPerson['person'] + "-" + k}`);
+											// 					div.appendChild(h5);
+											// 					div.appendChild(canvas);
+											// 					container.appendChild(div);
+
+											// 					var idCanvas = `${resultPerson['person'] + "-" + k}`
+											// 					fillChart('radar', idCanvas, "you", resultPerson, "others", resultPeople);
+											// 				}
+
+											// 				$('#modalResultExperiment').modal('hide');
+											// 				$('#modalResultExperiment').modal('show');
+											// 				$('#modalResultExperiment').data('bs.modal').handleUpdate()
+											// 			},
+											// 			error: function (error) { // error for retrieve the emotion of a person
+											// 				console.log(error);
+											// 			}
+											// 		})
+
+											// first = false;
+											// if (!first && currentIndex == 0) {
+											// 	$("#modalexperiment")[0].innerText = "Loading data..."
+											// 	$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
+											// }
+											// });
 										},
-										error: function (error) { // error for retrieve the emotion of a person
+										error: function (error) { // error for send sequence and do the experiment
 											console.log(error);
 										}
-									})
+									});
 								},
 								error: function (error) { // error for send sequence and do the experiment
 									console.log(error);
 								}
 							});
 
-
 						})
+
 						.catch((error) => { //error for navigation permission
 							console.log('Got error :', error);
 						})
@@ -684,7 +749,7 @@ $(document).ready(function () {
 				keys = keys.slice(1);
 				var idPic = null;
 
-				if(id == "1122")
+				if (id == "1122")
 					idPic = "112";
 				else idPic = id;
 
@@ -741,39 +806,39 @@ $(document).ready(function () {
 	}
 
 	// Function made just to realize data visualization for the final presentation. (Comment or decomment the function inside to use it!)
-	function showResultPoster(){
-		function showResultPerson(person){
+	function showResultPoster() {
+		function showResultPerson(person) {
 			$.ajax({
 				url: '/final/person?p=' + person,
 				type: 'GET',
 				success: function (result) {
 
-						document.body.innerHTML = "";
-						var divMain = document.createElement("div");
-						document.body.appendChild(divMain);
+					document.body.innerHTML = "";
+					var divMain = document.createElement("div");
+					document.body.appendChild(divMain);
 
-						for(var id in result['time']){
-							var paint = result['time'][id];
-							for(var i=1; i <= 4; i++){
+					for (var id in result['time']) {
+						var paint = result['time'][id];
+						for (var i = 1; i <= 4; i++) {
 
-								if(paint[i] == {}){ //put average in case it is empty
-									paint[i] = result['average'][id]
-								}
+							if (paint[i] == {}) { //put average in case it is empty
+								paint[i] = result['average'][id]
 							}
-							var div = document.createElement("div");
-							div.classList.add("col");
-							var h5 = document.createElement("h5");
-
-							h5.innerHTML = `${paint[1]['name']}`;
-							var canvas = document.createElement("canvas");
-							var idCanvas = `${id}-time`;
-							canvas.setAttribute("id", idCanvas);
-							div.appendChild(h5);
-							div.appendChild(canvas);
-							divMain.appendChild(div);
-
-							fillChartTime('line', idCanvas, paint)
 						}
+						var div = document.createElement("div");
+						div.classList.add("col");
+						var h5 = document.createElement("h5");
+
+						h5.innerHTML = `${paint[1]['name']}`;
+						var canvas = document.createElement("canvas");
+						var idCanvas = `${id}-time`;
+						canvas.setAttribute("id", idCanvas);
+						div.appendChild(h5);
+						div.appendChild(canvas);
+						divMain.appendChild(div);
+
+						fillChartTime('line', idCanvas, paint)
+					}
 
 				},
 				error: function (error) { // error retrieve data of an image
@@ -784,7 +849,7 @@ $(document).ready(function () {
 
 		// showResultPerson(52); //comment or decomment (52 is just an example)
 
-		function showRadarChartAll(){
+		function showRadarChartAll() {
 			$.ajax({
 				url: '/experiment/table',
 				type: 'GET',
@@ -794,19 +859,19 @@ $(document).ready(function () {
 					document.body.appendChild(divMain);
 
 
-					for(var i in results){
+					for (var i in results) {
 						paint = results[i];
 						var div = document.createElement("div");
-							div.classList.add("col");
-							var h5 = document.createElement("h5");
+						div.classList.add("col");
+						var h5 = document.createElement("h5");
 
-							h5.innerHTML = `${paint['name']}`;
-							var canvas = document.createElement("canvas");
-							var idCanvas = `${i}-final`;
-							canvas.setAttribute("id", idCanvas);
-							div.appendChild(h5);
-							div.appendChild(canvas);
-							divMain.appendChild(div);
+						h5.innerHTML = `${paint['name']}`;
+						var canvas = document.createElement("canvas");
+						var idCanvas = `${i}-final`;
+						canvas.setAttribute("id", idCanvas);
+						div.appendChild(h5);
+						div.appendChild(canvas);
+						divMain.appendChild(div);
 
 						fillChart('radar', idCanvas, `${paint['name']}`, paint, null, null)
 					}
