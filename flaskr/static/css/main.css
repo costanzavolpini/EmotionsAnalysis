@@ -1147,3 +1147,13 @@ h5.text-uppercase.font-weight-bold {
 	cursor: pointer;
 	background-color: #fda085;
 }
+
+#modalResultExperiment{
+	overflow-y:scroll;
+}
+
+.carousel-inner>.item {
+    -webkit-transition: -webkit-transform 0.2s ease-in-out !important;
+    -o-transition: -o-transform 0.2s ease-in-out !important;
+    transition: transform 0.2s ease-in-out !important;
+}

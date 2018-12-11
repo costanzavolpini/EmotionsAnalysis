@@ -4,6 +4,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 )
 
+
 import cv2
 import time
 import Path
@@ -19,6 +20,7 @@ from io import BytesIO
 
 bp = Blueprint('experiment', __name__, url_prefix='/experiment')
 
+
 # Setup azure
 # Replace <Subscription Key> with your valid subscription key.
 subscription_key = "1906a065079e4402b155f4256ed451b3"
@@ -33,7 +35,7 @@ def get_camera():
     sequence = request.args.get('sequence').split("-")
     print(sequence)
 
-    # 23 elements * 7.5 = 172.5seconds (one element is bad quality)
+    # 23 elements * 1.5 * 4 = 138seconds
 
     # res = l - i
     camera = cv2.VideoCapture(0)
@@ -42,26 +44,27 @@ def get_camera():
     dirname = request.args.get('sequence') + '&time=' + str(int(time.time()*1000.0))
     os.mkdir("flaskr/static/experiments/" + dirname)
 
-    timer = 172.5
-    # timer = 7.5
+    curr_photo = 0
     i = -1
     c = 0
 
-    while (i < len(sequence)) & (timer > 0):
-        timer = timer-1.5
-        # Capture frame-by-frame
-        ret, frame = camera.read()
-        if(timer % 7.5 == 0):
-            # Our operations on the frame come here
-            i = i + 1
-            c = 0
-        c = c + 1
-        filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(c))
-        cv2.imwrite(filename, frame)
-        time.sleep(1.5)
-        print(timer)
+    start_time = time.time()
+    r_time = start_time
+    while i < len(sequence):
+        if (time.time() - start_time)//1.5 >= curr_photo:
+            # Capture frame-by-frame
+            ret, frame = camera.read()
+            curr_photo += 1
+            filename = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, sequence[i], str(curr_photo))
+            cv2.imwrite(filename, frame)
+        if curr_photo == 4:
+            i += 1
+            curr_photo = 0
+            start_time = time.time()
 
     cv2.destroyAllWindows()
+    print("end")
+    print(time.time() - r_time)
 
     # When everything done, release the capture
     del camera
@@ -73,6 +76,7 @@ def get_camera():
     for el in sequence:
         f = open("flaskr/static/experiments/%s/log.txt" % (dirname),"w+")
         for index in range(1, 5):
+            print("analysing photo %s-%s" % (el, str(index)))
             try:
                 name_frame = 'flaskr/static/experiments/%s/%s-%s.jpg' % (dirname, el, str(index))
                 # send to microsoft azure

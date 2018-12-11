@@ -331,7 +331,6 @@ $(document).ready(function () {
 			$("#slideShowExperiment")[0].innerHTML = inner;
 
 			$("#slideShowExperiment").carousel({
-				interval: 7500,
 				pause: false,
 				keyboard: false,
 				wrap: false,
@@ -341,6 +340,11 @@ $(document).ready(function () {
 			$('#slideShowExperiment').hover(function () {
 				$("#slideShowExperiment").carousel('cycle');
 			});
+
+			$('#slideShowExperiment').carousel(0);
+			var d = new Date();
+			console.log("start", d.getTime());
+
 
 			return sequence;
 		}
@@ -362,13 +366,27 @@ $(document).ready(function () {
 							//Generate path to pass in the get
 							var sequenceurl = sequence.join("-");
 
-							setTimeout(
-								() => {
-									$('#bodyLoading').innerHTML = `<div class="loader medium" style="margin: auto; margin-top: 25%;"></div>`;
-								},
-								172500 //172.5 seconds
-							);
-							$('#slideShowExperiment').carousel(0);
+							var first = true;
+
+							// put loader
+							$('#slideShowExperiment').on('slid.bs.carousel', function () {
+								var total= $('#slideShowExperiment div.carousel-item').length;
+								var currentIndex = $('#slideShowExperiment div.carousel-item.active').index();
+								console.log($('#slideShowExperiment div.carousel-item.active')[0].outerHTML);
+								var d = new Date();
+								console.log(currentIndex, "index ",  d.getTime());
+
+								first = false;
+								if(!first && currentIndex==0){
+									var d = new Date();
+									console.log("end", d.getTime());
+									console.log($("#modalexperiment"));
+									$("#modalexperiment")[0].innerText = "Loading data..."
+									$('#bodyLoading')[0].innerHTML = `<div class="loader medium" style="margin: auto;"></div>`;
+								}
+							  });
+
+
 
 							$.ajax({
 								url: '/experiment?sequence=' + sequenceurl,
