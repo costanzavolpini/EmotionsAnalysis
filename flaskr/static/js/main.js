@@ -192,10 +192,10 @@ $(document).ready(function () {
 				label: "Anger",
 				data: [data['1']['anger'], data['2']['anger'], data['3']['anger'], data['4']['anger']],
 				backgroundColor: [
-					'rgba(244, 237, 212, .5)',
+					'rgba(244, 237, 124, .5)',
 				],
 				borderColor: [
-					'rgba(244, 237, 212, .5)',
+					'rgba(244, 237, 124, .5)',
 				],
 				borderWidth: 1
 			},
@@ -203,10 +203,10 @@ $(document).ready(function () {
 				label: "Fear",
 				data: [data['1']['fear'], data['2']['fear'], data['3']['fear'], data['4']['fear']],
 				backgroundColor: [
-					'rgba(244, 223, 151, .5)',
+					'rgba(249, 214, 22, .5)',
 				],
 				borderColor: [
-					'rgba(244, 223, 151, .5)',
+					'rgba(249, 214, 22, .5)',
 				],
 				borderWidth: 1
 			},
@@ -214,10 +214,10 @@ $(document).ready(function () {
 				label: "Disgust",
 				data: [data['1']['disgust'], data['2']['disgust'], data['3']['disgust'], data['4']['disgust']],
 				backgroundColor: [
-					'rgba(236, 200, 106, .5)',
+					'rgba(247, 181, 12, .5)',
 				],
 				borderColor: [
-					'rgba(236, 200, 106, .5)',
+					'rgba(247, 181, 12, .5)',
 				],
 				borderWidth: 1
 			},
@@ -225,10 +225,10 @@ $(document).ready(function () {
 				label: "Contempt",
 				data: [data['1']['contempt'], data['2']['contempt'], data['3']['contempt'], data['4']['contempt']],
 				backgroundColor: [
-					'rgba(253, 160, 133, .5)',
+					'rgba(249, 155, 12, .5)',
 				],
 				borderColor: [
-					'rgba(253, 160, 133, .5)',
+					'rgba(249, 155, 12, .5)',
 				],
 				borderWidth: 1
 			},
@@ -237,10 +237,10 @@ $(document).ready(function () {
 				data: [data['1']['happiness'], data['2']['happiness'], data['3']['happiness'], data['4']['happiness']],
 
 				backgroundColor: [
-					'rgba(208, 131, 109, .5)',
+					'rgba(244, 124, 0, .5)',
 				],
 				borderColor: [
-					'rgba(208, 131, 109, .5)',
+					'rgba(244, 124, 0, .5)',
 				],
 				borderWidth: 1
 			},
@@ -248,10 +248,10 @@ $(document).ready(function () {
 				label: "Sadness",
 				data: [data['1']['sadness'], data['2']['sadness'], data['3']['sadness'], data['4']['sadness']],
 				backgroundColor: [
-					'rgba(139, 88, 73, .5)',
+					'rgba(249, 107, 7, .5)',
 				],
 				borderColor: [
-					'rgba(139, 88, 73, .5)',
+					'rgba(249, 107, 7, .5)',
 				],
 				borderWidth: 1
 			},
@@ -259,10 +259,10 @@ $(document).ready(function () {
 				label: "Surprise",
 				data: [data['1']['surprise'], data['2']['surprise'], data['3']['surprise'], data['4']['surprise']],
 				backgroundColor: [
-					'rgba(69, 44, 37, .5)',
+					'rgba(209, 91, 5, .5)',
 				],
 				borderColor: [
-					'rgba(69, 44, 37, .5)',
+					'rgba(209, 91, 5, .5)',
 				],
 				borderWidth: 1
 			}
@@ -794,7 +794,7 @@ $(document).ready(function () {
 			});
 		}
 
-		// showResultPerson(52); //comment or decomment (52 is just an example)
+		// showResultPerson(92); //comment or decomment (52 is just an example)
 
 		function showRadarChartAll() {
 			$.ajax({
