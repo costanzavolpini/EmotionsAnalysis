@@ -567,47 +567,6 @@ $(document).ready(function () {
 			var statistics_left = document.createElement("div");
 			statistics_left.classList.add("col");
 
-			// var statistics_left_p_title = document.createElement("h5");
-			// statistics_left_p_title.classList.add("category");
-			// statistics_left_p_title.innerText = "Age";
-			// statistics_left.appendChild(statistics_left_p_title);
-
-
-			// var statistics_left_p_ad = document.createElement("p");
-			// statistics_left_p_ad.classList.add("no-margin");
-			// // TODO: update!
-			// statistics_left_p_ad.innerText = "Adult: Happiness"
-			// statistics_left.appendChild(statistics_left_p_ad);
-
-			// var statistics_left_p_children = document.createElement("p");
-			// statistics_left_p_children.classList.add("no-margin");
-			// // TODO: update!
-			// statistics_left_p_children.innerText = "Children: -"
-			// statistics_left.appendChild(statistics_left_p_children);
-
-			// var statistics_left_p_senior = document.createElement("p");
-			// statistics_left_p_senior.classList.add("no-margin");
-			// // TODO: update!
-			// statistics_left_p_senior.innerText = "Senior: -"
-			// statistics_left.appendChild(statistics_left_p_senior);
-
-			// var statistics_left_p_title2 = document.createElement("h5");
-			// statistics_left_p_title2.classList.add("category", "mg-8-top");
-			// statistics_left_p_title2.innerText = "Sex";
-			// statistics_left.appendChild(statistics_left_p_title2);
-
-			// var statistics_left_p_female = document.createElement("p");
-			// statistics_left_p_female.classList.add("no-margin");
-			// // TODO: update!
-			// statistics_left_p_female.innerText = "Female: Sadness"
-			// statistics_left.appendChild(statistics_left_p_female);
-
-			// var statistics_left_p_male = document.createElement("p");
-			// statistics_left_p_male.classList.add("no-margin");
-			// // TODO: update!
-			// statistics_left_p_male.innerText = "Male: Happy"
-			// statistics_left.appendChild(statistics_left_p_male);
-
 			var statistics_right = document.createElement("div");
 			statistics_right.classList.add("col");
 
@@ -832,7 +791,6 @@ $(document).ready(function () {
 
 		}
 		// showRadarChartAll(); //comment or decomment
-
 	}
 	showResultPoster();
 });
