@@ -6,16 +6,7 @@ import experiment
 import homepage
 import pathgenerator
 import final
-
-# Initialize database
-# flask init-db
-
-# For Linux and Mac:
-# export FLASK_APP=flaskr && export FLASK_ENV=development && flask run
-
-# For Windows cmd, use set instead of export:
-# set FLASK_APP=flaskr && set FLASK_ENV=development && flask run
-
+"""Main file"""
 
 def create_app(test_config=None):
     # create and configure the app
@@ -43,17 +34,11 @@ def create_app(test_config=None):
 
     db.init_app(app)
 
+    # Register blueprint
     app.register_blueprint(homepage.bp)
     app.register_blueprint(pathgenerator.bp)
     app.register_blueprint(experiment.bp)
     app.register_blueprint(pathgenerator.bp)
     app.register_blueprint(final.bp)
-
-    # # a simple page that says hello
-    # @app.route('/')
-    # def main():
-    #     # db.init_app(app)
-    #     cur = db.get_db().cursor()
-    #     return render_template('index.html')
 
     return app

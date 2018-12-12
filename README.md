@@ -35,11 +35,16 @@ Install all the requirements (__requirements.txt__ file) using pip. <br>
 In case you want to initialize the database, delete flaskr.sqlite inside instance folder, and after: <br>
 ```flask init-db```
 
+### Key Azure
+**Important**: The key named __subscription_key__ used in the file /flaskr/experiment.py expired every 7 days. To run the experiment, substitute it with a new one.
+
+
 ## Structure of the code
 ### Folders:
 - **\flaskr** Files related to the frontend and backend of the website.
 - **\instance** Current instance of the database of the website.
 - **\graphics-deliverables** Files for the final presentation.
+- - **\PCA** Containing Jupyther that shows code and result for PCA.
 - **\matplotlib** Library matplotlib.
 
 ### Flaskr folder:
@@ -51,6 +56,7 @@ Backend files for the server (Python) and schema.sql
 ### Graphics deliverables folder:
 - **\images** Images used for the README.md
 - **\indesign**
+Final A2 posters and presentation.
 
 ## Website (Screenshots)
 ![Homepage](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/homepage.png?raw=true)

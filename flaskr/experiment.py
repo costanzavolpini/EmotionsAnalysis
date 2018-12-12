@@ -4,7 +4,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 )
 
-
+"""File that handle the experiment."""
 import cv2
 import time
 import Path
@@ -22,7 +22,7 @@ bp = Blueprint('experiment', __name__, url_prefix='/experiment')
 
 
 # Setup azure
-# Replace <Subscription Key> with your valid subscription key.
+# Replace <Subscription Key> with your valid subscription key every 7 days!
 subscription_key = "1906a065079e4402b155f4256ed451b3"
 
 assert subscription_key
@@ -30,17 +30,20 @@ assert subscription_key
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
 
 @bp.route('/person', methods=['GET'])
+"""Return a new id to use for a person."""
 def get_person():
     return str(int(db.findIdPerson()) + 1)
 
 @bp.route('/folder', methods=['GET'])
 def make_dir():
+    """Generate a folder where save the images of the experiment."""
     dirname = request.args.get('dirname')
     os.mkdir("flaskr/static/experiments/" + dirname)
     return ("Generated folder %s" % dirname)
 
 @bp.route('/', methods=['GET'])
 def get_photo():
+    """Capture pictures for the experiment and send it to Microsoft Azure."""
     dirname = request.args.get('sequence')
     id = request.args.get('id')
     person = request.args.get('person')
@@ -94,6 +97,7 @@ def get_photo():
 
 @bp.route('/painting', methods=['GET'])
 def getPainting():
+    """Get the emotion related to a painting."""
     id = request.args.get('id')
     datas = db.getEmotionByPaiting(id)
     ds = {}
@@ -113,6 +117,7 @@ def getPainting():
 
 @bp.route('/emotion', methods=['GET'])
 def getEmotion():
+    """Get the emotion related to a person."""
     person = request.args.get('person')
     paintings = db.getEmotionsByPerson(person)
     ps = {}
@@ -132,6 +137,7 @@ def getEmotion():
 
 @bp.route('/table', methods=['GET'])
 def getTable():
+    """Get all the information stored."""
     table = {}
     ts = db.query_db("select * from experience", one=False)
     emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'neutral', 'sadness', 'surprise']
@@ -159,9 +165,3 @@ def getTableJson():
         table[i] = {"id": t[0], "person": t[2], "time": t[2], "name": t[3], "anger": t[4], "contempt": t[5], "disgust": t[6], "fear": t[7], "happiness": t[8], "neutral": t[9], "sadness": t[10], "surprise": t[11]}
         i = i+1
     return jsonify(table)
-
-# TODO:
-# fix bugs
-# put high quality photo for experiment -- same size photo of the experiment
-# add waiting gif!
-# server?

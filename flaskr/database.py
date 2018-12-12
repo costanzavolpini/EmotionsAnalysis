@@ -3,6 +3,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+"""File to handle queries with sqlLite."""
 
 def generatePaintingsMap():
     paintingsDic = {}
@@ -31,6 +32,7 @@ def generatePaintingsMap():
     paintingsDic["123"] = "Vore registration is in accordance with the law"
     return paintingsDic
 
+"""Basic functions"""
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -62,11 +64,15 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
+
+"""Queries"""
 def getEmotionsByPerson(person):
+    """Return all the informations related to a person."""
     paintings = query_db('select * from experience where person = %s' % (person), one=False)
     return paintings
 
 def getEmotionByPaiting(painting):
+    """Return all the informations related to a painting."""
     datas = query_db('select * from experience where id = %s' % (painting), one=False)
     return datas
 
@@ -80,7 +86,7 @@ def findIdPerson():
         return -1
 
 def insertEmotion(emotion, person, painting, time):
-    """Insert row of emotion into the database."""
+    """Insert row of an emotion into the database."""
     paintingsDic = generatePaintingsMap()
     db = get_db()
     db.commit()
@@ -88,6 +94,7 @@ def insertEmotion(emotion, person, painting, time):
     db.cursor().execute(query)
     db.commit()
 
+"""Initialize functions"""
 @click.command('init-db')
 @with_appcontext
 def init_db_command():

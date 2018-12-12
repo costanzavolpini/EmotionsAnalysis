@@ -7,7 +7,7 @@ from flask import (
 import database as db
 
 bp = Blueprint('homepage', __name__, url_prefix='/')
-
+"""Root for the homepage."""
 @bp.route('/')
 def hello_world():
     return render_template('index.html')

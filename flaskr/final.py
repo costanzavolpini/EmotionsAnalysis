@@ -19,7 +19,7 @@ bp = Blueprint('final', __name__, url_prefix='/final')
 1. read_from_folder : insert into the database data related to old experiment runned in the past, uploading all the images of a folder.
 2. get_person_results: return all the information related to a person such as all his/her emotion in front of a painting, the evolution of the emotion and so on."""
 
-# Setup azure
+# Setup azure - The key expired every 7 days!
 subscription_key = "1906a065079e4402b155f4256ed451b3"
 
 assert subscription_key
