@@ -2,8 +2,8 @@
 **EPFL | Media & Design Lab | Experience Design** <br>
 Project realized in context of the master course CS-489 Experience Design at EPFL (Fall Semester 2018/2019).
 <br>
-Professor: Jeffrey Huang <br>
-Assistant: Immanuel Koh
+Professor: __Jeffrey **Huang**__ <br>
+Assistant: __Immanuel **Koh**__
 
 ## Abstract
 ### __Art is watching you!__
@@ -32,11 +32,11 @@ Install all the requirements (__requirements.txt__ file) using pip. <br>
 ```export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0``` -->
 
 ### Initialize database
-In case you want to initialize the database, delete flaskr.sqlite inside instance folder, and after: <br>
+In case you want to initialize the database, delete flaskr.sqlite inside instance folder, and after:
 ```flask init-db```
 
 ### Key Azure
-**Important**: The key named __subscription_key__ used in the file /flaskr/experiment.py expired every 7 days. To run the experiment, substitute it with a new one.
+**Important**: The key named __subscription_key__ used in the file __/flaskr/experiment.py__ expired every 7 days. To run the experiment, substitute it with a new one.
 
 
 ## Structure of the code
@@ -44,7 +44,7 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 - **\flaskr** Files related to the frontend and backend of the website.
 - **\instance** Current instance of the database of the website.
 - **\graphics-deliverables** Files for the final presentation.
-- - **\PCA** Containing Jupyther that shows code and result for PCA.
+- **\PCA** Containing Jupyther that shows code and result for PCA.
 - **\matplotlib** Library matplotlib.
 
 ### Flaskr folder:
@@ -54,7 +54,7 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 Backend files for the server (Python) and schema.sql
 
 ### Graphics deliverables folder:
-- **\images** Images used for the README.md
+- **\images** Images used for the __README.md__
 - **\indesign**
 Final A2 posters and presentation.
 
@@ -88,8 +88,8 @@ In case you are interested in the **collected data**, you can visualize the corr
 ![Team](https://raw.githubusercontent.com/costanzavolpini/emotions-museum.github.io/master/graphics-deliverables/images/team.png)
 
 
-## Future improvements
-- Improve our sample: analyse more people of different age, sex and cultural background.
+<!-- ## Future improvements -->
+<!-- - Improve our sample: analyse more people of different age, sex and cultural background. -->
 <!-- - Improve the tool to help museum curators to realize the best path for an exhibition. -->
 
 
