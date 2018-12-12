@@ -649,57 +649,6 @@ ul li {
 	margin-top: 30px;
 }
 
-/* ------------------------------------------------------------------------------
-	 Footer
--------------------------------------------------------------------------------*/
-
-/* .footer {
-	text-align: left;
-}
-.footer-top {
-	background-color: #181818;
-	padding-top: 50px;
-}
-.footer-bottom {
-	background-color: #313454;
-	padding: 20px 0;
-}
-.footer .footer-col {
-	margin-bottom: 80px;
-}
-.footer h5 {
-	color: #fff;
-}
-.footer h5 {
-	margin-bottom: 20px;
-}
-.footer p {
-	color: rgba(255, 255, 255, 0.25);
-}
-.footer a {
-	color: rgba(255, 255, 255, 0.50);
-}
-.footer a:hover {
-	color: #e84545;
-}
-.footer .footer-share {
-	margin-top: 0;
-}
-.footer .footer-share li {
-	display: inline-block;
-	float: none;
-}
-.footer .footer-share a {
-	border: none;
-	font-size: 21px;
-	color: rgba(255, 255, 255, 0.25);
-}
-.footer .fa-heart {
-	color: #e84545;
-	font-size: 11px;
-	margin: 0 2px;
-} */
-
 
 /* CUSTOMIZE */
 .navigation a {
@@ -882,31 +831,6 @@ blockquote p {
 	color: #5f6982;
 }
 
-/* .uploader .btn {
-	display: inline-block;
-	margin: .5rem .5rem 1rem .5rem;
-	clear: both;
-	font-family: inherit;
-	font-weight: 700;
-	font-size: 14px;
-	text-decoration: none;
-	text-transform: initial;
-	border: none;
-	border-radius: .2rem;
-	outline: none;
-	padding: 0 1rem;
-	height: 36px;
-	line-height: 36px;
-	color: #fff;
-	-webkit-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
-	box-sizing: border-box;
-	background: #454cad;
-	border-color: #454cad;
-	cursor: pointer;
-  } */
-
-/* END DRAG AND DROP */
 
 .database {
 	background-color: #e9eaed;

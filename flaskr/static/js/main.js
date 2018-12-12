@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	// Main JS
 	scrollHeader();
 	fillCarousel();
 	sliderEmotions();
@@ -47,7 +48,8 @@ $(document).ready(function () {
 	function generatePath() {
 		$('#generatePath').click(function (e) {
 			var d = new Date / 1E3 | 0;
-			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
+			// var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
+			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/path.png");
 			console.log(path);
 
 
