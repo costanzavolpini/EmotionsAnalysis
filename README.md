@@ -1,6 +1,7 @@
 # FACE TO FACE
-**EPFL | Media & Design Lab | Experience Design**
+**EPFL | Media & Design Lab | Experience Design** <br>
 Project realized in context of the master course CS-489 Experience Design at EPFL (Fall Semester 2018/2019).
+<br>
 Professor: Jeffrey Huang <br>
 Assistant: Immanuel Koh
 
@@ -17,48 +18,73 @@ For our research we have chosen one particular exhibition (Liu Bolin - Le Théa
 We have realized a website in order to record feelings and emotions of a person in front of a random sequence of paintings. We record 4 pictures of the user for every artwork (one every 1.5 seconds) to analyse how the feelings evolve in front of it. At the end of the experiment the user is able to compare its emotion in front of an artwork in comparison with our sample recorded before (and at the same time is improving our dataset). Every artwork is then mapped to a category (happiness, anger... etc.) then we can create an algorithm of how the paintings sequence should be according to the swing of emotions we want to reach. A feeling path is also proposed, *SKANDER WRITE SOMETHING HERE!*.
 
 
-## Setup
-Install all the requirements (__requirements.txt__ file) using pip.
-```pip install -r requirements.txt``` (OSX)
-py -m pip install -r requirements.txt (Windows)
+## Installation
+All the following commands must be executed from the root of the project.
+### Setup
+Install all the requirements (__requirements.txt__ file) using pip. <br>
+```pip install -r requirements.txt``` (Mac and Linux) <br>
+```py -m pip install -r requirements.txt``` (Windows)
+
+### Run the server:
+```export FLASK_APP=flaskr && export FLASK_ENV=development && flask run``` (Mac and Linux) <br>
+```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run``` (Windows)
+<!-- To share:
+```export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0``` -->
 
 ### Initialize database
-Delete flaskr.sqlite inside instance folder
+In case you want to initialize the database, delete flaskr.sqlite inside instance folder, and after: <br>
 ```flask init-db```
 
-### For Linux and Mac:
-```export FLASK_APP=flaskr && export FLASK_ENV=development && flask run```
-To share:
-```export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0```
+## Structure of the code
+### Folders:
+- **\flaskr** Files related to the frontend and backend of the website.
+- - **\instance** Current instance of the database of the website.
+- **\graphics-deliverables** Files for the final presentation.
+- **\matplotlib** Library matplotlib.
 
-### For Windows cmd, use set instead of export:
-```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run```
+### Flaskr folder:
+- **\map** Images used to generated the path. TODO: clean
+- **\static** Css, fonts, images, js, scss files
+- **\templates** index.html
+Backend files for the server (Python) and schema.sql
 
+### Graphics deliverables folder:
+- **\images** Images used for the README.md
+- **\indesign**
 
-## Website
+## Website (Screenshots)
 ![Homepage](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/homepage.png?raw=true)
 
 ![Procedure](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/projectprocedure.png?raw=true)
-
+<br>
 It is possible to **analyze the feeling of a person** directly from the website, the button "Try the experiment", open a modal that will show a sequence of paintings.
+<br>
 ![Experiment](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment1.png?raw=true)
+<br>
 For each painting the webcamera will capture 4 pictures.
+<br>
 ![Experiment Run](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment2.png?raw=true)
+<br>
 All the results are then analyzed by **Microsoft Azure**, a chart for each artwork containing his/her emotionsis then returned to the user.
+<br>
 ![Results](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/results.png?raw=true)
+<br>
 For each painting we analyse the anger, fear, disgust, contempt, happiness, sadness, surprise emotions.
-
+<br>
 Become the curator of yourself, just generating a **feeling path** that best fit your feeling.
+<br>
 ![Path](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/path.png?raw=true)
-
+<br>
 In case you are interested in the **collected data**, you can visualize the corresponding charts for each artwork.
+<br>
 ![Chart](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/chart.png?raw=true)
+
+![Team](https://raw.githubusercontent.com/costanzavolpini/emotions-museum.github.io/master/graphics-deliverables/images/team.png)
 
 
 ## Future improvements
 - Improve our sample: analyse more people of different age, sex and cultural background.
 - Create a tool to help museum curators to realize the best path for an exhibition.
 
-![Team](https://raw.githubusercontent.com/costanzavolpini/emotions-museum.github.io/master/graphics-deliverables/images/team.png)
 
 
