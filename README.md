@@ -22,7 +22,8 @@ Describe and put some images!
 
 # Setup
 Install all the requirements (__requirements.txt__ file) using pip.
-```pip install -r requirements.txt```
+```pip install -r requirements.txt``` (OSX)
+py -m pip install -r requirements.txt (Windows)
 
 # Initialize database
 Delete flaskr.sqlite inside instance folder
