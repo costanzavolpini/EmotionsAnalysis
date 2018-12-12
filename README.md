@@ -4,43 +4,61 @@ Project realized in context of the master course CS-489 Experience Design at EPF
 Professor: Jeffrey Huang <br>
 Assistant: Immanuel Koh
 
-# Abstract
-## __Art is watching you!__
+## Abstract
+### __Art is watching you!__
 Reverse your perspective: for once the artwork will look at you like you’re a work of art. **The paintings have eyes**. Create your own path following your emotions, making your experience in the museum unique. Be the curator of your own emotions!
 
 We intend to **analyse and record feelings and emotions in visitors** in front of various paintings and investigate the way they look at artworks. The aim is to set a specific path, museum design and succession of depictions based on a precise sequence of feelings that the viewer or even the organiser of the exhibition wants to evoke.
 
-### Liu Bolin
+#### Liu Bolin
 For our research we have chosen one particular exhibition (Liu Bolin - Le Théâtre des apparences) because his work is not too well known to interfere with the recording of visitors’ impressions and it’s at the same time various (in terms of atmosphere of the work curious for most of the visitors and unconventional.
 
-# Procedure
+## Procedure
 We have realized a website in order to record feelings and emotions of a person in front of a random sequence of paintings. We record 4 pictures of the user for every artwork (one every 1.5 seconds) to analyse how the feelings evolve in front of it. At the end of the experiment the user is able to compare its emotion in front of an artwork in comparison with our sample recorded before (and at the same time is improving our dataset). Every artwork is then mapped to a category (happiness, anger... etc.) then we can create an algorithm of how the paintings sequence should be according to the swing of emotions we want to reach. A feeling path is also proposed, *SKANDER WRITE SOMETHING HERE!*.
 
 
-# Setup
+## Setup
 Install all the requirements (__requirements.txt__ file) using pip.
 ```pip install -r requirements.txt``` (OSX)
 py -m pip install -r requirements.txt (Windows)
 
-# Initialize database
+### Initialize database
 Delete flaskr.sqlite inside instance folder
 ```flask init-db```
 
-# For Linux and Mac:
+### For Linux and Mac:
 ```export FLASK_APP=flaskr && export FLASK_ENV=development && flask run```
 To share:
 ```export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0```
 
-# For Windows cmd, use set instead of export:
+### For Windows cmd, use set instead of export:
 ```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run```
 
 
-# Website
-Describe and put some images!
-![alt text](http://url/to/img.png)
+## Website
+![Homepage](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/homepage.png?raw=true)
+
+![Procedure](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/projectprocedure.png?raw=true)
+
+It is possible to **analyze the feeling of a person** directly from the website, the button "Try the experiment", open a modal that will show a sequence of paintings.
+![Experiment](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment1.png?raw=true)
+For each painting the webcamera will capture 4 pictures.
+![Experiment Run](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment2.png?raw=true)
+All the results are then analyzed by **Microsoft Azure**, a chart for each artwork containing his/her emotionsis then returned to the user.
+![Results](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/results.png?raw=true)
+For each painting we analyse the anger, fear, disgust, contempt, happiness, sadness, surprise emotions.
+
+Become the curator of yourself, just generating a **feeling path** that best fit your feeling.
+![Path](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/path.png?raw=true)
+
+In case you are interested in the **collected data**, you can visualize the corresponding charts for each artwork.
+![Chart](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/chart.png?raw=true)
 
 
-
-# Future improvements
+## Future improvements
 - Improve our sample: analyse more people of different age, sex and cultural background.
 - Create a tool to help museum curators to realize the best path for an exhibition.
+
+![Team](https://raw.githubusercontent.com/costanzavolpini/emotions-museum.github.io/master/graphics-deliverables/images/team.png)
+
+
