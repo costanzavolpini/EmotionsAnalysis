@@ -38,12 +38,12 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 ## Structure of the code
 ### Folders:
 - **\flaskr** Files related to the frontend and backend of the website.
-- - **\instance** Current instance of the database of the website.
+- **\instance** Current instance of the database of the website.
 - **\graphics-deliverables** Files for the final presentation.
 - **\matplotlib** Library matplotlib.
 
 ### Flaskr folder:
-- **\map** Images used to generated the path. TODO: clean
+- **\map** Images used to generated the path.
 - **\static** Css, fonts, images, js, scss files
 - **\templates** index.html
 Backend files for the server (Python) and schema.sql
@@ -84,7 +84,7 @@ In case you are interested in the **collected data**, you can visualize the corr
 
 ## Future improvements
 - Improve our sample: analyse more people of different age, sex and cultural background.
-- Create a tool to help museum curators to realize the best path for an exhibition.
+<!-- - Improve the tool to help museum curators to realize the best path for an exhibition. -->
 
 
 
