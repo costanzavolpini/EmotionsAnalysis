@@ -16,9 +16,6 @@ For our research we have chosen one particular exhibition (Liu Bolin - Le Théa
 # Procedure
 We have realized a website in order to record feelings and emotions of a person in front of a random sequence of paintings. We record 4 pictures of the user for every artwork (one every 1.5 seconds) to analyse how the feelings evolve in front of it. At the end of the experiment the user is able to compare its emotion in front of an artwork in comparison with our sample recorded before (and at the same time is improving our dataset). Every artwork is then mapped to a category (happiness, anger... etc.) then we can create an algorithm of how the paintings sequence should be according to the swing of emotions we want to reach. A feeling path is also proposed, *SKANDER WRITE SOMETHING HERE!*.
 
-# Website
-Describe and put some images!
-
 
 # Setup
 Install all the requirements (__requirements.txt__ file) using pip.
@@ -36,6 +33,13 @@ To share:
 
 # For Windows cmd, use set instead of export:
 ```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run```
+
+
+# Website
+Describe and put some images!
+![alt text](http://url/to/img.png)
+
+
 
 # Future improvements
 - Improve our sample: analyse more people of different age, sex and cultural background.
