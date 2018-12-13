@@ -27,3 +27,4 @@ scipy==1.1.0
 simplegeneric==0.8.1
 widgetsnbextension==1.2.6
 xlrd==1.1.0
+opencv-python

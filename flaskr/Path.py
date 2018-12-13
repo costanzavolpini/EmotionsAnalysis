@@ -70,7 +70,7 @@ def drawPath(map1, G, points):
         controlY= np.zeros(len(path[i]))
 
         for j in range(0,len(path[i])):
-            controlY[j] = len(map1)-path[i][j]/len(map1[0])
+            controlY[j] = len(map1)-path[i][j]/float(len(map1[0]))
             controlX[j] = path[i][j]%len(map1[0])
 
         nodes = np.asfortranarray([
@@ -79,8 +79,8 @@ def drawPath(map1, G, points):
             ])
         curve = bezier.Curve(nodes, degree=2)
         normalizedCurve = curve.nodes
-        normalizedCurve[0] = normalizedCurve[0]/len(map1[0])
-        normalizedCurve[1] = normalizedCurve[1]/len(map1)
+        normalizedCurve[0] = normalizedCurve[0]/float(len(map1[0]))
+        normalizedCurve[1] = normalizedCurve[1]/float(len(map1))
 
         #color of path
         c0=(255-244)*i/len(path)+244
@@ -198,7 +198,7 @@ def EmoDist(emotions, name, time=24):
         distance = []
         #entrance
         for i in artifacts:
-            distance.append(1/nx.shortest_path_length(G,entrance[0]*len(map1[0])+entrance[1],i[0][0]*len(map1[0])+i[0][1]))
+            distance.append(1.0/nx.shortest_path_length(G,entrance[0]*len(map1[0])+entrance[1],i[0][0]*len(map1[0])+i[0][1]))
         distance = np.array(distance)/max(distance)
         distances.append(distance)
 
@@ -206,7 +206,7 @@ def EmoDist(emotions, name, time=24):
             distance = []
             for j in range(0,len(artifacts)):
                 if(i!=j):
-                    distance.append(1/nx.shortest_path_length(G,artifacts[i][0][0]*len(map1[0])+artifacts[i][0][1],artifacts[j][0][0]*len(map1[0])+artifacts[j][0][1]))
+                    distance.append(1.0/nx.shortest_path_length(G,artifacts[i][0][0]*len(map1[0])+artifacts[i][0][1],artifacts[j][0][0]*len(map1[0])+artifacts[j][0][1]))
                 else:
                     distance.append(-1)
             distance = np.array(distance)/max(distance)
