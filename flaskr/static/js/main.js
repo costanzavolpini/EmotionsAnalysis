@@ -143,6 +143,7 @@ $(document).ready(function () {
 
 	// fill a chart
 	function fillChartTime(typeChar, idCanvas, input1) {
+
 		var data = {
 			'1': {
 				'anger': null,
@@ -182,12 +183,12 @@ $(document).ready(function () {
 			}
 		};
 
-		for (var t in input1) {
-			data[t] = normalizeData(input1[t]);
-		}
-
 		var labels = ["1s", "2s", "3s", "4s"];
 
+
+		for(var i in input1){
+			data[i] = normalizeData(input1[i])
+		}
 
 		var datasets = [{
 				label: "Anger",
@@ -470,22 +471,29 @@ $(document).ready(function () {
 		var max = null;
 		var min = null;
 		var emotions = ['anger', 'contempt', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
-		// Find max and min
+
+		var data = {}
+		//normalize and ln(x + 1)
 		for (var i in input) {
 			if (emotions.includes(i)) {
-				if (max == null || input[i] > max) max = input[i]
-				if (min == null || input[i] < min) min = input[i]
+				data[i] = Math.log(Math.log(Math.log(input[i] + 1) + 1) + 1).toFixed(3) //ln
 			}
 		}
 
-		var data = {}
-		//normalize and log(x + 1)
-		for (var i in input) {
+
+		// Find max and min
+		for (var i in data) {
 			if (emotions.includes(i)) {
-				var normalized = (input[i] - min) / (max - min)
-				data[i] = (Math.log(normalized + 1)).toFixed(3)
+				if (max == null || data[i] > max) max = data[i]
+				if (min == null || data[i] < min) min = data[i]
 			}
 		}
+
+		// Find max and min
+		for (var i in data) {
+			data[i] = (data[i] - min) / (max - min)
+		}
+
 		return data;
 	}
 
@@ -672,7 +680,6 @@ $(document).ready(function () {
 							datas[r] = normalizeData(result[r]);
 							datas[r]["name"] = result[r]["name"];
 						}
-
 
 						var datasMean = {
 							"name": null,
