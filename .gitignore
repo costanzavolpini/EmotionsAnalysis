@@ -13,3 +13,15 @@ flaskr/experiment\.pyc
 venv/*
 
 flaskr/static/images/pathGenerated*
+
+flaskr/database\.pyc
+
+flaskr/final\.pyc
+
+flaskr/homepage\.pyc
+
+flaskr/Path\.pyc
+
+flaskr/pathgenerator\.pyc
+
+flaskr/__init__\.pyc

@@ -25,6 +25,9 @@ Install all the requirements (__requirements.txt__ file) using pip. <br>
 ```pip install -r requirements.txt``` (Mac and Linux) <br>
 ```py -m pip install -r requirements.txt``` (Windows)
 
+In case you have problem use:
+```python3 -mpip install -r requirements.txt``` (Mac and Linux)
+
 ### Run the server:
 ```export FLASK_APP=flaskr && export FLASK_ENV=development && flask run``` (Mac and Linux) <br>
 ```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run``` (Windows)
