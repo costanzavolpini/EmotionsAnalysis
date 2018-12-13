@@ -88,7 +88,14 @@ def drawPath(map1, G, points):
         c2= (160-101)*i/len(path)+101
 
         #curves on same plot
-        bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax,color=[c0/255.0,c1/255.0,c2/255.0])
+        if (len(normalizedCurve[0])>25):
+            ind=[0]
+            for k in range(1,len(normalizedCurve[0]-1),2):
+                ind.append(k)
+            ind.append(len(normalizedCurve[0])-1)
+            bezier.Curve(normalizedCurve[:,ind], degree=10).plot(num_pts=256,ax=ax,color=[c0/255.0,c1/255.0,c2/255.0])
+        else:
+            bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax,color=[c0/255.0,c1/255.0,c2/255.0])
 
     #Save the image
     plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)

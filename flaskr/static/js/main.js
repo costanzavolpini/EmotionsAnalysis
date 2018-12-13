@@ -34,6 +34,7 @@ $(document).ready(function () {
 			disgust: 50,
 			contempt: 50,
 			happiness: 50,
+			sadness: 50,
 			surprise: 50
 		}
 
