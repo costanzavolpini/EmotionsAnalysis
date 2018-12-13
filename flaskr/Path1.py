@@ -9,7 +9,6 @@ from PIL import Image
 from resizeimage import resizeimage
 import random
 
-#Creates an adjacency matrix of the graph representing the possible positions in the floor from an image.
 def makeAdjacency(map1):
     matrix = np.zeros((len(map1),len(map1[0])))
     adjacency = np.zeros((len(map1)*len(map1[0]),len(map1)*len(map1[0])))
@@ -20,8 +19,9 @@ def makeAdjacency(map1):
 
     matLine = np.reshape(matrix, len(map1)*len(map1[i]))
 
-    #Creating edges if both pixels are colored(red)
     for i in range(0,len(adjacency)):
+        #i_1 = (i-i%116)/116
+        #i_2 = i%116
         if(matLine[i] >= 800 and matLine[i] < 870):
             if(i-1 >= 0 and i-1 < len(adjacency) and matLine[i-1] != 888 and matLine[i-1] >= 800 and matLine[i-1] < 870):
                 adjacency[i][i-1] = 1
@@ -31,13 +31,18 @@ def makeAdjacency(map1):
                 adjacency[i][i-len(map1[0])] = 1
             if(i+len(map1[0]) >= 0 and i+len(map1[0]) < len(adjacency) and matLine[i+len(map1[0])] != 888 and matLine[i+len(map1[0])] >= 800 and matLine[i+len(map1[0])] < 870):
                 adjacency[i][i+len(map1[0])] = 1
+            #if(i-len(map1)+1 >= 0 and i-len(map1[0])+1 < len(adjacency) and matLine[i-len(map1[0])+1] != 888 and matLine[i-len(map1[0])+1] >= 800 and matLine[i-len(map1[0])+1] < 870):
+            #    adjacency[i][i-len(map1[0])+1] = 1
+            #if(i+len(map1[0])+1 >= 0 and i+len(map1[0])+1 < len(adjacency) and matLine[i+len(map1[0])+1] != 888 and matLine[i+len(map1[0])+1] >= 800 and matLine[i+len(map1[0])+1] < 870):
+            #    adjacency[i][i+len(map1[0])+1] = 1
+            #if(i-len(map1[0])-1 >= 0 and i-len(map1[0])-1 < len(adjacency) and matLine[i-len(map1[0])-1] != 888 and matLine[i-len(map1[0])-1] >= 800 and matLine[i-len(map1[0])-1] < 870):
+            #    adjacency[i][i-len(map1[0])-1] = 1
+            #if(i+len(map1[0])-1 >= 0 and i+len(map1[0])-1 < len(adjacency) and matLine[i+len(map1[0])-1] != 888 and matLine[i+len(map1[0])-1] >= 800 and matLine[i+len(map1[0])-1] < 870):
+            #    adjacency[i][i+len(map1[0])-1] = 1
 
     return adjacency
 
-#Draw the path on a separate image using nodes as control points after computing the shortest paths for every bigram in the points array.
 def drawPath(map1, G, points):
-
-    #compute shortest paths for all points
     path = []
     for i in range(0,len(points)-1):
         path.append(nx.shortest_path(G,source=len(map1[0])*points[i][0]+points[i][1],target=len(map1[0])*points[i+1][0]+points[i+1][1]))
@@ -59,7 +64,6 @@ def drawPath(map1, G, points):
     curve = bezier.Curve(nodes, degree=2)
     ax =  curve.plot(num_pts=256)
 
-    #Draw all bezier curves one by one on the same plot
     for i in range(0,len(path)):
 
         controlX= np.zeros(len(path[i]))
@@ -78,61 +82,53 @@ def drawPath(map1, G, points):
         normalizedCurve[0] = normalizedCurve[0]/len(map1[0])
         normalizedCurve[1] = normalizedCurve[1]/len(map1)
 
-        #color of path
+        #curves on same plot
         c0=(255-244)*i/len(path)+244
         c1=(237-160)*i/len(path)+160
         c2= (160-101)*i/len(path)+101
-
-        #curves on same plot
         bezier.Curve(normalizedCurve, degree=10).plot(num_pts=256,ax=ax,color=[c0/255.0,c1/255.0,c2/255.0])
 
-    #Save the image
     plt.axis(xmin=0, ymin=0, xmax=1, ymax=1)
     ax.set_axis_off()
-    plt.savefig("./flaskr/map/sPath.jpg",frameon=True,bbox_inches='tight')
+    plt.savefig("sexyPath.jpg",frameon=True,bbox_inches='tight')
 
-#Copies the actual path to the floor plan image
 def copyPath(source,target,scale, name):
     mapResize = scipy.misc.imread(target,mode="RGB")
     scaleMap = scipy.misc.imread(scale,mode="RGB")
     bPath = scipy.misc.imread(source,mode="RGB")
     img = Image.fromarray(bPath)
-
-    #Crop to have the correct scale
     img = img.crop([50,21,535,383])
     img= img.resize((len(scaleMap[0]), len(scaleMap)), Image.ANTIALIAS)
     bPath = np.array(img)
     diff1 = len(mapResize) - len(bPath)
     diff2 = len(mapResize[0]) - len(bPath[0])
-
-    #Copy colored pixels
     for i in range(0,len(bPath)):
         for j in range(0,len(bPath[0])):
             if bPath[i][j][0] <= 240 or bPath[i][j][1] < 240 or bPath[i][j][2] <= 240:
                 mapResize[i+int(diff1/2)][j+int(diff2/2)] = bPath[i][j]
-
-    #Save the image
+    # Image.fromarray(mapResize).show()
     Image.fromarray(mapResize).save("./flaskr/static/images/pathGenerated"+ name +".png")
 
-#Takes an image a set of points and a name to generate a path image for the first floor
 def path1(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./flaskr/map/sPath.jpg","./flaskr/map/prospettometrico.jpg","./flaskr/map/prospettometricoScale.jpg", name)
+    copyPath("./flaskr/sexyPath.jpg","./flaskr/map/prospettometrico.jpg","./flaskr/map/prospettometricoScale.jpg", name)
 
-#Takes an image a set of points and a name to generate a path image for the second floor
 def path2(map1,points,name):
     G=nx.from_numpy_matrix(makeAdjacency(map1))
     drawPath(map1, G, points)
-    copyPath("./flaskr/map/sPath.jpg","./flaskr/map/Elysee quello vero2-1.jpg","./flaskr/map/prospettometricoScale.jpg", name)
+    copyPath("./flaskr/sexyPath.jpg","./flaskr/map/Elysee quello vero2-1.jpg","./flaskr/map/prospettometricoScale.jpg", name)
 
+#def randomEmo(seed=None):
+#    random.seed(seed)
+#    return [random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random(),random.random()]
 
-#Creates a path and generates an image with that path from an emotion list,a name and a time specified in minutes.
+#Create distance and emotion arrays for each floor
+
 def EmoDist(emotions, name, time=24):
     emotions = dict({'disgust':emotions[2], 'fear':emotions[1], 'surprise':emotions[6], 'contempt':emotions[3], 'anger':emotions[0], 'neutral':0.0, 'sadness':emotions[5], 'happiness':emotions[4]})
     emotions = [emotions['disgust'],emotions['fear'],emotions['surprise'],emotions['contempt'],emotions['anger'],emotions['neutral'],emotions['sadness'],emotions['happiness']]
 
-    #List of emotions per piece of art
     artifacts = []
     artifacts.append(((35,2),[0.003114284729630245, 0.007223662704549059, 0.0016858212355301396, 0.00016405983059756136, 0.2743962541631626, 0.00566353309158946, 0.03422367038104477, 0.0004200016215656562])) #pipes
     artifacts.append(((31,2),[0.00012897703697416134, 0.00510296691643047, 0.0001199773460572663, 2.488433069414404e-05, 0.09206292427807605, 0.010007219933790284, 0.009125791089037877, 0.00028789832033016954]))#Provisional wall
@@ -171,24 +167,19 @@ def EmoDist(emotions, name, time=24):
     artifacts.append(((15,16),[0.00011589086459607323, 0.0012106328060325225, 0.0004498447591928208, 8.561787946468424e-06, 0.24865988342134923, 0.006902473200818978, 0.0006024878165213847, 0.00013281043960142126])) #Water crisis
     artifacts.append(((30,26),[0.020669587430652083, 0.006627560860320249, 0.006430877661852104, 8.987867818554116e-06, 0.022662838830229827, 0.010548476890667641, 0.012258295055558548, 0.0003391770258139032])) #Cooperate with rero
     artifacts.append(((20,12),[0.00037744630891234056, 0.017144744781651518, 0.00039012041433358625, 0.00012659930795340477, 0.16457632565180444, 0.008674815582133698, 0.006449437883311316, 0.00140610500335182])) #Forest 2
-    #First floor artifacts
     artifacts1 = artifacts[:23]
-    #Second floor artifacts
     artifacts2 = artifacts[23:]
 
-    #Load floor images
+
     map1 = scipy.misc.imread("./flaskr/map/pixel_floor1.jpg")
     map2 = scipy.misc.imread("./flaskr/map/pixel_floor2.jpg")
-    #Generate graph
     G1=nx.from_numpy_matrix(makeAdjacency(map1))
     #G2=nx.from_numpy_matrix(makeAdjacency(map2))
     distances1 = [] #0 is the entrance
     distances2 = [] #1 first artifact
-    #Entrance pointe in floors 1 and 2
     entrance1 = (25,21)
     entrance2 = (40,20)
 
-    #Computes the distance between all pairs of points in artifacts using G as the graph and an entrance point
     def computeDistance(map1, artifacts, G, entrance):
         distances = []
         distance = []
@@ -210,11 +201,9 @@ def EmoDist(emotions, name, time=24):
 
         return distances
 
-    #Compute the distances
     distances1 = computeDistance(map1,artifacts1,G1,entrance1)
     #distances2 = computeDistance(map2,artifacts2,G2,entrance2)
 
-    #Create a list of emotion_scores for each artifact in the first floor
     emo_score1 = []
     for i in artifacts1:
         emo_score1.append(np.dot(np.array(emotions),np.array(i[1])))
@@ -223,7 +212,7 @@ def EmoDist(emotions, name, time=24):
     #for i in artifacts2:
     #    emo_score2.append(np.dot(np.array(emotions),np.array(i[1])))
 
-    #Finds the next hop by computing as score for every non-visited point by combining the distance and the similarity of both emotion scores.
+
     def findNextHop(distance, emo_score, current, visited):
         final_score = np.array((distance)*np.array(emo_score))
         final_indices = np.argsort(-final_score)
@@ -233,40 +222,33 @@ def EmoDist(emotions, name, time=24):
 
         return final_indices[i]
 
-    #Final set of visited points in order
     final_indices1 = []
-    #Maximum number of hops using the time parameter
     max_hops = min(int(np.ceil(time/2.0)),23)
 
     current=-1
-    #Compute all the points in the path
     for i in range(max_hops):
         nextHop = findNextHop(distances1[current+1],emo_score1,current,final_indices1)
         final_indices1.append(nextHop)
         current = nextHop
 
-    #final_indices2 = []
-    #current=-1
+    final_indices2 = []
+    current=-1
     #for i in range(max_hops):
     #    nextHop = findNextHop(distances2[current+1],emo_score2,current,final_indices2)
     #    final_indices2.append(nextHop)
     #    current = nextHop
 
-    #Add the entrance
     pointsFinal1 = [entrance1]
-    #pointsFinal2 = [entrance2]
+    pointsFinal2 = [entrance2]
 
-    #Get back the coordinates of each index
     for i in final_indices1:
         if(i<len(artifacts1)):
             pointsFinal1.append(artifacts1[i][0])
-    #Add the exit
     pointsFinal1.append(entrance1)
 
     #for i in final_indices2:
     #    if(i<len(artifacts2)):
     #        pointsFinal2.append(artifacts2[i][0])
     #pointsFinal2.append(entrance2)
-
-    #Generate the path
     path1(map1,pointsFinal1, name)
+#EmoDist([.0,.0,.0,.0,.0,.2,.0])

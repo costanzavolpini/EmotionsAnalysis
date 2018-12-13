@@ -30,8 +30,8 @@ assert subscription_key
 emotion_recognition_url = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect"
 
 @bp.route('/person', methods=['GET'])
-"""Return a new id to use for a person."""
 def get_person():
+    """Return a new id to use for a person."""
     return str(int(db.findIdPerson()) + 1)
 
 @bp.route('/folder', methods=['GET'])

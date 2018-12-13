@@ -48,8 +48,7 @@ $(document).ready(function () {
 	function generatePath() {
 		$('#generatePath').click(function (e) {
 			var d = new Date / 1E3 | 0;
-			// var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
-			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/path.png");
+			var path = $("#pathGenerated")[0].src.replace(/\/[^\/]*$/, "/pathGenerated" + d + ".png");
 			console.log(path);
 
 

@@ -9,7 +9,7 @@ from Path import EmoDist
 bp = Blueprint('pathgenerator', __name__, url_prefix='/pathgenerator')
 
 @bp.route('/', methods=['GET', 'POST'], strict_slashes=False)
-# Function to get the value of the emotions in order to generate the path
+"""Function to get the value of the emotions in order to generate the path."""
 def get_emotions_path():
     print(request.get_json())
     if request.method == 'POST':
