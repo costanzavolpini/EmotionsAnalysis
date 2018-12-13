@@ -477,6 +477,7 @@ $(document).ready(function () {
 				if (min == null || input[i] < min) min = input[i]
 			}
 		}
+
 		var data = {}
 		//normalize and log(x + 1)
 		for (var i in input) {
@@ -671,6 +672,7 @@ $(document).ready(function () {
 							datas[r] = normalizeData(result[r]);
 							datas[r]["name"] = result[r]["name"];
 						}
+
 
 						var datasMean = {
 							"name": null,

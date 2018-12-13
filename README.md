@@ -41,6 +41,8 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 ### Key Azure
 **Important**: The key named __subscription_key__ used in the file __/flaskr/experiment.py__ expired every 7 days. To run the experiment, substitute it with a new one.
 
+[Project video](https://www.youtube.com/watch?v=DTCL3usNJIY)
+
 
 ## Structure of the code
 ### Folders:
