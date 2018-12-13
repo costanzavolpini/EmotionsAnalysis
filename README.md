@@ -55,8 +55,7 @@ Backend files for the server (Python) and schema.sql
 
 ### Graphics deliverables folder:
 - **\images** Images used for the __README.md__
-- **\indesign**
-Final A2 posters and presentation.
+Final A2 posters, midterm presentation, final presentation, dwg and skp files, renderings.
 
 ## Website (Screenshots)
 ![Homepage](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/homepage.png?raw=true)
