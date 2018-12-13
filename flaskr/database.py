@@ -1,4 +1,7 @@
 import sqlite3
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd(), 'flaskr'))
 
 import click
 from flask import current_app, g

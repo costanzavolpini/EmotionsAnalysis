@@ -1,4 +1,7 @@
 import functools
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd(), 'flaskr'))
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
@@ -8,7 +11,6 @@ from flask import (
 import cv2
 import time
 import Path
-import os
 import database as db
 
 # Azure

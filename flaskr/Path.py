@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd(), 'flaskr'))
+
 import scipy.misc
 import numpy as np
 import networkx as nx
