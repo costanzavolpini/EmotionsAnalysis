@@ -7,9 +7,9 @@ from flask import (
 """File that handle the experiment."""
 import cv2
 import time
-import Path
+import flaskr.Path
 import os
-import database as db
+import flaskr.database as db
 
 # Azure
 import requests

@@ -1,0 +1,3 @@
+recursive-include flaskr/map *
+recursive-include flaskr/static *
+recursive-include flaskr/templates *

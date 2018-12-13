@@ -4,7 +4,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 
-import database as db
+import flaskr.database as db
 
 bp = Blueprint('homepage', __name__, url_prefix='/')
 """Root for the homepage."""

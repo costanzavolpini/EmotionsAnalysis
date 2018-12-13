@@ -5,7 +5,7 @@ from flask import (
 )
 import os
 
-import database as db
+import flaskr.database as db
 
 # Azure
 import requests

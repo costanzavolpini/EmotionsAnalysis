@@ -13,3 +13,5 @@ flaskr/experiment\.pyc
 venv/*
 
 flaskr/static/images/pathGenerated*
+
+webapp/flaskr/static/experiments/*

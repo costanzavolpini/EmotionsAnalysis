@@ -3,8 +3,8 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-import Path as pt
-from Path import EmoDist
+import flaskr.Path as pt
+from flaskr.Path import EmoDist
 
 bp = Blueprint('pathgenerator', __name__, url_prefix='/pathgenerator')
 

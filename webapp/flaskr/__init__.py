@@ -1,11 +1,11 @@
 import os
 
 from flask import Flask, Blueprint
-import database as db
-import experiment
-import homepage
-import pathgenerator
-import final
+import flaskr.database as db
+import flaskr.experiment
+import flaskr.homepage
+import flaskr.pathgenerator
+import flaskr.final
 """Main file"""
 
 def create_app(test_config=None):
