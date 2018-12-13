@@ -62,7 +62,7 @@ Final A2 posters, midterm presentation, final presentation, dwg and skp files, r
 
 ![Procedure](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/projectprocedure.png?raw=true)
 <br>
-It is possible to **analyze the feeling of a person** directly from the website, the button "Try the experiment", open a modal that will show a sequence of paintings.
+It is possible to **analyze the feeling of a person** directly from the website: the button "Try the experiment" opens a modal that will show a sequence of paintings.
 <br>
 ![Experiment](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment1.png?raw=true)
 <br>
@@ -70,13 +70,13 @@ For each painting the webcamera will capture 4 pictures.
 <br>
 ![Experiment Run](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/experiment2.png?raw=true)
 <br>
-All the results are then analyzed by **Microsoft Azure**, a chart for each artwork containing his/her emotionsis then returned to the user.
+All the results are then analyzed by **Microsoft Azure**; a chart for each artwork containing his/her emotionsis is then returned to the user.
 <br>
 ![Results](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/results.png?raw=true)
 <br>
-For each painting we analyse the anger, fear, disgust, contempt, happiness, sadness, surprise emotions.
+For each painting we analyse anger, fear, disgust, contempt, happiness, sadness, and surprise.
 <br>
-Become the curator of yourself, just generating a **feeling path** that best fit your feeling.
+Become the curator of yourself, just generating a **feeling path** that best fits your feelings.
 <br>
 ![Path](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/path.png?raw=true)
 <br>
