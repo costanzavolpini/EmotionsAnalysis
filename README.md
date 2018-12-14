@@ -14,6 +14,8 @@ We intend to **analyse and record feelings and emotions in visitors** in front o
 #### Liu Bolin
 For our research we have chosen one particular exhibition (Liu Bolin - Le Théâtre des apparences) because his work is not too well known to interfere with the recording of visitors’ impressions and it’s at the same time various (in terms of atmosphere of the work curious for most of the visitors and unconventional).
 
+**Watch our project video on [youtube](https://www.youtube.com/watch?v=DTCL3usNJIY)!**
+
 ## Procedure
 We have realized a website in order to record feelings and emotions of a person in front of a random sequence of paintings. We record 4 pictures of the user for every artwork (one every 1.5 seconds) to analyse how feelings evolve in front of it. At the end of the experiment the user is able to put their emotion in front of an artwork in comparison with our previously recorded samples (and at the same time they will improve our dataset). Every artwork is then mapped to a category (happiness, anger... etc.), so we can create an algorithm of how the paintings sequence should be according to the swing of emotions we want to reach. A feeling path is also suggested: it is computed from a set emotion values given by the user which is compared to the emotion values of all of the art pieces. A time value can also be fed to the algorithm to decide what number of artwork will be visited on the path.
 
@@ -40,8 +42,6 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 
 ### Key Azure
 **Important**: The key named __subscription_key__ used in the file __/flaskr/experiment.py__ expired every 7 days. To run the experiment, substitute it with a new one.
-
-[Project video](https://www.youtube.com/watch?v=DTCL3usNJIY)
 
 
 ## Structure of the code
