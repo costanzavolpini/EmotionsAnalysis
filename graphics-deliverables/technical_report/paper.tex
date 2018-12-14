@@ -164,7 +164,7 @@ You should not worry anymore about a default museum path. Do you feel a bit sad 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.49\textwidth]{samplesample.png}
+    \includegraphics[width=0.47\textwidth]{samplesample.png}
     \caption{Sample analyzed. On the right: 9 of the 10 people analyzed.}
     \label{fig:sample}
 \end{figure}
@@ -174,7 +174,7 @@ In Section \ref{sec:experiment} we have described the structure of the process t
 %TODO: add
 
 \section{Experiment} \label{sec:experiment}
-\PARstart{T}{o} run the experiment we have implemented a Flask web application. The sample did not know the goal of our experiment, we asked him/her to sit in front of the computer and to watch a sequence of artworks for 2/3 minutes. The sequence of painting should resemble a possible museum path, it is generated randomly for each person to avoid the possibility that an artwork could potentially affected the emotion of the following ones. Each artwork is showed for 6 seconds during which the web camera of the computer record 4 pictures (each one every 1.5 seconds) to detect the emotion trend of an artwork (see Fig. \ref{fig:time}). 
+\PARstart{T}{o} run the experiment we have implemented a Flask web application. The sample did not know the goal of our experiment, we asked him/her to sit in front of the computer and to watch a sequence of artworks for 2/3 minutes. The sequence of painting should resemble a possible museum path, it is generated randomly for each person to avoid the possibility that an artwork could potentially affected the emotion of the following ones. Each artwork is showed for 6 seconds during which the web camera of the computer records 4 pictures (each one every 1.5 seconds) to detect the emotion trend of an artwork (see Fig. \ref{fig:time}). 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.49\textwidth]{timeemotion.png}
@@ -194,6 +194,13 @@ We first take a low-resolution image which represents the floor map and define p
 At this point, to go from a point to another, we now only need to compute the shortest path using our graph, this will give us the set of pixels crossed in the way. We can then do this for a set of points that we consider to be our path and use the result as control points to draw curves which will illustrate the path. We are using b\'ezier curves to make them smooth and produce a human-like movement. We get the final route by concatenating all the different curves into a single one.
 Once we have our path, we can copy it to the fancy illustrated floor plan by re-sizing our curve accordingly.
 
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.35\textwidth]{sPath.jpg}
+  \caption{Example of the drawn path.}
+  \label{fig:path}
+\end{figure}
+
 \subsection{Path computation}
 Here we will look into the process which allows to find which pieces of art will be on the path and in which order.
 
@@ -204,31 +211,29 @@ We then get the inputs: the emotions vector and the time available from the user
 After that, we begin to construct the path by doing the scalar product of the input vector and the emotion vector of every piece of art to get a similarity score. We then weight these scores by the distance between our actual position and the position of the art piece. The bigger the distance, the lower we are likely to visit it next. Once we decide on our next step, we add the node to the set of visited node so we don't visit it again and set it as our current position. We iterate this way until we reach the wanted number of hops and get back to the exit/entrance point.
 
 This will return our final set of points to visit in order for us to draw the Feeling Path.
-
+\\
 
 \begin{figure}[!h]
   \centering
-  \begin{minipage}[b]{0.23\textwidth}
-    \includegraphics[width=\textwidth]{sPath.jpg}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[b]{0.25\textwidth}
-    \includegraphics[width=\textwidth]{patherino.jpg}
-  \end{minipage}
-  \caption{Generation of the feeling path.}
-  \label{fig:path}
+    \includegraphics[width=0.38\textwidth]{patherino.jpg}
+  \caption{Example of generated Feeling Path.}
+  \label{fig:pathToMap}
 \end{figure}
 
-\section{PCA}
-% SKANDER
-% \PARstart{T}{he}
+\section{Principle Component Analysis: PCA}
+\PARstart{O}{nce} the experiment was done and we decided we had gathered enough data from it, we wanted to compare people to the pieces of art such that each person can be face to face with artwork that emotionally resembles them.\\
+To this end we used PCA to do dimensionality reduction and being able to represent pictures and people on a 2D plane, having the distance between two points as a metric to the emotional likelihood. As an input to the reduction we use all the emotional vectors from the art pieces and the mean of all persons' reactions during the entire reaction to define them.\\
+Finally, we use the PCA functions from scikit-learn Python library to perform our comparison and plot them as below to get visual results.\\
+
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=3.8cm]{pcaOK.jpg}
-    \caption{PCA.}
+    \includegraphics[width=3.8cm]{PCABoth.png}
+    \caption{PCA with both floors and people: Circles are the artworks and crosses the different persons.}
     \label{fig:pca}
 \end{figure}
 
+As an addition to this, we also found interesting to create two different plots to compare people and pictures from each floor separately. This is because we had two set of people, one who saw the images from both floors and one group who saw the images of the first floor. It hence gives a different vision to the experiment, as we can now show people new artworks directly from their reactions to other exhibits and possibly other museums.
 
 \begin{figure}[!h]
   \centering
@@ -244,17 +249,34 @@ This will return our final set of points to visit in order for us to draw the Fe
 \end{figure}
 
 \section{Web application}
-% COSTANZA 
-\PARstart{F}{or} the web application we have decided to use the framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} for the back-end since it is really light and easily expandable. We have factored the application into a set of blueprints \footnote{Blueprint: record operations to execute when registered on an application. Flask associates view functions with blueprints when dispatching requests and generating URLs from one endpoint to another (\url{http://flask.pocoo.org/docs/1.0/blueprints/}).} that allows the instantiation of an application object. To capture the picture during the experiment with the web camera we have used the library \textit{OpenCV}, the experiment starts when the user press the corresponding button on the homepage, every time that a new artwork is showed an \textit{ajax} request is made. The backend then record 4 pictures for the painting and send a \textit{GET request} to Microsoft Azure to get the corresponding emotions recorded. As database we have choosen to use \textit{SQLite3}. At the end of the experiment we insert all the new data into the database. At the end of the experiment a modal containing the results recorded is then showed. The user can also look to average datas recorded just clicking on the interested painting in the carousel (in the homepage), every time we ask to the back-end to query the corresponding value in order to show an updated chart.
+\PARstart{F}{or} the web application we have decided to use the framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} for the back-end since it is really light and easily expandable. We have factored the application into a set of blueprints \footnote{Blueprint: record operations to execute when registered on an application. Flask associates view functions with blueprints when dispatching requests and generating URLs from one endpoint to another (\url{http://flask.pocoo.org/docs/1.0/blueprints/}).} that allows the instantiation of an application object. To capture the picture during the experiment with the web camera we have used the library \textit{OpenCV}, the experiment starts when the user press the corresponding button on the homepage, every time that a new artwork is showed an \textit{ajax} request is made (see Fig.\ref{fig:experimentim}). The back-end then records 4 pictures for the painting and sends a \textit{GET request} to Microsoft Azure to get the corresponding emotions recorded. 
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[b]{0.24\textwidth}
+    \includegraphics[width=\textwidth]{experiment1.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.24\textwidth}
+    \includegraphics[width=\textwidth]{experiment2.png}
+  \end{minipage}
+  \caption{Experiment UI}
+  \label{fig:experimentim}
+\end{figure}
+As database we have chosen to use \textit{SQLite3}. At the end of the experiment we insert all the new data into the database. At the end of the experiment a modal containing the results recorded is showed (see Fig.\ref{fig:res}). The user can also look to average data recorded just clicking on the interested painting in the carousel (in the homepage), every time we ask to the back-end to query the corresponding value in order to show an updated chart.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.49\textwidth]{results.png}
+    \caption{Results obtained after having run the experiment.}
+    \label{fig:res}
+\end{figure}
 
 For the front-end we have used mainly the library \textit{Bootstrap Material Design}\footnote{BootstrapMD: \url{https://mdbootstrap.com/}}. As Javascript library we have used \textit{jQuery}.
 
 To design our web application we have followed the set of rules, guidelines and components proposed by material design.
 
-
 \section{Conclusion}
 % ALL
-\PARstart{w}{hat} we aim to do is emphasising this feeling centred attention and let the visitors embrace the essence of the exhibition. NON SO CHE SCRIVERE, MAGARI DOVREI DIRE QUALCOSA SUI DATI!
+\PARstart{w}{hat} we aim to do is emphasising this feeling centred attention and let the visitors embrace the essence of the exhibition. This project allowed us to put ourselves in another prospective. We were able to consider artworks not just as a piece of art but to give them somethings that go beyond being material, something that is more abstract: a feeling, an emotion that is intrinsically part of it. As showed in Fig. (\ref{fig:pca-art}) we can notice that some people almost full overlay with certain artworks, that means that are emotionally similar. The website grants people interested in the project to look at results that we have collected during the experiment (see Fig. \ref{fig:charttime}).
 \begin{figure}[!h]
   \centering
   \begin{minipage}[b]{0.24\textwidth}
@@ -265,6 +287,7 @@ To design our web application we have followed the set of rules, guidelines and 
     \includegraphics[width=\textwidth]{emot.png}
   \end{minipage}
   \caption{Result of the emotion obtained for the artwork \textit{Info wall}. On the left: emotions average distribution, on the right: evolution of the emotions during 6 seconds.}
+  \label{fig:charttime}
 \end{figure}
 
 \end{document}
