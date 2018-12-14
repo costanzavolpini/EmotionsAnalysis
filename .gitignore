@@ -23,3 +23,5 @@ flaskr/Path\.pyc
 flaskr/pathgenerator\.pyc
 
 flaskr/__init__\.pyc
+
+.vscode/
