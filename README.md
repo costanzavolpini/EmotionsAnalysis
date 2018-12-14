@@ -60,7 +60,8 @@ Backend files for the server (Python) and schema.sql
 
 ### Graphics deliverables folder:
 - **\images** Images used for the __README.md__
-Final A2 posters, midterm presentation, final presentation, dwg and skp files, renderings.
+- **\technical_report** Latex technical report
+Final A2 posters, midterm presentation, final presentation, dwg and skp files, renderings, technical report.
 
 ## Website (Screenshots)
 ![Homepage](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/homepage.png?raw=true)
@@ -90,11 +91,5 @@ In case you are interested in the **collected data**, you can visualize the corr
 ![Chart](https://github.com/costanzavolpini/emotions-museum.github.io/blob/master/graphics-deliverables/images/chart.png?raw=true)
 
 ![Team](https://raw.githubusercontent.com/costanzavolpini/emotions-museum.github.io/master/graphics-deliverables/images/team.png)
-
-
-<!-- ## Future improvements -->
-<!-- - Improve our sample: analyse more people of different age, sex and cultural background. -->
-<!-- - Improve the tool to help museum curators to realize the best path for an exhibition. -->
-
 
 
