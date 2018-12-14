@@ -30,6 +30,9 @@ Install all the requirements (__requirements.txt__ file) using pip. <br>
 In case you have problem use:
 ```python3 -mpip install -r requirements.txt``` (Mac and Linux)
 
+In case you are missing module cv2:
+```sudo pip3 install opencv-python```
+
 ### Run the server:
 ```export FLASK_APP=flaskr && export FLASK_ENV=development && flask run``` (Mac and Linux) <br>
 ```set FLASK_APP=flaskr && set FLASK_ENV=development && flask run``` (Windows)
