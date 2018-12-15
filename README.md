@@ -50,21 +50,21 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 
 ## Structure of the code
 ### Folders:
-- **\flaskr** Files related to the frontend and backend of the website. A description of the file is provided inside every one.
-- **\instance** Current instance of the database of the website.
-- **\graphics-deliverables** Files for the final presentation.
-- **\PCA** Containing Jupyther that shows code and result for PCA.
-- **\matplotlib** Library matplotlib.
+- **/flaskr** Files related to the frontend and backend of the website. A description of the file is provided inside every one.
+- **/instance** Current instance of the database of the website.
+- **/graphics-deliverables** Files for the final presentation.
+- **/PCA** Containing Jupyther that shows code and result for PCA.
+- **/matplotlib** Library matplotlib.
 
 ### Flaskr folder:
-- **\map** Images used to generated the path.
-- **\static** Css, fonts, images, js, scss files
-- **\templates** index.html
+- **/map** Images used to generated the path.
+- **/static** Css, fonts, images, js, scss files
+- **/templates** index.html
 Backend files for the server (Python) and schema.sql
 
 ### Graphics deliverables folder:
-- **\images** Images used for the __README.md__
-- **\technical_report** Latex technical report
+- **/images** Images used for the __README.md__
+- **/technical_report** Latex technical report
 Final A2 posters, midterm presentation, final presentation, dwg and skp files, renderings, technical report.
 
 ## Website (Screenshots)
