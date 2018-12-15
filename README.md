@@ -28,7 +28,7 @@ Install all the requirements (__requirements.txt__ file) using pip. <br>
 ```pip install -r requirements.txt``` (Mac and Linux) <br>
 ```py -m pip install -r requirements.txt``` (Windows)
 
-In case you have problem use:
+If you have problems during the installation try to use:
 ```python3 -mpip install -r requirements.txt``` (Mac and Linux)
 
 In case you are missing module cv2:
@@ -41,7 +41,7 @@ In case you are missing module cv2:
 ```export FLASK_APP=server.py && export FLASK_ENV=development && flask run --host=0.0.0.0``` -->
 
 ### Initialize database
-In case you want to initialize the database, delete flaskr.sqlite inside instance folder, and after:
+If you want to initialize the database, delete flaskr.sqlite inside instance folder, and after:
 ```flask init-db```
 
 ### Key Azure
@@ -54,7 +54,6 @@ In case you want to initialize the database, delete flaskr.sqlite inside instanc
 - **/instance** Current instance of the database of the website.
 - **/graphics-deliverables** Files for the final presentation.
 - **/PCA** Containing Jupyther that shows code and result for PCA.
-- **/matplotlib** Library matplotlib.
 
 ### Flaskr folder:
 - **/map** Images used to generated the path.
